@@ -18,3 +18,14 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('/faculties','FacultiesController');
+Route::resource('posts','FacultiesController');
+Route::get('editfaculties/{Faculties}/edit',['uses'=>'FacultiesController@editfacultiesDetails','as'=>'editfacultiesDetails']);
+
+
+Route::resource('/Levels','LevelsController');
+Route::resource('/Semesters','SemestersController');
+Route::resource('/Subjects','SubjectsController');
+
+
