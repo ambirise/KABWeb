@@ -1,8 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Faculty;
+use App\Level;
+use App\Semester;
+use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class LevelsController extends Controller
 {
@@ -13,7 +17,8 @@ class LevelsController extends Controller
      */
     public function index()
     {
-        return view('levels');
+        $get_level_data= Level::all();
+        return view('levels')->with('get_level_data',$get_level_data);
     }
 
     /**
@@ -80,5 +85,19 @@ class LevelsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getlevelsSearch(Request $request)
+    {
+        $query = $request->input('q');
+        if ($query != '') {
+            $get_level_data = DB::table('levels')->where('level_title', 'like', '%' . $query . '%')->get();
+        } else {
+            $get_level_data = DB::table('levels')
+                ->orderBy('level_title', 'desc')
+                ->get();
+        }
+
+        return view('levels')->with('get_level_data', $get_level_data);
     }
 }

@@ -30,8 +30,9 @@
 </head> 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#"><input type="image" id="myimage" src="{{ asset('/backend/images/logo.jpeg') }}"
-                height="40" width="80" /></a>
+    <!-- for logo -->
+        <!-- <a class="navbar-brand" href="#"><input type="image" id="myimage" src="{{ asset('/backend/images/logo.jpeg') }}"
+                height="40" width="80" /></a> -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -45,7 +46,7 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ url('/levels') }}">Levels</a>
                 </li>
-                <li class="nav-item active">
+                <!-- <li class="nav-item active">
                     <a class="nav-link" href="{{ url('faculties') }}">Faculties</a>
                 </li>
                 <li class="nav-item active">
@@ -53,7 +54,7 @@
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link active" href="{{ url('/subjects') }}">Subjects</a>
-                </li>
+                </li> -->
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <a style="float:right;color:white;text-decoration:none;" class="mt-2" href="{{ route('logout') }}"

@@ -19,13 +19,25 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('/faculties','FacultiesController');
-Route::resource('posts','FacultiesController');
+Route::get('/faculties/{Level}', ['uses'=>'FacultiesController@index','as'=>'getfacultiesIndex']);
+Route::post('faculties',['uses'=>'FacultiesController@store','as'=>'facultiesStore']);
+
+Route::get('/semesters/{Faculty}', ['uses'=>'SemestersController@index','as'=>'getsemestersIndex']);
+Route::get('/subjects/{Semester}', ['uses'=>'SubjectsController@index','as'=>'getsubjectsIndex']);
+
+Route::post('semesters/{Faculty}',['uses'=>'SemestersController@store','as'=>'semestersStore']);
+
+
+Route::any('/searchfaculties/{Level}',['uses'=>'FacultiesController@getfacultiesSearch','as'=>'getfacultiesSearch']);
+Route::any('/searchlevels',['uses'=>'LevelsController@getlevelsSearch','as'=>'getlevelsSearch']);
+
+Route::get('/live_search/faculties', 'FacultiesController@action')->name('live_search.action');
+
+
 Route::get('editfaculties/{Faculties}/edit',['uses'=>'FacultiesController@editfacultiesDetails','as'=>'editfacultiesDetails']);
 
-
-Route::resource('/Levels','LevelsController');
-Route::resource('/Semesters','SemestersController');
-Route::resource('/Subjects','SubjectsController');
+Route::resource('/levels','LevelsController');
+// Route::resource('/semesters','SemestersController');
+// Route::resource('/subjects','SubjectsController');
 
 
