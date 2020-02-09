@@ -1,15 +1,17 @@
 @extends('home')
 @section('content')
 
-
 <div class="container">
+<a href="{{ url('/levels') }}"><span>Levels</span></a> -> <a
+        href="{{ url('/faculties', $get_semester_data->level_id) }}"><span>Faculties</span></a> ->
+    <a href="{{ url('/semesters',$get_semester_data->faculty_id) }}"><span>Semesters</span></a>
     <div class="card mt-4">
         <div class="card-body">
-            <form action="{{route('semestersStore',$get_faculty_data->faculty_id)}}" method="POST" enctype="mutipart/form-data">
+            <form action="{{route('semestersStore',$get_semester_data->faculty_id)}}" method="POST" enctype="mutipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-md-6">
-                        @if($get_faculty_data->yearorsemester == "s" && $get_faculty_data->numberofsemester == "6")
+                        @if($get_semester_data->yearorsemester == "s" && $get_semester_data->numberofsemester == "6")
                         <span style="font-size:16px;">Select Semester</span><br>
                         <select class="custom-select" name="year" style="height:38px;width:182px;" id="customchange"
                             required>
@@ -22,7 +24,7 @@
                         </select>
                         @endif
 
-                        @if($get_faculty_data->yearorsemester == "s" && $get_faculty_data->numberofsemester == "8")
+                        @if($get_semester_data->yearorsemester == "s" && $get_semester_data->numberofsemester == "8")
                         <span style="font-size:16px;">Select Semester</span><br>
                         <select class="custom-select" name="year" style="height:38px;width:182px;" id="customchange"
                             required>
@@ -37,7 +39,7 @@
                         </select>
                         @endif
 
-                        @if($get_faculty_data->yearorsemester == "s" && $get_faculty_data->numberofsemester == "10")
+                        @if($get_semester_data->yearorsemester == "s" && $get_semester_data->numberofsemester == "10")
                         <span style="font-size:16px;">Select Semester</span><br>
                         <select class="custom-select" name="year" style="height:38px;width:182px;" id="customchange"
                             required>
@@ -54,7 +56,7 @@
                         </select>
                         @endif
 
-                        @if($get_faculty_data->yearorsemester == "s" && $get_faculty_data->numberofsemester == "3")
+                        @if($get_semester_data->yearorsemester == "s" && $get_semester_data->numberofsemester == "3")
                         <span style="font-size:16px;">Select Year</span><br>
                         <select class="custom-select" name="year" style="height:38px;width:182px;" id="customchange"
                             required>
@@ -64,7 +66,7 @@
                         </select>
                         @endif
 
-                        @if($get_faculty_data->yearorsemester == "s" && $get_faculty_data->numberofsemester == "4")
+                        @if($get_semester_data->yearorsemester == "s" && $get_semester_data->numberofsemester == "4")
                         <span style="font-size:16px;">Select Year</span><br>
                         <select class="custom-select" name="year" style="height:38px;width:182px;" id="customchange"
                             required>
@@ -75,7 +77,7 @@
                         </select>
                         @endif
 
-                        @if($get_faculty_data->yearorsemester == "s" && $get_faculty_data->numberofsemester == "5")
+                        @if($get_semester_data->yearorsemester == "s" && $get_semester_data->numberofsemester == "5")
                         <span style="font-size:16px;">Select Year</span><br>
                         <select class="custom-select" name="year" style="height:38px;width:182px;" id="customchange"
                             required>
@@ -98,9 +100,7 @@
 
 
 <div class="container">
-    <a href="{{ url('/levels') }}"><span>Levels</span></a> -> <a
-        href="{{ url('/faculties', $get_faculty_data->level_id) }}"><span>Faculties</span></a> ->
-    <a href="{{ url('/semesters',$get_faculty_data->faculty_id) }}"><span>Semesters</span></a>
+   
     <div class="card mt-2">
         <div class="card-header text-center">
             <div class="row">
@@ -126,18 +126,21 @@
         <div class="card-body">
             <table class="table mt-0 table-striped">
                 <thead>
-
+              
                     <tr>
                         <th scope="col">S.N</th>
-                        <th scope="col">Semester Title</th>
+                        <th scope="col">Semester</th>
+                       
                     </tr>
-
                 </thead>
                 <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
+                @if($get_semester_data->semester_title == "3s")
+                    <tr onclick="window.location = '{{route('getsubjectsIndex',$get_semester_data->semester_id)}}'"
+                            style="cursor:pointer;">
+                        <td>1</td>
+                        <td>Third Semester</td>
                     </tr>
+                @endif
                 </tbody>
             </table>
         </div>

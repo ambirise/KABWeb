@@ -1,3 +1,4 @@
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -19,11 +20,14 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{URL::asset('backend/css/bootstrap.css')}}">
+    <!-- <link rel="stylesheet" href="{{URL::asset('backend/css/bootstrap.css')}}">
     <link rel="stylesheet" href="{{URL::asset('backend/css/bootstrap.min.css')}}">
     <script src="{{ URL::asset('backend/js/bootstrap.js') }}"></script>
-    <script src="{{ URL::asset('backend/js/bootstrap.min.js') }}"></script>   
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+    <script src="{{ URL::asset('backend/js/bootstrap.min.js') }}"></script>   -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.js"></script>
 
     <!-- Bootstrap Import Css And Js -->
 
@@ -40,9 +44,6 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto" style="font-size:20px;">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ url('/home') }}">Home <span class="sr-only">(current)</span></a>
-                </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ url('/levels') }}">Levels</a>
                 </li>
