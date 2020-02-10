@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Subject;
 use App\Chapter;
+use App\Faculty;
+use App\Level;
 use DB;
 use Illuminate\Support\Arr;
 
@@ -21,9 +23,21 @@ class ChaptersController extends Controller
     {
         
         $get_subject_data = Subject::where('subject_id', $subject_id)->first();
-        $get_subject_data_array= DB::table('chapters')->where('subject_id',$subject_id)->get();
-       
-        return view('chapters')->with('get_subject_data',$get_subject_data)->with('get_subject_data_array',$get_subject_data_array);
+
+        $get_subject_data_level_id = Subject::where('subject_id', $subject_id)->get();
+        $pluck_level_id = Arr::pluck($get_subject_data_level_id, ['level_id']);
+        $level_id = implode(" ", $pluck_level_id);
+        $level_title = Level::where('level_id', $level_id)->first();
+
+        $get_subject_data_array = Chapter::where('subject_id', $subject_id)->get();
+
+        $pluck_facultyid_subject=Arr::pluck($get_subject_data_level_id,['faculty_id']);
+    
+        $implode_facultyid_subject = implode(" ",$pluck_facultyid_subject);
+        $get_faculty_data= Faculty::where('faculty_id', $implode_facultyid_subject)->first();
+
+        return view('chapters')->with('get_subject_data',$get_subject_data)->with('get_subject_data_array',$get_subject_data_array)
+        ->with('get_faculty_data',$get_faculty_data)->with('level_title',$level_title);
     }
 
     /**

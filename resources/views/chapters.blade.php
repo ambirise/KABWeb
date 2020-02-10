@@ -1,12 +1,12 @@
 @extends('home')
 @section('content')
 
-<div class="container">
+<div class="container"><br>
     <a href="{{ url('/levels') }}"><span>Levels</span></a> -> <a
-        href="{{ url('/faculties',$get_subject_data->level_id) }}"><span>Faculties</span></a>
-    -> <a href="{{ url('/semesters',$get_subject_data->faculty_id) }}"><span>Semesters</span></a>
-    -> <a href="{{ url('/subjects',$get_subject_data->semester_id) }}"><span>Subject</span></a>
-    -> <a href="{{ url('/chapters',$get_subject_data->subject_id) }}"><span>Chapter</span></a>
+        href="{{ url('/faculties',$get_subject_data->level_id) }}"><span>{{$level_title->level_title}}</span></a>
+    <!-- -> <a href="{{ url('/semesters',$get_subject_data->faculty_id) }}"><span>Semesters</span></a> -->
+    -> <a href="{{ url('/subjects',$get_subject_data->faculty_id) }}"><span>{{$get_faculty_data->faculty_title}}</span></a>
+    -> <a href="{{ url('/chapters',$get_subject_data->subject_id) }}"><span>{{$get_subject_data->subject_title}}</span></a>
     <div class="card mt-4">
         <div class="card-body">
             <form action="{{route('chaptersStore',$get_subject_data->subject_id)}}" method="POST"

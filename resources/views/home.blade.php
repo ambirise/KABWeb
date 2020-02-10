@@ -32,7 +32,7 @@
     <!-- Bootstrap Import Css And Js -->
 
 </head> 
-<body>
+<body onFocus="parent_disable();" onclick="parent_disable();">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <!-- for logo -->
         <!-- <a class="navbar-brand" href="#"><input type="image" id="myimage" src="{{ asset('/backend/images/logo.jpeg') }}"

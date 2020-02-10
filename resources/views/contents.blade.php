@@ -1,3 +1,39 @@
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!-- for logo -->
+        <!-- <a class="navbar-brand" href="#"><input type="image" id="myimage" src="{{ asset('/backend/images/logo.jpeg') }}"
+                height="40" width="80" /></a> -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto" style="font-size:20px;">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url('/levels') }}">Levels</a>
+                </li>
+                <!-- <li class="nav-item active">
+                    <a class="nav-link" href="{{ url('faculties') }}">Faculties</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link " href="{{ url('/semesters') }}">Semesters/Year</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link active" href="{{ url('/subjects') }}">Subjects</a>
+                </li> -->
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <a style="float:right;color:white;text-decoration:none;" class="mt-2" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();"><span style="font-size:20px;color:white;"><u>Logout</u></span></a>
+            </form>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+        </div>
+    </nav>
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.js"></script>
@@ -22,13 +58,15 @@
     }
 
 </style>
+
+<br>
 <div class="container">
     <a href="{{ url('/levels') }}"><span>Levels</span></a> -> <a
-        href="{{ url('/faculties',$get_chapter_data->level_id) }}"><span>Faculties</span></a>
-    -> <a href="{{ url('/semesters',$get_chapter_data->faculty_id) }}"><span>Semesters</span></a>
-    -> <a href="{{ url('/subjects',$get_chapter_data->semester_id) }}"><span>Subject</span></a>
-    -> <a href="{{ url('/chapters',$get_chapter_data->subject_id) }}"><span>Chapter</span></a>
-    -> <a href="{{ url('/chapters',$get_chapter_data->chapter_id) }}"><span>Content</span></a>
+        href="{{ url('/faculties',$get_chapter_data->level_id) }}"><span>{{$level_title->level_title}}</span></a>
+    <!-- -> <a href="{{ url('/semesters',$get_chapter_data->faculty_id) }}"><span>Semesters</span></a> -->
+    -> <a href="{{ url('/subjects',$get_chapter_data->faculty_id) }}"><span>{{$get_faculty_title->faculty_title}}</span></a>
+    -> <a href="{{ url('/chapters',$get_chapter_data->subject_id) }}"><span>{{$get_subject_title->subject_title}}</span></a>
+    -> <a href="{{ url('/contents',$get_chapter_data->chapter_id) }}"><span>{{$get_chapter_data->chapter_title}}</span></a>
     <div class="card mt-4">
         <div class="card-body">
             <form action="{{ route('contentsStore',$get_chapter_data->chapter_id) }}" method="POST"
@@ -128,3 +166,5 @@
     });
 
 </script>
+
+

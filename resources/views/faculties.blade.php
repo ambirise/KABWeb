@@ -1,17 +1,16 @@
 @extends('home')
 @section('content')
-<div class="container">
+<div class="container"><br>
     <a href="{{ url('/levels') }}"><span>Levels</span></a> -> <a
-        href="{{ url('/faculties',$get_level_data->level_id) }}"><span>Faculties</span></a>
+        href="{{ url('/faculties',$get_level_data->level_id) }}"><span>{{$get_level_data->level_title}}</span></a>
     <div class="card mt-4 addfacultyform" hidden="true">
         <div class="card-header">
             <h5>Insert Faculty</h5>
-        </div>
+        </div> 
         <div class="card-body">
             <form action="{{route('facultiesStore')}}" method="POST" enctype="mutipart/form-data">
                 @csrf
                 <div class="row">
-
                     <div class="col-md-4">
                         <br>
                         <span style="font-size:16px;">Level : {{$get_level_data->level_title}}</span><br>
@@ -19,13 +18,14 @@
                             id="customchange" disabled>
                             <option value="" selected>{{$get_level_data->level_title}}</option>
                         </select> -->
-                        <input type="text" name="levelid" hidden="true" class="form-control" value="{{$level_id}}" id="usr" style="width:182px;">
+                        <input type="text" name="levelid" hidden="true" class="form-control" value="{{$level_id}}"
+                            id="usr" style="width:182px;">
                     </div>
 
 
                     @if($get_level_data->level_title=='School')
                     <div class="col-md-4 hideclass">
-                    <br>
+                        <br>
                         <span style="font-size:16px;">Add Class</span>
                         <select class="custom-select" name="facultyschool" style="height:38px;width:182px;"
                             id="customchange" required>
@@ -43,11 +43,10 @@
                         </select>
                     </div>
                     @endif
- 
-                   
+
                     @if($get_level_data->level_title=='10+2')
                     <div class="col-md-4 hideclass">
-                    <br>
+                        <br>
                         <span style="font-size:16px;">Add Class</span>
                         <select class="custom-select" name="facultyschool" style="height:38px;width:182px;"
                             id="customchange" required>
@@ -71,11 +70,11 @@
                         <span style="font-size:16px;">Choose Semester or Year</span>
                         <div>
                             <label class="btn btn-light">
-                                <input type="radio" name="Semester" Value="s" autocomplete="off" >
+                                <input type="radio" name="Semester" Value="s" autocomplete="off">
                                 Semester
                             </label>
                             <label class="btn btn-light">
-                                <input type="radio" name="Semester" value="y" autocomplete="off" > Year
+                                <input type="radio" name="Semester" value="y" autocomplete="off"> Year
                             </label>
                         </div>
                     </div>
@@ -101,11 +100,11 @@
 
                         <div>
                             <label class="btn btn-light">
-                                <input type="radio" name="numberofsemester" Value="6" autocomplete="off" >
+                                <input type="radio" name="numberofsemester" Value="6" autocomplete="off">
                                 Six
                             </label>
                             <label class="btn btn-light">
-                                <input type="radio" name="numberofsemester" value="8" autocomplete="off" >Eight
+                                <input type="radio" name="numberofsemester" value="8" autocomplete="off">Eight
                             </label>
                             <label class="btn btn-light">
                                 <input type="radio" name="numberofsemester" value="10" autocomplete="off">Ten
@@ -210,6 +209,15 @@
     </div>
 </div>
 
+
+@if($message = Session::get('violation'))
+<div class="container mt-2">
+    <div class="card alert alert-danger" role="alert">
+        <p>{{$message}}<p>
+    </div>
+</div>
+@endif
+
 <div class="container">
     <div class="card mt-2">
         <div class="card-header ">
@@ -249,27 +257,32 @@
                             @if(($get_level_data->level_id == "5"))
                             <th scope="col">Field</th>
                             @endif
+                            @if(($get_level_data->level_id == "6"))
+                            <th scope="col">Field</th>
+                            @endif
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                       
+
                         <!-- For main if condition -->
                         @if(($get_level_data->level_id == "3"))
                         @if(isset($details))
                         @php
                         $i=0;
                         @endphp
-                        @foreach($get_faculty_data->where('level_id', 3) as  $faculty_data)
+                        @foreach($get_faculty_data->where('level_id', 3) as $faculty_data)
                         @php
                         $i++;
                         @endphp
-                        <tr onclick="window.location = '{{route('getsemestersIndex',$faculty_data->faculty_id)}}'"
+                        <tr onclick="window.location = '{{route('getfacultiesIndex',$faculty_data->faculty_id)}}'"
                             style="cursor:pointer;">
                             <th scope="row">{{$i}}</th>
                             <td>{{$faculty_data->faculty_title}}</td>
-                            <td><a href="{{ route('editfacultiesDetails', $faculty_data->faculty_id)}}"><button
-                                        class="btn btn-primary">Edit</button></a>
+                            <!-- {{ route('editfacultiesDetails', $faculty_data->faculty_id)}} -->
+                            <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
+                                    onClick=window.open("www.google.com","Ratting","width=550,height=130,left=150,top=50,toolbar=0,status=0,");>Click
+                                    here to open the child window</a><button class="btn btn-primary">Edit</button></a>
                                 <form action="" method="POST" style="display: inline;">
                                     {{ method_field('DELETE') }}{{ csrf_field() }}<button
                                         class="btn btn-danger">Delete</button></form>
@@ -279,26 +292,27 @@
                             @endif
 
                         </tr>
-                     
+
                         @endforeach
 
                         @else
                         @php
                         $i=0;
                         @endphp
-                        @foreach($get_faculty_data->where('level_id', 3) as  $faculty_data)
+                        @foreach($get_faculty_data->where('level_id', 3) as $faculty_data)
                         @php
                         $i++;
                         @endphp
-                        <tr onclick="window.location = '{{route('getsemestersIndex',$faculty_data->faculty_id)}}'"
+                        <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
                             style="cursor:pointer;">
                             <th scope="row">{{$i}}</th>
                             <td>{{$faculty_data->faculty_title}}</td>
-                            <td><a href="{{ route('editfacultiesDetails', $faculty_data->faculty_id)}}"><button
-                                        class="btn btn-primary">Edit</button></a>
-                                <form action="" method="POST" style="display: inline;">
-                                    {{ method_field('DELETE') }}{{ csrf_field() }}<button
-                                        class="btn btn-danger">Delete</button></form>
+                            <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
+                                    onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");>
+                                    <button class="btn btn-primary">Edit</button></a>
+                                <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
+                                    onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                        class="btn btn-danger ">Delete</button></a>
                             </td>
                         </tr>
 
@@ -307,20 +321,21 @@
 
                         @endif
 
-                      
+
                         <!-- End of main if condition -->
 
-                         <!-- For second main if condition -->
+                        <!-- For second main if condition -->
                         @if($get_level_data->level_id == "1")
                         @if(isset($details))
                         @php
                         $i=0;
                         @endphp
-                        @foreach($get_faculty_data->where('level_id', 1) as  $faculty_data)
+                        @foreach($get_faculty_data->where('level_id', 1) as $faculty_data)
                         @php
                         $i++;
                         @endphp
-                        <tr>
+                        <tr  onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
+                            style="cursor:pointer;">
                             <th scope="row">{{$i}}</th>
                             <td>{{$faculty_data->faculty_title}}</td>
                             <td><a href="{{ route('editfacultiesDetails', $faculty_data->faculty_id)}}"><button
@@ -333,18 +348,19 @@
                             this is home
                             @endif
                         </tr>
-                     
+
                         @endforeach
 
                         @else
                         @php
                         $i=0;
                         @endphp
-                        @foreach($get_faculty_data->where('level_id', 1) as  $faculty_data)
+                        @foreach($get_faculty_data->where('level_id', 1) as $faculty_data)
                         @php
                         $i++;
                         @endphp
-                        <tr>
+                        <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
+                            style="cursor:pointer;">
                             <th scope="row">{{$i}}</th>
                             <td>{{$faculty_data->faculty_title}}</td>
                             <td><a href="{{ route('editfacultiesDetails', $faculty_data->faculty_id)}}"><button
@@ -368,7 +384,7 @@
                         @php
                         $i=0;
                         @endphp
-                        @foreach($get_faculty_data->where('level_id', 4) as  $faculty_data)
+                        @foreach($get_faculty_data->where('level_id', 4) as $faculty_data)
                         @php
                         $i++;
                         @endphp
@@ -385,14 +401,14 @@
                             this is home
                             @endif
                         </tr>
-                     
+
                         @endforeach
 
                         @else
                         @php
                         $i=0;
                         @endphp
-                        @foreach($get_faculty_data->where('level_id', 4) as  $faculty_data)
+                        @foreach($get_faculty_data->where('level_id', 4) as $faculty_data)
                         @php
                         $i++;
                         @endphp
@@ -420,7 +436,7 @@
                         @php
                         $i=0;
                         @endphp
-                        @foreach($get_faculty_data->where('level_id', 5) as  $faculty_data)
+                        @foreach($get_faculty_data->where('level_id', 5) as $faculty_data)
                         @php
                         $i++;
                         @endphp
@@ -437,14 +453,66 @@
                             this is home
                             @endif
                         </tr>
-                     
+
                         @endforeach
 
                         @else
                         @php
                         $i=0;
                         @endphp
-                        @foreach($get_faculty_data->where('level_id', 5) as  $faculty_data)
+                        @foreach($get_faculty_data->where('level_id', 5) as $faculty_data)
+                        @php
+                        $i++;
+                        @endphp
+                        <tr>
+                            <th scope="row">{{$i}}</th>
+                            <td>{{$faculty_data->faculty_title}}</td>
+                            <td><a href="{{ route('editfacultiesDetails', $faculty_data->faculty_id)}}"><button
+                                        class="btn btn-primary">Edit</button></a>
+                                <form action="" method="POST" style="display: inline;">
+                                    {{ method_field('DELETE') }}{{ csrf_field() }}<button
+                                        class="btn btn-danger">Delete</button></form>
+                            </td>
+
+                        </tr>
+
+                        @endforeach
+                        @endif
+
+                        @endif
+                        <!-- End of main if condition -->
+
+                        <!-- For fifth main if condition -->
+                        @if($get_level_data->level_id == "6")
+                        @if(isset($details))
+                        @php
+                        $i=0;
+                        @endphp
+                        @foreach($get_faculty_data->where('level_id', 6) as $faculty_data)
+                        @php
+                        $i++;
+                        @endphp
+                        <tr>
+                            <th scope="row">{{$i}}</th>
+                            <td>{{$faculty_data->faculty_title}}</td>
+                            <td><a href="{{ route('editfacultiesDetails', $faculty_data->faculty_id)}}"><button
+                                        class="btn btn-primary">Edit</button></a>
+                                <form action="" method="POST" style="display: inline;">
+                                    {{ method_field('DELETE') }}{{ csrf_field() }}<button
+                                        class="btn btn-danger">Delete</button></form>
+                            </td>
+                            @if($get_faculty_data->isEmpty())
+                            this is home
+                            @endif
+                        </tr>
+
+                        @endforeach
+
+                        @else
+                        @php
+                        $i=0;
+                        @endphp
+                        @foreach($get_faculty_data->where('level_id', 6) as $faculty_data)
                         @php
                         $i++;
                         @endphp
@@ -472,38 +540,38 @@
         </div>
     </div>
     <script>
-    $(document).ready(function () {
-        $('input:radio[name="Semester"]').change(function () {
-            if ($(this).val() == 'y') {
-                $('.hideyears').removeAttr('hidden');
-                $('.hidesemesters').attr("hidden", "false");
+        $(document).ready(function () {
+            $('input:radio[name="Semester"]').change(function () {
+                if ($(this).val() == 'y') {
+                    $('.hideyears').removeAttr('hidden');
+                    $('.hidesemesters').attr("hidden", "false");
 
-                // $('.hideselectyearfirst').attr("hidden", "true");
-                // $('.hideselectyearsecond').attr("hidden", "true");
-                // $('.hideselectyearthird').attr("hidden", "true");
+                    // $('.hideselectyearfirst').attr("hidden", "true");
+                    // $('.hideselectyearsecond').attr("hidden", "true");
+                    // $('.hideselectyearthird').attr("hidden", "true");
 
-                // $('.hideselectsemesterfirst').attr("hidden", "true");
-                // $('.hideselectsemestersecond').attr("hidden", "true");
-                // $('.hideselectsemesterthird').attr("hidden", "true");
-            }
+                    // $('.hideselectsemesterfirst').attr("hidden", "true");
+                    // $('.hideselectsemestersecond').attr("hidden", "true");
+                    // $('.hideselectsemesterthird').attr("hidden", "true");
+                }
 
-            if ($(this).val() == 's') {
-                $('.hidesemesters').removeAttr('hidden');
-                $('.hideyears').attr("hidden", "false");
+                if ($(this).val() == 's') {
+                    $('.hidesemesters').removeAttr('hidden');
+                    $('.hideyears').attr("hidden", "false");
 
-                // $('.hideselectyearfirst').attr("hidden", "true");
-                // $('.hideselectyearsecond').attr("hidden", "true");
-                // $('.hideselectyearthird').attr("hidden", "true");
+                    // $('.hideselectyearfirst').attr("hidden", "true");
+                    // $('.hideselectyearsecond').attr("hidden", "true");
+                    // $('.hideselectyearthird').attr("hidden", "true");
 
-                // $('.hideselectsemesterfirst').attr("hidden", "true");
-                // $('.hideselectsemestersecond').attr("hidden", "true");
-                // $('.hideselectsemesterthird').attr("hidden", "true");
-            }
+                    // $('.hideselectsemesterfirst').attr("hidden", "true");
+                    // $('.hideselectsemestersecond').attr("hidden", "true");
+                    // $('.hideselectsemesterthird').attr("hidden", "true");
+                }
+            });
         });
 
-    });
     </script>
-<!-- 
+    <!--
 //     $(document).ready(function () {
 //         $("select.getlevelname").change(function () {
 //             if ($(this).val() == '1') {
@@ -656,7 +724,7 @@
 //     $('tbody').html(data.table_data);
 //     $('#total_records').text(data.total_data);
 //     var x=(data.table_data);
- 
+
 //    }
 //   })
 //  }
@@ -673,5 +741,15 @@
             $('.addfacultyform').removeAttr("hidden");
         });
 
+        $("#dialog").dialog({
+            autoOpen: false
+        });
+        $("#btnExample").click(function () {
+            $("#dialog").dialog("open");
+        });
+
     </script>
+
+
+
     @endsection

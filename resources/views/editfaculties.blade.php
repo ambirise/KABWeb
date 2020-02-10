@@ -6,8 +6,7 @@
     <h5> Edit Faculties: </h5>
     <br>
     <main class="page-content" style="font-family: Times New Roman, Times, serif;">
-        <form action="{{ route('faculties.update',$facultiesdetails->faculty_id) }}" method="POST"
-            enctype="mutipart/form-data">
+        <form action=" " method="POST" enctype="mutipart/form-data">
             {{ method_field('PUT') }}
             {{ csrf_field() }}
             <div class="row">
@@ -27,7 +26,7 @@
                 @if($implode_leveldetailstitle=="Bachelor")
                 <div class="col-md-4">
                     <span style="font-size:16px;">Add Faculty</span>
-                    <input type="text" name="faculty" value="{{$facultiesdetails->faculty_title}}" class="form-control"
+                    <input type="text" name="faculty" value="" class="form-control"
                         id="usr" style="width:182px;"><br>
                 </div>
 
@@ -55,12 +54,11 @@
                     </div>
                 </div>
 
-                @if( !empty($facultiesdetails->numberofyears))
+                @if( !empty($facultiesdetails->numberofyear))
                 <div class="col-md-4 hideyears">
                     <span style="font-size:16px;">Number of Years</span>
-
                     <div>
-                        @if($facultiesdetails->numberofyears=="3")
+                        @if($facultiesdetails->numberofyear=="3")
                         <label class="btn btn-light">
                             <input type="radio" name="numberofyear" Value="3" autocomplete="off" checked>
                             Three
@@ -72,7 +70,7 @@
                             <input type="radio" name="numberofyear" value="5" autocomplete="off">Five
                         </label>
                         @endif
-                        @if($facultiesdetails->numberofyears=="4")
+                        @if($facultiesdetails->numberofyear=="4")
                         <label class="btn btn-light">
                             <input type="radio" name="numberofyear" Value="3" autocomplete="off">
                             Three
@@ -84,7 +82,7 @@
                             <input type="radio" name="numberofyear" value="5" autocomplete="off">Five
                         </label>
                         @endif
-                        @if($facultiesdetails->numberofyears=="5")
+                        @if($facultiesdetails->numberofyear=="5")
                         <label class="btn btn-light">
                             <input type="radio" name="numberofyear" Value="3" autocomplete="off">
                             Three

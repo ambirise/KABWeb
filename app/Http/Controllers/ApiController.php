@@ -333,10 +333,9 @@ class ApiController extends Controller
     //     }else{
 
     //         return $this->prepareResult(false, [], "unauthorized","You are not authenticated to delete this todo");
-
     //     }
-
     // }
+    
     public function getTestApi()
     {
         $get_content_data_array = DB::table('contents')->get();
