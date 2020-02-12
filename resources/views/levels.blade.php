@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
 
-    <div class="container">
+    <div class="container"><br>
         <a href="{{ url('/levels') }}"><h6>Levels</h6></a>
         <div class="card mt-2">
             <div class="card-header text-center">

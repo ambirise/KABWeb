@@ -342,4 +342,10 @@ class ApiController extends Controller
         return $get_content_data_array;
     }
 
+    public function getlevelApi()
+    {
+        $get_content_data_array = DB::table('levels')->get();
+        return $get_content_data_array;
+    }
+
 }

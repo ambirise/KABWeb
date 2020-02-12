@@ -6,7 +6,7 @@
     <div class="card mt-4 addfacultyform" hidden="true">
         <div class="card-header">
             <h5>Insert Faculty</h5>
-        </div> 
+        </div>
         <div class="card-body">
             <form action="{{route('facultiesStore')}}" method="POST" enctype="mutipart/form-data">
                 @csrf
@@ -57,9 +57,16 @@
                     </div>
                     @endif
 
+                    @if($get_level_data->level_title=='Loksewa' || $get_level_data->level_title=='Others')
+                    <div class="col-md-4">
+                        <span style="font-size:16px;">Faculty</span>
+                        <input type="text" name="facultybachelor" class="form-control" id="usr"
+                            style="width:182px;"><br>
+                    </div>
+                    @endif
 
-                    @if($get_level_data->level_title=='Bachelor' || $get_level_data->level_title=='Loksewa' ||
-                    $get_level_data->level_title=='Others')
+
+                    @if($get_level_data->level_title=='Bachelor')
                     <div class="col-md-4 hidefaculty">
                         <span style="font-size:16px;">Faculty</span>
                         <input type="text" name="facultybachelor" class="form-control" id="usr"
@@ -241,7 +248,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <table class="table mt-0">
+                <table class="table mt-0 table-striped">
                     <thead>
                         <tr>
                             <th scope="col">S.N</th>
@@ -275,22 +282,21 @@
                         @php
                         $i++;
                         @endphp
-                        <tr onclick="window.location = '{{route('getfacultiesIndex',$faculty_data->faculty_id)}}'"
+                        <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
                             style="cursor:pointer;">
-                            <th scope="row">{{$i}}</th>
-                            <td>{{$faculty_data->faculty_title}}</td>
+                            <th scope="row" >{{$i}}</th>
+                            <td >{{$faculty_data->faculty_title}}</td>
                             <!-- {{ route('editfacultiesDetails', $faculty_data->faculty_id)}} -->
                             <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                    onClick=window.open("www.google.com","Ratting","width=550,height=130,left=150,top=50,toolbar=0,status=0,");>Click
-                                    here to open the child window</a><button class="btn btn-primary">Edit</button></a>
-                                <form action="" method="POST" style="display: inline;">
-                                    {{ method_field('DELETE') }}{{ csrf_field() }}<button
-                                        class="btn btn-danger">Delete</button></form>
+                                    onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                                    <button class="btn btn-primary">Edit</button></a>
+                                <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
+                                    onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                        class="btn btn-danger ">Delete</button></a>
                             </td>
                             @if($get_faculty_data->isEmpty())
                             this is home
                             @endif
-
                         </tr>
 
                         @endforeach
@@ -305,10 +311,10 @@
                         @endphp
                         <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
                             style="cursor:pointer;">
-                            <th scope="row">{{$i}}</th>
+                            <th scope="row"  >{{$i}}</th>
                             <td>{{$faculty_data->faculty_title}}</td>
                             <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                    onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");>
+                                    onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
                                     <button class="btn btn-primary">Edit</button></a>
                                 <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
                                     onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
@@ -334,15 +340,16 @@
                         @php
                         $i++;
                         @endphp
-                        <tr  onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
+                        <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
                             style="cursor:pointer;">
                             <th scope="row">{{$i}}</th>
                             <td>{{$faculty_data->faculty_title}}</td>
-                            <td><a href="{{ route('editfacultiesDetails', $faculty_data->faculty_id)}}"><button
-                                        class="btn btn-primary">Edit</button></a>
-                                <form action="" method="POST" style="display: inline;">
-                                    {{ method_field('DELETE') }}{{ csrf_field() }}<button
-                                        class="btn btn-danger">Delete</button></form>
+                            <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
+                                    onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                                    <button class="btn btn-primary">Edit</button></a>
+                                <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
+                                    onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                        class="btn btn-danger ">Delete</button></a>
                             </td>
                             @if($get_faculty_data->isEmpty())
                             this is home
@@ -363,11 +370,12 @@
                             style="cursor:pointer;">
                             <th scope="row">{{$i}}</th>
                             <td>{{$faculty_data->faculty_title}}</td>
-                            <td><a href="{{ route('editfacultiesDetails', $faculty_data->faculty_id)}}"><button
-                                        class="btn btn-primary">Edit</button></a>
-                                <form action="" method="POST" style="display: inline;">
-                                    {{ method_field('DELETE') }}{{ csrf_field() }}<button
-                                        class="btn btn-danger">Delete</button></form>
+                            <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
+                                    onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                                    <button class="btn btn-primary">Edit</button></a>
+                                <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
+                                    onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                        class="btn btn-danger ">Delete</button></a>
                             </td>
 
                         </tr>
@@ -388,14 +396,16 @@
                         @php
                         $i++;
                         @endphp
-                        <tr>
+                        <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
+                            style="cursor:pointer;">
                             <th scope="row">{{$i}}</th>
                             <td>{{$faculty_data->faculty_title}}</td>
-                            <td><a href="{{ route('editfacultiesDetails', $faculty_data->faculty_id)}}"><button
-                                        class="btn btn-primary">Edit</button></a>
-                                <form action="" method="POST" style="display: inline;">
-                                    {{ method_field('DELETE') }}{{ csrf_field() }}<button
-                                        class="btn btn-danger">Delete</button></form>
+                            <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
+                                    onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                                    <button class="btn btn-primary">Edit</button></a>
+                                <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
+                                    onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                        class="btn btn-danger ">Delete</button></a>
                             </td>
                             @if($get_faculty_data->isEmpty())
                             this is home
@@ -412,14 +422,16 @@
                         @php
                         $i++;
                         @endphp
-                        <tr>
+                        <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
+                            style="cursor:pointer;">
                             <th scope="row">{{$i}}</th>
                             <td>{{$faculty_data->faculty_title}}</td>
-                            <td><a href="{{ route('editfacultiesDetails', $faculty_data->faculty_id)}}"><button
-                                        class="btn btn-primary">Edit</button></a>
-                                <form action="" method="POST" style="display: inline;">
-                                    {{ method_field('DELETE') }}{{ csrf_field() }}<button
-                                        class="btn btn-danger">Delete</button></form>
+                            <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
+                                    onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                                    <button class="btn btn-primary">Edit</button></a>
+                                <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
+                                    onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                        class="btn btn-danger ">Delete</button></a>
                             </td>
 
                         </tr>
@@ -440,14 +452,16 @@
                         @php
                         $i++;
                         @endphp
-                        <tr>
+                        <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
+                            style="cursor:pointer;">
                             <th scope="row">{{$i}}</th>
                             <td>{{$faculty_data->faculty_title}}</td>
-                            <td><a href="{{ route('editfacultiesDetails', $faculty_data->faculty_id)}}"><button
-                                        class="btn btn-primary">Edit</button></a>
-                                <form action="" method="POST" style="display: inline;">
-                                    {{ method_field('DELETE') }}{{ csrf_field() }}<button
-                                        class="btn btn-danger">Delete</button></form>
+                            <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
+                                    onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                                    <button class="btn btn-primary">Edit</button></a>
+                                <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
+                                    onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                        class="btn btn-danger ">Delete</button></a>
                             </td>
                             @if($get_faculty_data->isEmpty())
                             this is home
@@ -464,14 +478,16 @@
                         @php
                         $i++;
                         @endphp
-                        <tr>
+                        <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
+                            style="cursor:pointer;">
                             <th scope="row">{{$i}}</th>
                             <td>{{$faculty_data->faculty_title}}</td>
-                            <td><a href="{{ route('editfacultiesDetails', $faculty_data->faculty_id)}}"><button
-                                        class="btn btn-primary">Edit</button></a>
-                                <form action="" method="POST" style="display: inline;">
-                                    {{ method_field('DELETE') }}{{ csrf_field() }}<button
-                                        class="btn btn-danger">Delete</button></form>
+                            <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
+                                    onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                                    <button class="btn btn-primary">Edit</button></a>
+                                <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
+                                    onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                        class="btn btn-danger ">Delete</button></a>
                             </td>
 
                         </tr>
@@ -492,14 +508,16 @@
                         @php
                         $i++;
                         @endphp
-                        <tr>
+                        <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
+                            style="cursor:pointer;">
                             <th scope="row">{{$i}}</th>
                             <td>{{$faculty_data->faculty_title}}</td>
-                            <td><a href="{{ route('editfacultiesDetails', $faculty_data->faculty_id)}}"><button
-                                        class="btn btn-primary">Edit</button></a>
-                                <form action="" method="POST" style="display: inline;">
-                                    {{ method_field('DELETE') }}{{ csrf_field() }}<button
-                                        class="btn btn-danger">Delete</button></form>
+                            <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
+                                    onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                                    <button class="btn btn-primary">Edit</button></a>
+                                <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
+                                    onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                        class="btn btn-danger ">Delete</button></a>
                             </td>
                             @if($get_faculty_data->isEmpty())
                             this is home
@@ -516,18 +534,18 @@
                         @php
                         $i++;
                         @endphp
-                        <tr>
+                        <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
+                            style="cursor:pointer;">
                             <th scope="row">{{$i}}</th>
                             <td>{{$faculty_data->faculty_title}}</td>
-                            <td><a href="{{ route('editfacultiesDetails', $faculty_data->faculty_id)}}"><button
-                                        class="btn btn-primary">Edit</button></a>
-                                <form action="" method="POST" style="display: inline;">
-                                    {{ method_field('DELETE') }}{{ csrf_field() }}<button
-                                        class="btn btn-danger">Delete</button></form>
+                            <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
+                                    onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                                    <button class="btn btn-primary">Edit</button></a>
+                                <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
+                                    onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                        class="btn btn-danger ">Delete</button></a>
                             </td>
-
                         </tr>
-
                         @endforeach
                         @endif
 

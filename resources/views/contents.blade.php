@@ -67,7 +67,7 @@
     -> <a href="{{ url('/subjects',$get_chapter_data->faculty_id) }}"><span>{{$get_faculty_title->faculty_title}}</span></a>
     -> <a href="{{ url('/chapters',$get_chapter_data->subject_id) }}"><span>{{$get_subject_title->subject_title}}</span></a>
     -> <a href="{{ url('/contents',$get_chapter_data->chapter_id) }}"><span>{{$get_chapter_data->chapter_title}}</span></a>
-    <div class="card mt-4">
+    <div class="card mt-4 addcontentform" hidden="true">
         <div class="card-body">
             <form action="{{ route('contentsStore',$get_chapter_data->chapter_id) }}" method="POST"
                 enctype="multipart/form-data">
@@ -92,6 +92,14 @@
     </div>
 </div>
 
+@if($message = Session::get('violation'))
+<div class="container mt-2">
+    <div class="card alert alert-danger" role="alert">
+        <p>{{$message}}<p>
+    </div>
+</div>
+@endif
+
 <div class="container">
     <div class="card mt-2">
         <div class="card-header text-center">
@@ -111,7 +119,7 @@
                 </div>
                 <div class="col-md-4">
                     <!-- // for other additional pages -->
-                    <!-- <button class="btn btn-outline-primary" id="addfacultybutton" style="float:right">ADD</button> -->
+                    <button class="btn btn-outline-primary" id="addcontentbutton" style="float:right">ADD</button>
                 </div>
             </div>
         </div>
@@ -120,7 +128,7 @@
                 <thead>
                     <tr>
                         <th scope="col">S.N</th>
-                        <th scope="col">Type</th>
+                        <th scope="col">Name</th>
                         <th scope="col">Audio</th>
                         <th scope="col">Action</th>
                     </tr>
@@ -132,6 +140,11 @@
                         <td>{{$key+1}}</td>
                         <td>{{$content_data->content_type}}</td>
                         <td>{{$content_data->content_title}}</td>
+                        <td>
+                            <a><button class="btn btn-primary">Edit</button></a>
+                            <a href="{{route('delcontentsDetails',$content_data->content_id)}}" onclick="return confirm('Are you sure?')" class="delete_user"><button
+                                    type="button" class="btn btn-danger ">Delete</button></a>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -140,7 +153,7 @@
     </div>
 </div>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     $(function () {
         $(document).ready(function () {
             var bar = $('.bar');
@@ -165,6 +178,11 @@
         });
     });
 
+</script> -->
+
+<script>
+        $("#addcontentbutton").click(function () {
+            $('.addcontentform').removeAttr("hidden");
+        });
+
 </script>
-
-

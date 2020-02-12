@@ -8,6 +8,8 @@ use App\Subject;
 use App\Chapter;
 use App\Faculty;
 use App\Level;
+use App\Content;
+
 use DB;
 use Illuminate\Support\Arr;
 
@@ -30,7 +32,6 @@ class ChaptersController extends Controller
         $level_title = Level::where('level_id', $level_id)->first();
 
         $get_subject_data_array = Chapter::where('subject_id', $subject_id)->get();
-
         $pluck_facultyid_subject=Arr::pluck($get_subject_data_level_id,['faculty_id']);
     
         $implode_facultyid_subject = implode(" ",$pluck_facultyid_subject);
@@ -74,7 +75,11 @@ class ChaptersController extends Controller
        
         $chapters = new Chapter;
         $chapters -> level_id = $implode_levelid_subject;
+
+        if($implode_semesterid_subject ==!null){
         $chapters -> semester_id = $implode_semesterid_subject;
+        }
+
         $chapters -> faculty_id = $implode_facultyid_subject;
         $chapters -> subject_id = $implode_subjectid_subject;
         $chapters -> chapter_title = $get_chapter;
@@ -111,9 +116,15 @@ class ChaptersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $chapter_id)
     {
-        //
+        $get_chapter= $request->input('chapter');
+       
+        $chapters = Chapter::find($chapter_id);
+
+        $chapters -> chapter_title = $get_chapter;
+        $chapters->save();
+        return redirect()->back();
     }
 
     /**
@@ -125,5 +136,22 @@ class ChaptersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function delchaptersDetails($id)
+    { 
+        if (Content::where('chapter_id', $id)->exists()) {
+            return redirect()->back()->with('violation', 'Cannot delete chapter: Contents exists');
+        }
+        else {
+        Chapter::find($id)->delete();
+        return redirect()->back();
+        }
+    }
+
+    public function editchaptersDetails($chapter_id)
+    {
+        $get_chapter_data = Chapter::where('chapter_id', $chapter_id)->first();
+        return view('editchapters')->with('get_chapter_data', $get_chapter_data);
     }
 }

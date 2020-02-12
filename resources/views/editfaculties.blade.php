@@ -6,8 +6,8 @@
     <h5> Edit Faculties: </h5>
     <br>
     <main class="page-content" style="font-family: Times New Roman, Times, serif;">
-        <form action=" " method="POST" enctype="mutipart/form-data">
-            {{ method_field('PUT') }}
+        <form action="{{ route('facultiesUpdate', $facultiesdetails->faculty_id)}}"method="POST" enctype="mutipart/form-data">
+        
             {{ csrf_field() }}
             <div class="row">
                <!-- for levels page -->
@@ -26,7 +26,7 @@
                 @if($implode_leveldetailstitle=="Bachelor")
                 <div class="col-md-4">
                     <span style="font-size:16px;">Add Faculty</span>
-                    <input type="text" name="faculty" value="" class="form-control"
+                    <input type="text" name="facultybachelor" value="{{$facultiesdetails_faculty->faculty_title}}"  class="form-control"
                         id="usr" style="width:182px;"><br>
                 </div>
 
@@ -150,7 +150,7 @@
                 @endif
 
                 <div class="col-md-4"><br>
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="submit" class="btn btn-primary" onclick="window.close(); window.opener.location.reload();">Update</button>
                 </div>
             </div>
         </form>

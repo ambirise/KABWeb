@@ -7,7 +7,7 @@
     <!-- -> <a href="{{ url('/semesters',$get_subject_data->faculty_id) }}"><span>Semesters</span></a> -->
     -> <a href="{{ url('/subjects',$get_subject_data->faculty_id) }}"><span>{{$get_faculty_data->faculty_title}}</span></a>
     -> <a href="{{ url('/chapters',$get_subject_data->subject_id) }}"><span>{{$get_subject_data->subject_title}}</span></a>
-    <div class="card mt-4">
+    <div class="card mt-4 addchapterform" hidden="true">
         <div class="card-body">
             <form action="{{route('chaptersStore',$get_subject_data->subject_id)}}" method="POST"
                 enctype="mutipart/form-data">
@@ -24,10 +24,17 @@
                     </div>
                 </div>
             </form>
-
         </div>
     </div>
 </div>
+
+@if($message = Session::get('violation'))
+<div class="container mt-2">
+    <div class="card alert alert-danger" role="alert">
+        <p>{{$message}}<p>
+    </div>
+</div>
+@endif
 
 <div class="container">
     <div class="card mt-2">
@@ -48,18 +55,17 @@
                 </div>
                 <div class="col-md-4">
                     <!-- // for other additional pages -->
-                    <!-- <button class="btn btn-outline-primary" id="addfacultybutton" style="float:right">ADD</button> -->
+                    <button class="btn btn-outline-primary" id="addchapterbutton" style="float:right">ADD</button>
                 </div>
             </div>
         </div>
         <div class="card-body">
-
-
             <table class="table mt-0 table-striped">
                 <thead>
                     <tr>
                         <th scope="col">S.N</th>
                         <th scope="col">Level Title</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,6 +74,13 @@
                         style="cursor:pointer;">
                         <td>{{$key+1}}</td>
                         <td>{{$subject_data->chapter_title}}</td>
+                        <td>
+                        <a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
+                                    onClick=window.open('/editchapters/{{$subject_data->chapter_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                                    <button class="btn btn-primary">Edit</button></a>
+                            <a href="{{route('delchaptersDetails',$subject_data->chapter_id)}}" onclick="return confirm('Are you sure?')" class="delete_user"><button
+                                    type="button" class="btn btn-danger ">Delete</button></a>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -76,5 +89,11 @@
     </div>
 </div>
 
+<script>
+        $("#addchapterbutton").click(function () {
+            $('.addchapterform').removeAttr("hidden");
+        });
+
+</script>
 
 @endsection
