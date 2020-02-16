@@ -11,7 +11,7 @@
         <div class="card-body">
             <form action="{{route('chaptersStore',$get_subject_data->subject_id)}}" method="POST"
                 enctype="mutipart/form-data">
-                @csrf
+            @csrf
                 <div class="row">
                     <div class="col-md-6">
                         <div class="col-md-4">
@@ -36,12 +36,20 @@
 </div>
 @endif
 
+@if($message = Session::get('searchnotfound'))
+        <div class="container mt-2">
+            <div class="alert alert-danger" role="alert">
+                <p>{{$message}}<p>
+            </div>
+        </div>
+@endif
+
 <div class="container">
     <div class="card mt-2">
         <div class="card-header text-center">
             <div class="row">
                 <div class="col-md-8">
-                    <form action="" method="POST" role="search">
+                    <form action="{{route('getchaptersSearch',$get_subject_data->subject_id)}}" method="POST" role="search">
                         {{ csrf_field() }}
                         <div class="input-group" class="columnpatient1">
                             <input type="text" class="form-control" name="q" placeholder="Search">

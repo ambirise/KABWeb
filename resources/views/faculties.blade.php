@@ -30,16 +30,16 @@
                         <select class="custom-select" name="facultyschool" style="height:38px;width:182px;"
                             id="customchange" required>
                             <option value="" selected>Select Level</option>
-                            <option value="1">Class One</option>
-                            <option value="2">Class Two</option>
-                            <option value="3">Class Three</option>
-                            <option value="4">Class Four</option>
-                            <option value="5">Class Five</option>
-                            <option value="6">Class Six</option>
-                            <option value="7">Class Seven</option>
-                            <option value="8">Class Eight</option>
-                            <option value="9">Class Nine</option>
-                            <option value="10">Class Ten</option>
+                            <option value="One">Class One</option>
+                            <option value="Two">Class Two</option>
+                            <option value="Three">Class Three</option>
+                            <option value="Four">Class Four</option>
+                            <option value="Five">Class Five</option>
+                            <option value="Six">Class Six</option>
+                            <option value="Seven">Class Seven</option>
+                            <option value="Eight">Class Eight</option>
+                            <option value="Nine">Class Nine</option>
+                            <option value="Ten">Class Ten</option>
                         </select>
                     </div>
                     @endif
@@ -51,20 +51,19 @@
                         <select class="custom-select" name="facultyschool" style="height:38px;width:182px;"
                             id="customchange" required>
                             <option value="" selected>Select Level</option>
-                            <option value="11">Eleven</option>
-                            <option value="12">Twelve</option>
+                            <option value="Eleven">Eleven</option>
+                            <option value="Twelve">Twelve</option>
                         </select>
                     </div>
                     @endif
 
                     @if($get_level_data->level_title=='Loksewa' || $get_level_data->level_title=='Others')
                     <div class="col-md-4">
-                        <span style="font-size:16px;">Faculty</span>
+                        <span style="font-size:16px;">Field</span>
                         <input type="text" name="facultybachelor" class="form-control" id="usr"
                             style="width:182px;"><br>
                     </div>
                     @endif
-
 
                     @if($get_level_data->level_title=='Bachelor')
                     <div class="col-md-4 hidefaculty">
@@ -216,13 +215,20 @@
     </div>
 </div>
 
-
 @if($message = Session::get('violation'))
 <div class="container mt-2">
     <div class="card alert alert-danger" role="alert">
         <p>{{$message}}<p>
     </div>
 </div>
+@endif
+
+@if($message = Session::get('searchnotfound'))
+        <div class="container mt-2">
+            <div class="alert alert-danger" role="alert">
+                <p>{{$message}}<p>
+            </div>
+        </div>
 @endif
 
 <div class="container">
@@ -243,9 +249,12 @@
                         </div>
                     </form>
                 </div>
+
+                @if(($get_level_data->level_id == "3" || $get_level_data->level_id == "5" || $get_level_data->level_id == "6"))
                 <div class="col-md-4">
                     <button class="btn btn-outline-primary" id="addfacultybutton" style="float:right">ADD</button>
                 </div>
+                @endif
             </div>
             <div class="card-body">
                 <table class="table mt-0 table-striped">
@@ -259,7 +268,7 @@
                             <th scope="col">Class</th>
                             @endif
                             @if(($get_level_data->level_id == "4"))
-                            <th scope="col">10+2 Class</th>
+                            <th scope="col">Class</th>
                             @endif
                             @if(($get_level_data->level_id == "5"))
                             <th scope="col">Field</th>
@@ -767,7 +776,5 @@
         });
 
     </script>
-
-
 
     @endsection

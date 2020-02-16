@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Content;
 use App\Faculty;
 use App\Level;
 use App\Semester;
 use App\Subject;
-
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -73,7 +71,6 @@ class FacultiesController extends Controller
             $numberofsemester = $request->input('numberofsemester');
         }
 
-
         $faculties = new Faculty;
 
         $faculties->level_id = $levelid;
@@ -134,7 +131,7 @@ class FacultiesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$faculty_id)
+    public function update(Request $request, $faculty_id)
     {
         if ($request->input('facultybachelor') == null) {
             $faculty = $request->input('facultyschool');
@@ -145,7 +142,7 @@ class FacultiesController extends Controller
             $numberofsemester = $request->input('numberofsemester');
         }
 
-        $id=$faculty_id;
+        $id = $faculty_id;
 
         $faculties = Faculty::find($id);
 
@@ -160,9 +157,9 @@ class FacultiesController extends Controller
         //find semester id
         $find_semester_id = Semester::where('faculty_id', $faculty_id)->get();
 
-        $pluck_semester_id=Arr::pluck($find_semester_id,['semester_id']);
-        $implode_semester_id = implode(" ",$pluck_semester_id);
-        $semester_id=$implode_semester_id;
+        $pluck_semester_id = Arr::pluck($find_semester_id, ['semester_id']);
+        $implode_semester_id = implode(" ", $pluck_semester_id);
+        $semester_id = $implode_semester_id;
 
         // Get data for inserting into the semester
         $level_id_semester = $faculties->level_id;
@@ -170,7 +167,7 @@ class FacultiesController extends Controller
 
         //For inserting into semester
         $semesters = Semester::find($semester_id);
-       
+
         if ($request->input('facultybachelor') == !null) {
             $semesters->level_id = $level_id_semester;
             $semesters->faculty_id = $faculty_id_semester;
@@ -236,63 +233,39 @@ class FacultiesController extends Controller
 
     public function getfacultiesSearch(Request $request, $level_id)
     {
-        
+        $get_level_data = Level::where('level_id', $level_id)->first();
 
-        if ($level_id == 3) {
-            $get_level_data = Level::where('level_id', $level_id)->first();
-
-            $get_data = Level::all()->map->only(['level_id']);
-            $get_school = $get_data[0]['level_id']; // get School String
-            $get_bachelor = $get_data[1]['level_id']; // get Bachelor String
-            $get_10plus2 = $get_data[2]['level_id']; // get 10+2 String
-            $get_loksewa = $get_data[3]['level_id']; // get Loksewa String
-            $query = $request->input('q');
-            if ($query != '') {
-                $get_faculty_data = DB::table('faculties')->where('faculty_title', 'like', '%' . $query . '%')->get();
-            } else {
-                $get_faculty_data = DB::table('faculties')
-                    ->orderBy('faculty_title', 'desc')
-                    ->get();
+        $get_data = Level::all()->map->only(['level_id']);
+        $get_school = $get_data[0]['level_id']; // get School String
+        $get_bachelor = $get_data[1]['level_id']; // get Bachelor String
+        $get_10plus2 = $get_data[2]['level_id']; // get 10+2 String
+        $get_loksewa = $get_data[3]['level_id']; // get Loksewa String
+        $query = $request->input('q');
+        if ($query != '') {
+            $get_faculty_data = DB::table('faculties')->where('faculty_title', 'like', '%' . $query . '%')
+                ->where('level_id', '=', $level_id)->get();
+            if ($get_faculty_data->count() == 0) {
+                return redirect()->back()->with('searchnotfound', 'Sorry the search item doesnot exist');
             }
-
-            return view('faculties')->with('get_faculty_data', $get_faculty_data)
-                ->with('get_school', $get_school)->with('get_bachelor', $get_bachelor)
-                ->with('get_10plus2', $get_10plus2)->with('get_loksewa', $get_loksewa)
-                ->with('get_level_data', $get_level_data)->with('level_id', $level_id);
+        } else {
+            $get_faculty_data = DB::table('faculties')->where('level_id', '=', $level_id)
+                ->get();
         }
-        if ($level_id == 1) {
-            $get_level_data = Level::where('level_id', $level_id)->first();
+        return view('faculties')->with('get_faculty_data', $get_faculty_data)
+            ->with('get_school', $get_school)->with('get_bachelor', $get_bachelor)
+            ->with('get_10plus2', $get_10plus2)->with('get_loksewa', $get_loksewa)
+            ->with('get_level_data', $get_level_data)->with('level_id', $level_id);
 
-            $get_data = Level::all()->map->only(['level_id']);
-            $get_school = $get_data[0]['level_id']; // get School String
-            $get_bachelor = $get_data[1]['level_id']; // get Bachelor String
-            $get_10plus2 = $get_data[2]['level_id']; // get 10+2 String
-            $get_loksewa = $get_data[3]['level_id']; // get Loksewa String
-            $query = $request->input('q');
-            if ($query != '') {
-                $get_faculty_data = DB::table('faculties')->where('faculty_title', 'like', '%' . $query . '%')->get();
-            } else {
-                $get_faculty_data = DB::table('faculties')
-                    ->orderBy('faculty_title', 'desc')
-                    ->get();
-            }
-
-            return view('faculties')->with('get_faculty_data', $get_faculty_data)
-                ->with('get_school', $get_school)->with('get_bachelor', $get_bachelor)
-                ->with('get_10plus2', $get_10plus2)->with('get_loksewa', $get_loksewa)
-                ->with('get_level_data', $get_level_data)->with('level_id', $level_id);
-        }
     }
 
     public function delfacultiesDetails($id)
-    { 
+    {
         if (Subject::where('faculty_id', $id)->exists()) {
             return redirect()->back()->with('violation', 'Cannot delete faculty: Subjects exists');
-        }
-        else {
-        DB::table('semesters')->where('faculty_id','=', $id)->delete();
-        Faculty::find($id)->delete();
-        return redirect()->back();
+        } else {
+            DB::table('semesters')->where('faculty_id', '=', $id)->delete();
+            Faculty::find($id)->delete();
+            return redirect()->back();
         }
     }
 

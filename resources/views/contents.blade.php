@@ -1,8 +1,7 @@
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <!-- for logo -->
-        <!-- <a class="navbar-brand" href="#"><input type="image" id="myimage" src="{{ asset('/backend/images/logo.jpeg') }}"
-                height="40" width="80" /></a> -->
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color:#316698;">
+        <!-- for logo -->
+        <a class="navbar-brand" href="#"><input type="image" id="myimage" src="{{ asset('/backend/images/logo.jpeg') }}"
+                height="40" width="80" /></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -10,8 +9,12 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto" style="font-size:20px;">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ url('/levels') }}">Levels</a>
+
+                <li class="ml-2 nav-item active" >
+                    <a class="nav-link border p-1" style="color:white;" href="{{ url('/home') }}">Home</a>
+                </li>
+                <li class="ml-2 nav-item active">
+                    <a class="nav-link border p-1" style="color:white;" href="{{ url('/levels') }}">Levels</a>
                 </li>
                 <!-- <li class="nav-item active">
                     <a class="nav-link" href="{{ url('faculties') }}">Faculties</a>
@@ -23,10 +26,11 @@
                     <a class="nav-link active" href="{{ url('/subjects') }}">Subjects</a>
                 </li> -->
             </ul>
-            <form class="form-inline my-2 my-lg-0">
+            <form class="form-inline my-2 ml-2 my-lg-0">
                 <a style="float:right;color:white;text-decoration:none;" class="mt-2" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();"><span style="font-size:20px;color:white;"><u>Logout</u></span></a>
+                                                     document.getElementById('logout-form').submit();"><span
+                        style="font-size:20px;" class="border p-1">Logout</span></a>
             </form>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
@@ -58,6 +62,7 @@
     }
 
 </style>
+
 
 <br>
 <div class="container">
@@ -100,12 +105,20 @@
 </div>
 @endif
 
+@if($message = Session::get('searchnotfound'))
+        <div class="container mt-2">
+            <div class="alert alert-danger" role="alert">
+                <p>{{$message}}<p>
+            </div>
+        </div>
+@endif
+
 <div class="container">
     <div class="card mt-2">
         <div class="card-header text-center">
             <div class="row">
                 <div class="col-md-8">
-                    <form action="" method="POST" role="search">
+                    <form action="{{route('getcontentsSearch',$get_chapter_data->chapter_id)}}" method="POST" role="search">
                         {{ csrf_field() }}
                         <div class="input-group" class="columnpatient1">
                             <input type="text" class="form-control" name="q" placeholder="Search">

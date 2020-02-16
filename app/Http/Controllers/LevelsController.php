@@ -92,12 +92,15 @@ class LevelsController extends Controller
         $query = $request->input('q');
         if ($query != '') {
             $get_level_data = DB::table('levels')->where('level_title', 'like', '%' . $query . '%')->get();
+            if($get_level_data->count() == 0){
+                return redirect()->back()->with('searchnotfound', 'Sorry the search item doesnot exist');
+            }
         } else {
             $get_level_data = DB::table('levels')
                 ->orderBy('level_title', 'desc')
                 ->get();
         }
-
+       
         return view('levels')->with('get_level_data', $get_level_data);
     }
 }

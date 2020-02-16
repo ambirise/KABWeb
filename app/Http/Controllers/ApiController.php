@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\LevelsResource;
+use App\Level;
 use App\User;
 use Auth;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use DB;
 
 class ApiController extends Controller
 {
@@ -335,17 +337,90 @@ class ApiController extends Controller
     //         return $this->prepareResult(false, [], "unauthorized","You are not authenticated to delete this todo");
     //     }
     // }
-    
+
     public function getTestApi()
     {
         $get_content_data_array = DB::table('contents')->get();
         return $get_content_data_array;
     }
 
-    public function getlevelApi()
+    public function getlevelApi(): LevelsResource
     {
         $get_content_data_array = DB::table('levels')->get();
+        return new LevelsResource($get_content_data_array, 200);
+    }
+
+    public function getfacultyApi($id)
+    {
+        $get_faculty_data_array = DB::table('faculties')->where('level_id', $id)->get();
+        return $get_faculty_data_array;
+    }
+
+    public function getsemesterApi($id)
+    {
+        $get_semester_data_array = DB::table('semesters')->where('faculty_id', $id)->get();
+        return $get_semester_data_array;
+    }
+
+    public function getsubjectApi($id)
+    {
+        $get_subject_data_array = DB::table('subjects')->where('faculty_id', $id)->get();
+        return $get_subject_data_array;
+    }
+
+    public function getchapterApi($id)
+    {
+        $get_chapter_data_array = DB::table('chapters')->where('subject_id', $id)->get();
+        return $get_chapter_data_array;
+    }
+
+    public function getcontentApi($id)
+    {
+        $get_content_data_array = DB::table('contents')->where('chapter_id', $id)->get();
         return $get_content_data_array;
     }
 
+    public function search_faculties($query)
+    {
+        if ($query != '') {
+            $get_faculty_data = DB::table('faculties')->where('faculty_title', 'like', '%' . $query . '%')->get();
+        } else {
+            $get_faculty_data = DB::table('faculties')
+                ->get();
+        }
+        return $get_faculty_data;
+    }
+
+    public function search_subjects($query)
+    {
+        if ($query != '') {
+            $get_subject_data = DB::table('subjects')->where('subject_title', 'like', '%' . $query . '%')->get();
+        } else {
+            $get_subject_data = DB::table('subjects')
+                ->get();
+        }
+        return $get_subject_data;
+    }
+
+    public function search_chapters($query)
+    {
+        if ($query != '') {
+            $get_chapter_data = DB::table('chapters')->where('chapter_title', 'like', '%' . $query . '%')->get();
+        } else {
+            $get_chapter_data = DB::table('chapters')
+                ->get();
+        }
+        return $get_chapter_data;
+    }
+
+    public function search_contents($query)
+    {
+        if ($query != '') {
+            $get_content_data = DB::table('contents')->where('content_type', 'like', '%' . $query . '%')->get();
+        } else {
+            $get_content_data = DB::table('contents')
+                ->get();
+        }
+        return $get_content_data;
+    }
 }

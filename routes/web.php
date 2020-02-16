@@ -45,6 +45,11 @@ Route::get('delchaptersdetails/{Chapter}/delete',['uses'=>'ChaptersController@de
 Route::get('delcontentsdetails/{Content}/delete',['uses'=>'ContentsController@delcontentsDetails','as'=>'delcontentsDetails']);
 
 Route::any('/searchfaculties/{Level}',['uses'=>'FacultiesController@getfacultiesSearch','as'=>'getfacultiesSearch']);
+Route::any('/searchsubjects/{Faculty}',['uses'=>'SubjectsController@getsubjectsSearch','as'=>'getsubjectsSearch']);
+Route::any('/searchchapters/{Subjects}',['uses'=>'ChaptersController@getchaptersSearch','as'=>'getchaptersSearch']);
+Route::any('/searchcontents/{Chapters}',['uses'=>'ContentsController@getcontentsSearch','as'=>'getcontentsSearch']);
+Route::any('/searchall',['uses'=>'HomeController@getallSearch','as'=>'getallSearch']);
+
 Route::any('/searchlevels',['uses'=>'LevelsController@getlevelsSearch','as'=>'getlevelsSearch']);
 
 Route::get('/live_search/faculties', 'FacultiesController@action')->name('live_search.action');

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Chapter;
 use App\Faculty;
+use App\Level;
 use App\Semester;
 use App\Subject;
-use App\Level;
-use App\Chapter;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -21,8 +21,12 @@ class SubjectsController extends Controller
 
     public function index(Request $request, $faculty_id)
     {
-        $get_semester_data = Semester::where('faculty_id', $faculty_id)->first();
-       
+        if (Semester::where('faculty_id', $faculty_id)->first() == null) {
+            $get_semester_data = Faculty::where('faculty_id', $faculty_id)->first();
+        } else {
+            $get_semester_data = Semester::where('faculty_id', $faculty_id)->first();
+        }
+
         $get_faculty_data = Faculty::where('faculty_id', $faculty_id)->first();
 
         $get_faculty_data_level_title = Faculty::where('faculty_id', $faculty_id)->get();
@@ -182,9 +186,8 @@ class SubjectsController extends Controller
 
         $get_subject = $request->input('subject');
 
-      
         $subjects = Subject::find($subject_id);
-      
+
         $subjects->subject_title = $get_subject;
         $subjects->save();
         return redirect()->back();
@@ -209,20 +212,60 @@ class SubjectsController extends Controller
 
         $get_semester_data = Semester::where('semester_id', $semester_id)->first();
         $get_subject_data = Subject::where('subject_id', $subject_id)->first();
-        
-    
+
         return view('editsubjects')->with('get_semester_data', $get_semester_data)
-        ->with('get_subject_data', $get_subject_data);
+            ->with('get_subject_data', $get_subject_data);
     }
 
     public function delsubjectsDetails($id)
-    { 
+    {
         if (Chapter::where('subject_id', $id)->exists()) {
             return redirect()->back()->with('violation', 'Cannot delete faculty: Chapters exists');
+        } else {
+            Subject::find($id)->delete();
+            return redirect()->back();
         }
-        else {
-        Subject::find($id)->delete();
-        return redirect()->back();
-        }
+    }
+
+    public function getsubjectsSearch(Request $request, $faculty_id)
+    {
+        $get_faculty_data_array = Faculty::where('faculty_id', $faculty_id)->get();
+        $pluck_levelid_faculty = Arr::pluck($get_faculty_data_array, ['level_id']);
+        $level_id = implode(" ", $pluck_levelid_faculty);
+
+
+            if (Semester::where('faculty_id', $faculty_id)->first() == null) {
+                $get_semester_data = Faculty::where('faculty_id', $faculty_id)->first();
+            } else {
+                $get_semester_data = Semester::where('faculty_id', $faculty_id)->first();
+            }
+
+            $get_faculty_data = Faculty::where('faculty_id', $faculty_id)->first();
+
+            $get_faculty_data_level_title = Faculty::where('faculty_id', $faculty_id)->get();
+
+            $get_semester_data_array = Semester::where('faculty_id', $faculty_id)->get();
+            $pluck_semesterid_semester = Arr::pluck($get_semester_data_array, ['semester_id']);
+            $semester_id = implode(" ", $pluck_semesterid_semester);
+
+            $get_subject_data = DB::table('subjects')->where('faculty_id', $faculty_id)->get();
+            $pluck_level_id = Arr::pluck($get_faculty_data_level_title, ['level_id']);
+            $level_id = implode(" ", $pluck_level_id);
+            $level_title = Level::where('level_id', $level_id)->first();
+
+            $query = $request->input('q');
+            if ($query != '') {
+                $get_subject_data = DB::table('subjects')->where('subject_title', 'like', '%' . $query . '%')->where('faculty_id',"=",$faculty_id)->get();
+                if($get_subject_data->count() == 0){
+                    return redirect()->back()->with('searchnotfound', 'Sorry the search item doesnot exist');
+                }
+            } else {
+                $get_subject_data = DB::table('subjects')->where('faculty_id',"=",$faculty_id)
+                    ->get();
+            }
+
+            return view('subjects')->with('get_semester_data', $get_semester_data)
+            ->with('get_subject_data', $get_subject_data)->with('get_faculty_data', $get_faculty_data)
+            ->with('level_title', $level_title);
     }
 }
