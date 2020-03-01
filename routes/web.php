@@ -19,14 +19,20 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::prefix('student')->group(function(){
+Route::get('/','AdminController@index')->name('admin.dashboard');
+Route::get('/login','Auth\AdminLoginController@showLoginForm')->name('admin.login');
+Route::post('/login','Auth\AdminLoginController@login')->name('admin.login.submit');
+});
+
 Route::get('/faculties/{Level}', ['uses'=>'FacultiesController@index','as'=>'getfacultiesIndex']);
 Route::post('faculties',['uses'=>'FacultiesController@store','as'=>'facultiesStore']);
-
 
 // Route::get('/semesters/{Faculty}', ['uses'=>'SemestersController@index','as'=>'getsemestersIndex']);
 Route::get('/subjects/{Semester}', ['uses'=>'SubjectsController@index','as'=>'getsubjectsIndex']);
 Route::get('/chapters/{Subject}', ['uses'=>'ChaptersController@index','as'=>'getchaptersIndex']);
 Route::get('/contents/{Chapter}', ['uses'=>'ContentsController@index','as'=>'getcontentsIndex']);
+
 Route::get('/getcontent/{Content}', ['uses'=>'ShowcontentController@index','as'=>'getcontentShow']);
 
 // Route::post('semesters/{Faculty}',['uses'=>'SemestersController@store','as'=>'semestersStore']);
@@ -51,7 +57,6 @@ Route::any('/searchcontents/{Chapters}',['uses'=>'ContentsController@getcontents
 Route::any('/searchall',['uses'=>'HomeController@getallSearch','as'=>'getallSearch']);
 
 Route::any('/searchlevels',['uses'=>'LevelsController@getlevelsSearch','as'=>'getlevelsSearch']);
-
 Route::get('/live_search/faculties', 'FacultiesController@action')->name('live_search.action');
 
 Route::get('editfaculties/{Faculties}/edit',['uses'=>'FacultiesController@editfacultiesDetails','as'=>'editfacultiesDetails']);

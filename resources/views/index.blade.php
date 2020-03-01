@@ -16,39 +16,58 @@
         <div class="card-header text-center">
             <div class="row">
                 <div class="col-md-8">
-                  
+                <form action="{{ route('getallSearch')}}" method="POST"
+                        role="search">
+                        {{ csrf_field() }}
+                        <div class="input-group" class="columnpatient1">
+                            <input type="text" class="form-control" name="q" placeholder="Search">
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-secondary">
+                                    Search
+                                </button>
+                            </span>
+                        </div>
+                    </form>
                 </div>
-                
             </div>
         </div>
         <div class="card-body">
             <table class="table mt-0 table-striped">
                 <thead>
                     <tr>
-                        <th scope="col" style="width:20%">S.N</th>
-                        <th scope="col" style="width:30%">Name</th>
-                        <th scope="col" style="width:30%">Audio</th>
-                        <th scope="col" style="width:20%">Action</th>
+                        <th scope="col" style="width:10%">S.N</th>
+                        <th scope="col" style="width:40%">Search Results</th>
+                        <th scope="col" style="width:50%"></th>
+                     
                     </tr>
                 </thead>
                 <tbody>
-
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <a><button class="btn btn-primary">Edit</button></a>
-                            <a href="" class="delete_user"><button type="button"
-                                    class="btn btn-danger ">Delete</button></a>
-                        </td>
+         
+                @if(isset($data))
+                @foreach($data as $key=>$get_search_data)
+                    @if(isset($get_search_data->subject_title))
+                    <tr onclick="window.location = '{{route('getchaptersIndex',$get_search_data->subject_id)}}'"
+                        style="cursor:pointer;">
+                    @else
+                    <tr onclick="window.location = '{{route('getsubjectsIndex',$get_search_data->faculty_id)}}'"
+                        style="cursor:pointer;">
+                    @endif
+                    
+                        <td>{{$key+1}}</td>
+                        @if(@isset($get_search_data->subject_title))
+                        <td>{{$get_search_data->subject_title}}</td>
+                        <td>{{$get_search_data->level_title}}/{{$get_search_data->faculty_title}}</td>
+                        @else
+                        <td>{{$get_search_data->faculty_title}}</td>
+                        <td>{{$get_search_data->level_title}}</td>
+                         @endif
                     </tr>
-
+                @endforeach
+                @endif
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-
 
 @endsection

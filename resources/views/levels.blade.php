@@ -15,7 +15,7 @@
         @endif
 
         <div class="card mt-2">
-            <!-- <div class="card-header text-center">
+            <div class="card-header text-center">
                 <div class="row">
                     <div class="col-md-8">
                         <form action="{{ route('getlevelsSearch')}}" method="POST" role="search">
@@ -34,7 +34,7 @@
 
                     </div>
                 </div>
-            </div> -->
+            </div>
             <div class="card-body">
 
                 <table class="table mt-0 table-striped">

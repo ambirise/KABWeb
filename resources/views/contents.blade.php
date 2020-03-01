@@ -10,7 +10,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto" style="font-size:20px;">
 
-                <li class="ml-2 nav-item active" >
+                <li class="ml-2 nav-item active">
                     <a class="nav-link border p-1" style="color:white;" href="{{ url('/home') }}">Home</a>
                 </li>
                 <li class="ml-2 nav-item active">
@@ -151,7 +151,7 @@
                     <tr onclick="window.location = '{{route('getcontentShow',$content_data->content_id)}}'"
                         style="cursor:pointer;">
                         <td>{{$key+1}}</td>
-                        <td>{{$content_data->content_type}}</td>
+                        <td>{{$content_data->content_name}}</td>
                         <td>{{$content_data->content_title}}</td>
                         <td>
                             <a><button class="btn btn-primary">Edit</button></a>

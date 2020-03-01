@@ -224,11 +224,11 @@
 @endif
 
 @if($message = Session::get('searchnotfound'))
-        <div class="container mt-2">
-            <div class="alert alert-danger" role="alert">
-                <p>{{$message}}<p>
-            </div>
-        </div>
+<div class="container mt-2">
+    <div class="alert alert-danger" role="alert">
+        <p>{{$message}}<p>
+    </div>
+</div>
 @endif
 
 <div class="container">
@@ -250,355 +250,355 @@
                     </form>
                 </div>
 
-                @if(($get_level_data->level_id == "3" || $get_level_data->level_id == "5" || $get_level_data->level_id == "6"))
+                @if(($get_level_data->level_id == "3" || $get_level_data->level_id == "5" || $get_level_data->level_id
+                == "6"))
                 <div class="col-md-4">
                     <button class="btn btn-outline-primary" id="addfacultybutton" style="float:right">ADD</button>
                 </div>
                 @endif
             </div>
-            <div class="card-body">
-                <table class="table mt-0 table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">S.N</th>
-                            @if(($get_level_data->level_id == "3"))
-                            <th scope="col">Faculty</th>
-                            @endif
-                            @if(($get_level_data->level_id == "1"))
-                            <th scope="col">Class</th>
-                            @endif
-                            @if(($get_level_data->level_id == "4"))
-                            <th scope="col">Class</th>
-                            @endif
-                            @if(($get_level_data->level_id == "5"))
-                            <th scope="col">Field</th>
-                            @endif
-                            @if(($get_level_data->level_id == "6"))
-                            <th scope="col">Field</th>
-                            @endif
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        <!-- For main if condition -->
+        </div>
+        <div class="card-body">
+            <table class="table mt-0 table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">S.N</th>
                         @if(($get_level_data->level_id == "3"))
-                        @if(isset($details))
-                        @php
-                        $i=0;
-                        @endphp
-                        @foreach($get_faculty_data->where('level_id', 3) as $faculty_data)
-                        @php
-                        $i++;
-                        @endphp
-                        <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
-                            style="cursor:pointer;">
-                            <th scope="row" >{{$i}}</th>
-                            <td >{{$faculty_data->faculty_title}}</td>
-                            <!-- {{ route('editfacultiesDetails', $faculty_data->faculty_id)}} -->
-                            <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                    onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
-                                    <button class="btn btn-primary">Edit</button></a>
-                                <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
-                                    onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
-                                        class="btn btn-danger ">Delete</button></a>
-                            </td>
-                            @if($get_faculty_data->isEmpty())
-                            this is home
-                            @endif
-                        </tr>
-
-                        @endforeach
-
-                        @else
-                        @php
-                        $i=0;
-                        @endphp
-                        @foreach($get_faculty_data->where('level_id', 3) as $faculty_data)
-                        @php
-                        $i++;
-                        @endphp
-                        <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
-                            style="cursor:pointer;">
-                            <th scope="row"  >{{$i}}</th>
-                            <td>{{$faculty_data->faculty_title}}</td>
-                            <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                    onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
-                                    <button class="btn btn-primary">Edit</button></a>
-                                <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
-                                    onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
-                                        class="btn btn-danger ">Delete</button></a>
-                            </td>
-                        </tr>
-
-                        @endforeach
+                        <th scope="col">Faculty</th>
                         @endif
-
+                        @if(($get_level_data->level_id == "1"))
+                        <th scope="col">Class</th>
                         @endif
-
-
-                        <!-- End of main if condition -->
-
-                        <!-- For second main if condition -->
-                        @if($get_level_data->level_id == "1")
-                        @if(isset($details))
-                        @php
-                        $i=0;
-                        @endphp
-                        @foreach($get_faculty_data->where('level_id', 1) as $faculty_data)
-                        @php
-                        $i++;
-                        @endphp
-                        <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
-                            style="cursor:pointer;">
-                            <th scope="row">{{$i}}</th>
-                            <td>{{$faculty_data->faculty_title}}</td>
-                            <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                    onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
-                                    <button class="btn btn-primary">Edit</button></a>
-                                <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
-                                    onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
-                                        class="btn btn-danger ">Delete</button></a>
-                            </td>
-                            @if($get_faculty_data->isEmpty())
-                            this is home
-                            @endif
-                        </tr>
-
-                        @endforeach
-
-                        @else
-                        @php
-                        $i=0;
-                        @endphp
-                        @foreach($get_faculty_data->where('level_id', 1) as $faculty_data)
-                        @php
-                        $i++;
-                        @endphp
-                        <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
-                            style="cursor:pointer;">
-                            <th scope="row">{{$i}}</th>
-                            <td>{{$faculty_data->faculty_title}}</td>
-                            <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                    onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
-                                    <button class="btn btn-primary">Edit</button></a>
-                                <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
-                                    onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
-                                        class="btn btn-danger ">Delete</button></a>
-                            </td>
-
-                        </tr>
-
-                        @endforeach
+                        @if(($get_level_data->level_id == "4"))
+                        <th scope="col">Class</th>
                         @endif
-
+                        @if(($get_level_data->level_id == "5"))
+                        <th scope="col">Field</th>
                         @endif
-                        <!-- End of main if condition -->
-
-                        <!-- For third main if condition -->
-                        @if($get_level_data->level_id == "4")
-                        @if(isset($details))
-                        @php
-                        $i=0;
-                        @endphp
-                        @foreach($get_faculty_data->where('level_id', 4) as $faculty_data)
-                        @php
-                        $i++;
-                        @endphp
-                        <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
-                            style="cursor:pointer;">
-                            <th scope="row">{{$i}}</th>
-                            <td>{{$faculty_data->faculty_title}}</td>
-                            <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                    onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
-                                    <button class="btn btn-primary">Edit</button></a>
-                                <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
-                                    onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
-                                        class="btn btn-danger ">Delete</button></a>
-                            </td>
-                            @if($get_faculty_data->isEmpty())
-                            this is home
-                            @endif
-                        </tr>
-
-                        @endforeach
-
-                        @else
-                        @php
-                        $i=0;
-                        @endphp
-                        @foreach($get_faculty_data->where('level_id', 4) as $faculty_data)
-                        @php
-                        $i++;
-                        @endphp
-                        <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
-                            style="cursor:pointer;">
-                            <th scope="row">{{$i}}</th>
-                            <td>{{$faculty_data->faculty_title}}</td>
-                            <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                    onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
-                                    <button class="btn btn-primary">Edit</button></a>
-                                <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
-                                    onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
-                                        class="btn btn-danger ">Delete</button></a>
-                            </td>
-
-                        </tr>
-
-                        @endforeach
+                        @if(($get_level_data->level_id == "6"))
+                        <th scope="col">Field</th>
                         @endif
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
 
+                    <!-- For main if condition -->
+                    @if(($get_level_data->level_id == "3"))
+                    @if(isset($details))
+                    @php
+                    $i=0;
+                    @endphp
+                    @foreach($get_faculty_data->where('level_id', 3) as $faculty_data)
+                    @php
+                    $i++;
+                    @endphp
+                    <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
+                        style="cursor:pointer;">
+                        <th scope="row">{{$i}}</th>
+                        <td>{{$faculty_data->faculty_title}}</td>
+                        <!-- {{ route('editfacultiesDetails', $faculty_data->faculty_id)}} -->
+                        <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
+                                onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                                <button class="btn btn-primary">Edit</button></a>
+                            <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
+                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                    class="btn btn-danger ">Delete</button></a>
+                        </td>
+                        @if($get_faculty_data->isEmpty())
+                        this is home
                         @endif
-                        <!-- End of main if condition -->
+                    </tr>
 
-                        <!-- For fourth main if condition -->
-                        @if($get_level_data->level_id == "5")
-                        @if(isset($details))
-                        @php
-                        $i=0;
-                        @endphp
-                        @foreach($get_faculty_data->where('level_id', 5) as $faculty_data)
-                        @php
-                        $i++;
-                        @endphp
-                        <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
-                            style="cursor:pointer;">
-                            <th scope="row">{{$i}}</th>
-                            <td>{{$faculty_data->faculty_title}}</td>
-                            <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                    onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
-                                    <button class="btn btn-primary">Edit</button></a>
-                                <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
-                                    onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
-                                        class="btn btn-danger ">Delete</button></a>
-                            </td>
-                            @if($get_faculty_data->isEmpty())
-                            this is home
-                            @endif
-                        </tr>
+                    @endforeach
 
-                        @endforeach
+                    @else
+                    @php
+                    $i=0;
+                    @endphp
+                    @foreach($get_faculty_data->where('level_id', 3) as $faculty_data)
+                    @php
+                    $i++;
+                    @endphp
+                    <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
+                        style="cursor:pointer;">
+                        <th scope="row">{{$i}}</th>
+                        <td>{{$faculty_data->faculty_title}}</td>
+                        <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
+                                onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                                <button class="btn btn-primary">Edit</button></a>
+                            <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
+                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                    class="btn btn-danger ">Delete</button></a>
+                        </td>
+                    </tr>
 
-                        @else
-                        @php
-                        $i=0;
-                        @endphp
-                        @foreach($get_faculty_data->where('level_id', 5) as $faculty_data)
-                        @php
-                        $i++;
-                        @endphp
-                        <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
-                            style="cursor:pointer;">
-                            <th scope="row">{{$i}}</th>
-                            <td>{{$faculty_data->faculty_title}}</td>
-                            <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                    onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
-                                    <button class="btn btn-primary">Edit</button></a>
-                                <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
-                                    onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
-                                        class="btn btn-danger ">Delete</button></a>
-                            </td>
+                    @endforeach
+                    @endif
 
-                        </tr>
+                    @endif
 
-                        @endforeach
+
+                    <!-- End of main if condition -->
+
+                    <!-- For second main if condition -->
+                    @if($get_level_data->level_id == "1")
+                    @if(isset($details))
+                    @php
+                    $i=0;
+                    @endphp
+                    @foreach($get_faculty_data->where('level_id', 1) as $faculty_data)
+                    @php
+                    $i++;
+                    @endphp
+                    <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
+                        style="cursor:pointer;">
+                        <th scope="row">{{$i}}</th>
+                        <td>{{$faculty_data->faculty_title}}</td>
+                        <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
+                                onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                                <button class="btn btn-primary">Edit</button></a>
+                            <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
+                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                    class="btn btn-danger ">Delete</button></a>
+                        </td>
+                        @if($get_faculty_data->isEmpty())
+                        this is home
                         @endif
+                    </tr>
 
+                    @endforeach
+
+                    @else
+                    @php
+                    $i=0;
+                    @endphp
+                    @foreach($get_faculty_data->where('level_id', 1) as $faculty_data)
+                    @php
+                    $i++;
+                    @endphp
+                    <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
+                        style="cursor:pointer;">
+                        <th scope="row">{{$i}}</th>
+                        <td>{{$faculty_data->faculty_title}}</td>
+                        <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
+                                onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                                <button class="btn btn-primary">Edit</button></a>
+                            <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
+                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                    class="btn btn-danger ">Delete</button></a>
+                        </td>
+
+                    </tr>
+
+                    @endforeach
+                    @endif
+
+                    @endif
+                    <!-- End of main if condition -->
+
+                    <!-- For third main if condition -->
+                    @if($get_level_data->level_id == "4")
+                    @if(isset($details))
+                    @php
+                    $i=0;
+                    @endphp
+                    @foreach($get_faculty_data->where('level_id', 4) as $faculty_data)
+                    @php
+                    $i++;
+                    @endphp
+                    <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
+                        style="cursor:pointer;">
+                        <th scope="row">{{$i}}</th>
+                        <td>{{$faculty_data->faculty_title}}</td>
+                        <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
+                                onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                                <button class="btn btn-primary">Edit</button></a>
+                            <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
+                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                    class="btn btn-danger ">Delete</button></a>
+                        </td>
+                        @if($get_faculty_data->isEmpty())
+                        this is home
                         @endif
-                        <!-- End of main if condition -->
+                    </tr>
 
-                        <!-- For fifth main if condition -->
-                        @if($get_level_data->level_id == "6")
-                        @if(isset($details))
-                        @php
-                        $i=0;
-                        @endphp
-                        @foreach($get_faculty_data->where('level_id', 6) as $faculty_data)
-                        @php
-                        $i++;
-                        @endphp
-                        <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
-                            style="cursor:pointer;">
-                            <th scope="row">{{$i}}</th>
-                            <td>{{$faculty_data->faculty_title}}</td>
-                            <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                    onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
-                                    <button class="btn btn-primary">Edit</button></a>
-                                <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
-                                    onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
-                                        class="btn btn-danger ">Delete</button></a>
-                            </td>
-                            @if($get_faculty_data->isEmpty())
-                            this is home
-                            @endif
-                        </tr>
+                    @endforeach
 
-                        @endforeach
+                    @else
+                    @php
+                    $i=0;
+                    @endphp
+                    @foreach($get_faculty_data->where('level_id', 4) as $faculty_data)
+                    @php
+                    $i++;
+                    @endphp
+                    <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
+                        style="cursor:pointer;">
+                        <th scope="row">{{$i}}</th>
+                        <td>{{$faculty_data->faculty_title}}</td>
+                        <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
+                                onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                                <button class="btn btn-primary">Edit</button></a>
+                            <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
+                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                    class="btn btn-danger ">Delete</button></a>
+                        </td>
+                    </tr>
 
-                        @else
-                        @php
-                        $i=0;
-                        @endphp
-                        @foreach($get_faculty_data->where('level_id', 6) as $faculty_data)
-                        @php
-                        $i++;
-                        @endphp
-                        <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
-                            style="cursor:pointer;">
-                            <th scope="row">{{$i}}</th>
-                            <td>{{$faculty_data->faculty_title}}</td>
-                            <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                    onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
-                                    <button class="btn btn-primary">Edit</button></a>
-                                <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
-                                    onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
-                                        class="btn btn-danger ">Delete</button></a>
-                            </td>
-                        </tr>
-                        @endforeach
+                    @endforeach
+                    @endif
+
+                    @endif
+                    <!-- End of main if condition -->
+
+                    <!-- For fourth main if condition -->
+                    @if($get_level_data->level_id == "5")
+                    @if(isset($details))
+                    @php
+                    $i=0;
+                    @endphp
+                    @foreach($get_faculty_data->where('level_id', 5) as $faculty_data)
+                    @php
+                    $i++;
+                    @endphp
+                    <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
+                        style="cursor:pointer;">
+                        <th scope="row">{{$i}}</th>
+                        <td>{{$faculty_data->faculty_title}}</td>
+                        <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
+                                onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                                <button class="btn btn-primary">Edit</button></a>
+                            <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
+                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                    class="btn btn-danger ">Delete</button></a>
+                        </td>
+                        @if($get_faculty_data->isEmpty())
+                        this is home
                         @endif
+                    </tr>
 
+                    @endforeach
+
+                    @else
+                    @php
+                    $i=0;
+                    @endphp
+                    @foreach($get_faculty_data->where('level_id', 5) as $faculty_data)
+                    @php
+                    $i++;
+                    @endphp
+                    <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
+                        style="cursor:pointer;">
+                        <th scope="row">{{$i}}</th>
+                        <td>{{$faculty_data->faculty_title}}</td>
+                        <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
+                                onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                                <button class="btn btn-primary">Edit</button></a>
+                            <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
+                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                    class="btn btn-danger ">Delete</button></a>
+                        </td>
+                    </tr>
+
+                    @endforeach
+                    @endif
+
+                    @endif
+                    <!-- End of main if condition -->
+
+                    <!-- For fifth main if condition -->
+                    @if($get_level_data->level_id == "6")
+                    @if(isset($details))
+                    @php
+                    $i=0;
+                    @endphp
+                    @foreach($get_faculty_data->where('level_id', 6) as $faculty_data)
+                    @php
+                    $i++;
+                    @endphp
+                    <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
+                        style="cursor:pointer;">
+                        <th scope="row">{{$i}}</th>
+                        <td>{{$faculty_data->faculty_title}}</td>
+                        <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
+                                onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                                <button class="btn btn-primary">Edit</button></a>
+                            <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
+                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                    class="btn btn-danger ">Delete</button></a>
+                        </td>
+                        @if($get_faculty_data->isEmpty())
+                        this is home
                         @endif
-                        <!-- End of main if condition -->
+                    </tr>
 
-                    </tbody>
-                </table>
-            </div>
+                    @endforeach
+
+                    @else
+                    @php
+                    $i=0;
+                    @endphp
+                    @foreach($get_faculty_data->where('level_id', 6) as $faculty_data)
+                    @php
+                    $i++;
+                    @endphp
+                    <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
+                        style="cursor:pointer;">
+                        <th scope="row">{{$i}}</th>
+                        <td>{{$faculty_data->faculty_title}}</td>
+                        <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
+                                onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                                <button class="btn btn-primary">Edit</button></a>
+                            <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
+                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                    class="btn btn-danger ">Delete</button></a>
+                        </td>
+                    </tr>
+                    @endforeach
+                    @endif
+
+                    @endif
+                    <!-- End of main if condition -->
+
+                </tbody>
+            </table>
         </div>
     </div>
-    <script>
-        $(document).ready(function () {
-            $('input:radio[name="Semester"]').change(function () {
-                if ($(this).val() == 'y') {
-                    $('.hideyears').removeAttr('hidden');
-                    $('.hidesemesters').attr("hidden", "false");
+</div>
+<script>
+    $(document).ready(function () {
+        $('input:radio[name="Semester"]').change(function () {
+            if ($(this).val() == 'y') {
+                $('.hideyears').removeAttr('hidden');
+                $('.hidesemesters').attr("hidden", "false");
 
-                    // $('.hideselectyearfirst').attr("hidden", "true");
-                    // $('.hideselectyearsecond').attr("hidden", "true");
-                    // $('.hideselectyearthird').attr("hidden", "true");
+                // $('.hideselectyearfirst').attr("hidden", "true");
+                // $('.hideselectyearsecond').attr("hidden", "true");
+                // $('.hideselectyearthird').attr("hidden", "true");
 
-                    // $('.hideselectsemesterfirst').attr("hidden", "true");
-                    // $('.hideselectsemestersecond').attr("hidden", "true");
-                    // $('.hideselectsemesterthird').attr("hidden", "true");
-                }
+                // $('.hideselectsemesterfirst').attr("hidden", "true");
+                // $('.hideselectsemestersecond').attr("hidden", "true");
+                // $('.hideselectsemesterthird').attr("hidden", "true");
+            }
 
-                if ($(this).val() == 's') {
-                    $('.hidesemesters').removeAttr('hidden');
-                    $('.hideyears').attr("hidden", "false");
+            if ($(this).val() == 's') {
+                $('.hidesemesters').removeAttr('hidden');
+                $('.hideyears').attr("hidden", "false");
 
-                    // $('.hideselectyearfirst').attr("hidden", "true");
-                    // $('.hideselectyearsecond').attr("hidden", "true");
-                    // $('.hideselectyearthird').attr("hidden", "true");
+                // $('.hideselectyearfirst').attr("hidden", "true");
+                // $('.hideselectyearsecond').attr("hidden", "true");
+                // $('.hideselectyearthird').attr("hidden", "true");
 
-                    // $('.hideselectsemesterfirst').attr("hidden", "true");
-                    // $('.hideselectsemestersecond').attr("hidden", "true");
-                    // $('.hideselectsemesterthird').attr("hidden", "true");
-                }
-            });
+                // $('.hideselectsemesterfirst').attr("hidden", "true");
+                // $('.hideselectsemestersecond').attr("hidden", "true");
+                // $('.hideselectsemesterthird').attr("hidden", "true");
+            }
         });
+    });
 
-    </script>
-    <!--
+</script>
+<!--
 //     $(document).ready(function () {
 //         $("select.getlevelname").change(function () {
 //             if ($(this).val() == '1') {
@@ -763,18 +763,18 @@
 // });
 //  -->
 
-    <script>
-        $("#addfacultybutton").click(function () {
-            $('.addfacultyform').removeAttr("hidden");
-        });
+<script>
+    $("#addfacultybutton").click(function () {
+        $('.addfacultyform').removeAttr("hidden");
+    });
 
-        $("#dialog").dialog({
-            autoOpen: false
-        });
-        $("#btnExample").click(function () {
-            $("#dialog").dialog("open");
-        });
+    $("#dialog").dialog({
+        autoOpen: false
+    });
+    $("#btnExample").click(function () {
+        $("#dialog").dialog("open");
+    });
 
-    </script>
+</script>
 
-    @endsection
+@endsection

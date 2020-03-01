@@ -15,17 +15,25 @@ use App\Content;
 */
 
 Route::post('/login','ApiController@accessToken');
-
+Route::post('/login/student','ApiController@accessStudentToken');
 
 Route::group([
-    'middleware' => 'auth:api'
+    'middleware' => 'auth:admin api'
   ], function() {
     Route::get('/content','ApiController@getMessage');
+  });
+
+  Route::group([
+    'middleware' => 'auth:student api'
+  ], function() {
+    Route::get('/content/Student','ApiController@getMessageStudent');
   });
 
 
 // Route::post('/login','ApiController@login');
 // Route::post('reg', 'ApiController@register');
+
+Route::get('/', 'ApiController@guardnameApi');
 
 Route::get('/level', 'ApiController@getlevelApi');
 
@@ -46,4 +54,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/testingapi', 'ApiController@getTestApi');
+
+Route::get('/search_faculties_search/{query}', 'ApiController@getallSearch');
+
 Route::get('/contents', ['uses'=>'APIController@getcontentsAPI','as'=>'getcontentsAPI']);

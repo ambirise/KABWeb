@@ -3,40 +3,61 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\LevelsResource;
-use App\Level;
+use App\Student;
 use App\User;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class ApiController extends Controller
 {
     public $successStatus = 200;
+
+    public function guardnameApi()
+    {
+
+    }
+
     public function accessToken(Request $request)
     {
         $validate = $this->validations($request, "login");
 
         if ($validate["error"]) {
-
             return $this->prepareResult(false, [], $validate['errors'], "Error while validating user");
-
         }
 
         $user = User::where("email", $request->email)->first();
 
         if ($user) {
-
             if (Hash::check($request->password, $user->password)) {
-
                 return $this->prepareResult(true, ["accessToken" => $user->createToken('Todo App')->accessToken], [], "User Verified");
-
             } else {
-
                 return $this->prepareResult(false, [], ["password" => "Wrong passowrd"], "Password not matched");
+            }
 
+        } else {
+            return $this->prepareResult(false, [], ["email" => "Unable to find user"], "User not found");
+        }
+    }
+
+    public function accessStudentToken(Request $request)
+    {
+        $validate = $this->validations($request, "login");
+
+        if ($validate["error"]) {
+            return $this->prepareResult(false, [], $validate['errors'], "Error while validating user");
+        }
+
+        $user = Student::where("email", $request->email)->first();
+
+        if ($user) {
+            if (Hash::check($request->password, $user->password)) {
+                return $this->prepareResult(true, ["accessToken" => $user->createToken('Todo App')->accessToken], [], "User Verified");
+            } else {
+                return $this->prepareResult(false, [], ["password" => "Wrong passowrd"], "Password not matched");
             }
 
         } else {
@@ -63,19 +84,12 @@ class ApiController extends Controller
 
     public function validations($request, $type)
     {
-
         $errors = [];
-
         $error = false;
-
         if ($type == "login") {
-
             $validator = Validator::make($request->all(), [
-
                 'email' => 'required|email|max:255',
-
                 'password' => 'required',
-
             ]);
 
             if ($validator->fails()) {
@@ -183,8 +197,22 @@ class ApiController extends Controller
 
     public function getMessage()
     {
-        $get_content_data_array = DB::table('contents')->get();
-        return response()->json($get_content_data_array);
+        foreach (array_keys(config('auth.guards')) as $guard) {
+            if (auth()->guard($guard)->check()) {
+                return $guard;
+            }
+
+        }
+    }
+
+    public function getMessageStudent()
+    {
+        foreach (array_keys(config('auth.guards')) as $guard) {
+            if (auth()->guard($guard)->check()) {
+                return $guard;
+            }
+
+        }
     }
     // /**
 
@@ -344,27 +372,40 @@ class ApiController extends Controller
         return $get_content_data_array;
     }
 
-    public function getlevelApi(): LevelsResource
+    public function getlevelApi()
     {
         $get_content_data_array = DB::table('levels')->get();
-        return new LevelsResource($get_content_data_array, 200);
+        return $get_content_data_array;
     }
 
     public function getfacultyApi($id)
     {
-        $get_faculty_data_array = DB::table('faculties')->where('level_id', $id)->get();
+        $get_faculty_data_array = DB::table('faculties')->join('levels', 'levels.level_id', '=', 'faculties.level_id')->where('faculties.level_id','=',$id)->get();
         return $get_faculty_data_array;
     }
 
     public function getsemesterApi($id)
     {
-        $get_semester_data_array = DB::table('semesters')->where('faculty_id', $id)->get();
+        
+        $get_semester_data_array = DB::table('semesters')->join('levels', 'levels.level_id', '=', 'semesters.level_id')->where('faculty_id', $id)->get();
         return $get_semester_data_array;
+
+        // if($get_level_data_array==1){
+   
+        // }
+
+        return $implode_levelid;
+
+        // $implode_facultyid = implode(" ", $pluck_facultyid);
+   
+        if ($implode_yearorsemester !== "") {
+            
+        } 
     }
 
     public function getsubjectApi($id)
     {
-        $get_subject_data_array = DB::table('subjects')->where('faculty_id', $id)->get();
+        $get_subject_data_array = DB::table('subjects')->where('semester_id', $id)->get();
         return $get_subject_data_array;
     }
 
@@ -423,4 +464,51 @@ class ApiController extends Controller
         }
         return $get_content_data;
     }
+
+    public function getallSearch($query)
+    {
+        $Test = DB::table('subjects')->join('semesters', 'semesters.semester_id', '=', 'subjects.semester_id')->get();
+
+        dd($usingsecondtest);
+
+        if ($query != '') {
+
+            if ($test) {
+
+                $searchsubject = DB::table('faculties')->get();
+
+                $searchsubjectbytitle = DB::table('faculties')->join('subjects', 'subjects.faculty_id', '=', 'faculties.faculty_id')
+                    ->join('semesters', 'semesters.semester_id', '=', 'subjects.semester_id')
+                    ->where('subjects.subject_title', 'LIKE', '%' . $query . '%')->orwhere('faculties.faculty_title', 'LIKE', '%' . $query . '%')
+                    ->select('faculties.faculty_id', 'faculties.faculty_title', 'subjects.subject_id', 'subjects.subject_title', 'semesters.semester_title', 'semesters.semester_id')
+                    ->get();
+
+                foreach ($searchsubjectbytitle as $objectone) {
+
+                    $format_array_search_result1[] = array("faculty" => array('title' => $objectone->faculty_title, 'id' => $objectone->faculty_id));
+
+                    $format_array_search_result2[] = array("subject" => ['title' => $objectone->subject_title, 'id' => $objectone->subject_id], "faculty" => ['title' => $objectone->faculty_title, 'id' => $objectone->faculty_id], "semester" => ["semester" => $objectone->semester_title, "id" => $objectone->semester_id]);
+                }
+
+            } else {
+                $searchsubjectbytitle = DB::table('faculties')->join('subjects', 'subjects.faculty_id', '=', 'faculties.faculty_id')
+                    ->where('subjects.subject_title', 'LIKE', '%' . $query . '%')->orwhere('faculties.faculty_title', 'LIKE', '%' . $query . '%')
+                    ->select('faculties.faculty_id', 'faculties.faculty_title', 'subjects.subject_id', 'subjects.subject_title')
+                    ->get();
+            }
+
+            // $searchfacultybytitle = DB::table('faculties')->select('faculty_title', 'faculty_id')->where('faculty_title', 'LIKE', '%' . $query . '%')->get();
+
+            // $arraysearchresult = $searchfacultybytitle->merge($searchsubjectbytitle);
+
+            $data = array("facultylist" => $format_array_search_result1, "subjectlist" => $format_array_search_result2);
+
+        } else {
+            $data = DB::table('faculties')->join('subjects', 'subjects.faculty_id', '=', 'faculties.faculty_id')
+                ->join('semesters', 'semesters.semester_id', '=', 'subjects.semester_id')->get();
+        }
+
+        return $data;
+    }
+
 }

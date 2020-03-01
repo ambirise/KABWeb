@@ -16,12 +16,12 @@ class SemestersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index(Request $request,$faculty_id)
     {
         $get_semester_data = Semester::where('faculty_id', $faculty_id)->first();
         
         return view('semesters')->with('get_semester_data', $get_semester_data);
-        
     }
 
     /**
