@@ -107,7 +107,7 @@
                     <div class="col-md-6">
                         <span style="font-size:16px;">Subject</span>
                         <input type="text" name="subject" class="form-control input-sm" id="usr"
-                            style="width:182px;"><br>
+                            style="width:260px;"><br>
                     </div>
                 </div>
 
@@ -188,7 +188,7 @@
                                 onClick=window.open('/editsubjects/{{$subject_data->subject_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delsubjectsDetails',$subject_data->subject_id)}}"
-                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                onclick="return confirmClick();" class="delete_user"><button type="button"
                                     class="btn btn-danger ">Delete</button></a>
                         </td>
                     </tr>
@@ -215,7 +215,7 @@
                                 onClick=window.open('/editsubjects/{{$subject_data->subject_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delsubjectsDetails',$subject_data->subject_id)}}"
-                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                onclick="return confirmClick();" class="delete_user"><button type="button"
                                     class="btn btn-danger ">Delete</button></a>
                         </td>
                     </tr>
@@ -244,7 +244,7 @@
                                 onClick=window.open('/editsubjects/{{$subject_data->subject_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delsubjectsDetails',$subject_data->subject_id)}}"
-                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                onclick="return confirmClick();" class="delete_user"><button type="button"
                                     class="btn btn-danger ">Delete</button></a>
                         </td>
                     </tr>
@@ -271,7 +271,7 @@
                                 onClick=window.open('/editsubjects/{{$subject_data->subject_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delsubjectsDetails',$subject_data->subject_id)}}"
-                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                onclick="return confirmClick();" class="delete_user"><button type="button"
                                     class="btn btn-danger ">Delete</button></a>
                         </td>
                     </tr>
@@ -301,7 +301,7 @@
                                 onClick=window.open('/editsubjects/{{$subject_data->subject_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delsubjectsDetails',$subject_data->subject_id)}}"
-                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                onclick="return confirmClick();" class="delete_user"><button type="button"
                                     class="btn btn-danger ">Delete</button></a>
                         </td>
                     </tr>
@@ -328,7 +328,7 @@
                                 onClick=window.open('/editsubjects/{{$subject_data->subject_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delsubjectsDetails',$subject_data->subject_id)}}"
-                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                onclick="return confirmClick();" class="delete_user"><button type="button"
                                     class="btn btn-danger ">Delete</button></a>
                         </td>
                     </tr>
@@ -358,7 +358,7 @@
                                 onClick=window.open('/editsubjects/{{$subject_data->subject_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delsubjectsDetails',$subject_data->subject_id)}}"
-                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                onclick="return confirmClick();" class="delete_user"><button type="button"
                                     class="btn btn-danger ">Delete</button></a>
                         </td>
                     </tr>
@@ -385,7 +385,7 @@
                                 onClick=window.open('/editsubjects/{{$subject_data->subject_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delsubjectsDetails',$subject_data->subject_id)}}"
-                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                onclick="return confirmClick();" class="delete_user"><button type="button"
                                     class="btn btn-danger ">Delete</button></a>
                         </td>
                     </tr>
@@ -415,7 +415,7 @@
                                 onClick=window.open('/editsubjects/{{$subject_data->subject_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delsubjectsDetails',$subject_data->subject_id)}}"
-                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                onclick="return confirmClick();" class="delete_user"><button type="button"
                                     class="btn btn-danger ">Delete</button></a>
                         </td>
                     </tr>
@@ -442,7 +442,7 @@
                                 onClick=window.open('/editsubjects/{{$subject_data->subject_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delsubjectsDetails',$subject_data->subject_id)}}"
-                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                onclick="return confirmClick();" class="delete_user"><button type="button"
                                     class="btn btn-danger ">Delete</button></a>
                         </td>
                     </tr>
@@ -464,6 +464,15 @@
         $('.addsubjectform').removeAttr("hidden");
     });
 
+    function confirmClick() {
+        if (confirm("Are you sure?")) {
+            return true;
+        } else {
+            event.stopPropagation();
+            return false;
+
+        }
+    };
 </script>
 
 @endsection

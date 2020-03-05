@@ -83,7 +83,9 @@ class ContentsController extends Controller
         $implode_chapterid_chapter = implode(" ", $pluck_chapterid_chapter);
 
         $audios = $request->file('audio');
-        $audios_count = count($audios);
+        // if(count($audios)>=5){
+        //     return redirect()->back()->with('contentuploadexceeded', 'Cannot upload more than 4 items at a time');
+        // }
 
         $uploadcount = 0;
 
@@ -91,7 +93,7 @@ class ContentsController extends Controller
             foreach ($audios as $audio) {
                 // $destinationPath = 'audios';
 
-                $uniquecontent = sha1(time());
+                $uniquecontent = sha1(microtime());
                 $file = $audio->getClientOriginalName();
                 $info = pathinfo($file);
                 // from PHP 5.2.0 :
@@ -102,7 +104,9 @@ class ContentsController extends Controller
 
                 $getExtension = $audio->getClientOriginalExtension();
                 $nameofcontent = $uniquecontent . '.' . $getExtension;
+
                 $audio->move('audios/', $nameofcontent);
+              
 
                 $contents = new Content;
 
@@ -117,7 +121,7 @@ class ContentsController extends Controller
                 $contents->chapter_id = $implode_chapterid_chapter;
 
                 // if ($getExtension == "wav") {
-                $contents->content_type = $file_name;
+                $contents->content_name = $file_name;
                 // }
 
                 $contents->content_title = $nameofcontent;
@@ -185,7 +189,6 @@ class ContentsController extends Controller
 
     public function getcontentsSearch(Request $request, $chapter_id)
     {
-        
         $get_chapter_data = Chapter::where('chapter_id', $chapter_id)->first();
 
         $get_chapter_data_array = Chapter::where('chapter_id', $chapter_id)->get();
@@ -209,7 +212,7 @@ class ContentsController extends Controller
 
         $query = $request->input('q');
         if ($query != '') {
-            $get_content_data_array = DB::table('contents')->where('content_type', 'like', '%' . $query . '%')->where('chapter_id', "=", $chapter_id)->get();
+            $get_content_data_array = DB::table('contents')->where('content_name', 'like', '%' . $query . '%')->where('chapter_id', "=", $chapter_id)->get();
             if ($get_content_data_array->count() == 0) {
                 return redirect()->back()->with('searchnotfound', 'Sorry the search item doesnot exist');
             }

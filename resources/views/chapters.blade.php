@@ -5,18 +5,20 @@
     <a href="{{ url('/levels') }}"><span>Levels</span></a> -> <a
         href="{{ url('/faculties',$get_subject_data->level_id) }}"><span>{{$level_title->level_title}}</span></a>
     <!-- -> <a href="{{ url('/semesters',$get_subject_data->faculty_id) }}"><span>Semesters</span></a> -->
-    -> <a href="{{ url('/subjects',$get_subject_data->faculty_id) }}"><span>{{$get_faculty_data->faculty_title}}</span></a>
-    -> <a href="{{ url('/chapters',$get_subject_data->subject_id) }}"><span>{{$get_subject_data->subject_title}}</span></a>
+    -> <a
+        href="{{ url('/subjects',$get_subject_data->faculty_id) }}"><span>{{$get_faculty_data->faculty_title}}</span></a>
+    -> <a
+        href="{{ url('/chapters',$get_subject_data->subject_id) }}"><span>{{$get_subject_data->subject_title}}</span></a>
     <div class="card mt-4 addchapterform" hidden="true">
         <div class="card-body">
             <form action="{{route('chaptersStore',$get_subject_data->subject_id)}}" method="POST"
                 enctype="mutipart/form-data">
-            @csrf
+                @csrf
                 <div class="row">
                     <div class="col-md-6">
                         <div class="col-md-4">
                             <span style="font-size:16px;">Chapter</span>
-                            <input type="text" name="chapter" class="form-control" id="usr" style="width:182px;"><br>
+                            <input type="text" name="chapter" class="form-control" id="usr" style="width:260px;"><br>
                         </div>
                     </div>
                     <div class="col-md-6"><br>
@@ -37,11 +39,11 @@
 @endif
 
 @if($message = Session::get('searchnotfound'))
-        <div class="container mt-2">
-            <div class="alert alert-danger" role="alert">
-                <p>{{$message}}<p>
-            </div>
-        </div>
+<div class="container mt-2">
+    <div class="alert alert-danger" role="alert">
+        <p>{{$message}}<p>
+    </div>
+</div>
 @endif
 
 <div class="container">
@@ -49,7 +51,8 @@
         <div class="card-header text-center">
             <div class="row">
                 <div class="col-md-8">
-                    <form action="{{route('getchaptersSearch',$get_subject_data->subject_id)}}" method="POST" role="search">
+                    <form action="{{route('getchaptersSearch',$get_subject_data->subject_id)}}" method="POST"
+                        role="search">
                         {{ csrf_field() }}
                         <div class="input-group" class="columnpatient1">
                             <input type="text" class="form-control" name="q" placeholder="Search">
@@ -83,11 +86,12 @@
                         <td>{{$key+1}}</td>
                         <td>{{$subject_data->chapter_title}}</td>
                         <td>
-                        <a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                    onClick=window.open('/editchapters/{{$subject_data->chapter_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
-                                    <button class="btn btn-primary">Edit</button></a>
-                            <a href="{{route('delchaptersDetails',$subject_data->chapter_id)}}" onclick="return confirm('Are you sure?')" class="delete_user"><button
-                                    type="button" class="btn btn-danger ">Delete</button></a>
+                            <a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
+                                onClick=window.open('/editchapters/{{$subject_data->chapter_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                                <button class="btn btn-primary">Edit</button></a>
+                            <a href="{{route('delchaptersDetails',$subject_data->chapter_id)}}"
+                                onclick="return confirmClick();" class="delete_user"><button type="button"
+                                    class="btn btn-danger ">Delete</button></a>
                         </td>
                     </tr>
                     @endforeach
@@ -98,10 +102,18 @@
 </div>
 
 <script>
-        $("#addchapterbutton").click(function () {
-            $('.addchapterform').removeAttr("hidden");
-        });
+    $("#addchapterbutton").click(function () {
+        $('.addchapterform').removeAttr("hidden");
+    });
 
+    function confirmClick() {
+        if (confirm("Are you sure?")) {
+            return true;
+        } else {
+            event.stopPropagation();
+            return false;
+        }
+    };
 </script>
 
 @endsection

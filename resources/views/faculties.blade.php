@@ -278,7 +278,12 @@
                         @if(($get_level_data->level_id == "6"))
                         <th scope="col">Field</th>
                         @endif
+
+                        @if(($get_level_data->level_id == "1" || $get_level_data->level_id == "4"))
+
+                        @else
                         <th scope="col">Action</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -302,7 +307,7 @@
                                 onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
-                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                onclick="return confirmClick();" class="delete_user"><button type="button"
                                     class="btn btn-danger ">Delete</button></a>
                         </td>
                         @if($get_faculty_data->isEmpty())
@@ -328,7 +333,7 @@
                                 onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
-                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                onclick="return confirmClick();" class="delete_user"><button type="button"
                                     class="btn btn-danger ">Delete</button></a>
                         </td>
                     </tr>
@@ -355,13 +360,6 @@
                         style="cursor:pointer;">
                         <th scope="row">{{$i}}</th>
                         <td>{{$faculty_data->faculty_title}}</td>
-                        <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
-                                <button class="btn btn-primary">Edit</button></a>
-                            <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
-                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
-                                    class="btn btn-danger ">Delete</button></a>
-                        </td>
                         @if($get_faculty_data->isEmpty())
                         this is home
                         @endif
@@ -381,14 +379,6 @@
                         style="cursor:pointer;">
                         <th scope="row">{{$i}}</th>
                         <td>{{$faculty_data->faculty_title}}</td>
-                        <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
-                                <button class="btn btn-primary">Edit</button></a>
-                            <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
-                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
-                                    class="btn btn-danger ">Delete</button></a>
-                        </td>
-
                     </tr>
 
                     @endforeach
@@ -411,13 +401,7 @@
                         style="cursor:pointer;">
                         <th scope="row">{{$i}}</th>
                         <td>{{$faculty_data->faculty_title}}</td>
-                        <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
-                                <button class="btn btn-primary">Edit</button></a>
-                            <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
-                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
-                                    class="btn btn-danger ">Delete</button></a>
-                        </td>
+
                         @if($get_faculty_data->isEmpty())
                         this is home
                         @endif
@@ -437,13 +421,6 @@
                         style="cursor:pointer;">
                         <th scope="row">{{$i}}</th>
                         <td>{{$faculty_data->faculty_title}}</td>
-                        <td><a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
-                                <button class="btn btn-primary">Edit</button></a>
-                            <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
-                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
-                                    class="btn btn-danger ">Delete</button></a>
-                        </td>
                     </tr>
 
                     @endforeach
@@ -470,7 +447,7 @@
                                 onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
-                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                onclick="return confirmClick();" class="delete_user"><button type="button"
                                     class="btn btn-danger ">Delete</button></a>
                         </td>
                         @if($get_faculty_data->isEmpty())
@@ -496,7 +473,7 @@
                                 onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
-                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                onclick="return confirmClick();" class="delete_user"><button type="button"
                                     class="btn btn-danger ">Delete</button></a>
                         </td>
                     </tr>
@@ -525,7 +502,7 @@
                                 onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
-                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                onclick="return confirmClick();" class="delete_user"><button type="button"
                                     class="btn btn-danger ">Delete</button></a>
                         </td>
                         @if($get_faculty_data->isEmpty())
@@ -551,7 +528,7 @@
                                 onClick=window.open('/editfaculties/{{$faculty_data->faculty_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
-                                onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
+                                onclick="return confirmClick();" class="delete_user"><button type="button"
                                     class="btn btn-danger ">Delete</button></a>
                         </td>
                     </tr>
@@ -774,6 +751,16 @@
     $("#btnExample").click(function () {
         $("#dialog").dialog("open");
     });
+
+    function confirmClick() {
+        if (confirm("Are you sure?")) {
+            return true;
+        } else {
+            event.stopPropagation();
+            return false;
+
+        }
+    };
 
 </script>
 

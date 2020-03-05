@@ -6,12 +6,10 @@
             <h5>Welcome To The Home Page</h5>
         </div>
     </div>
-    <div class="card-body">
-
-    </div>
 </div>
 
-<div class="container">
+<div class="container"><br>
+    <h5 class="border border-info p-1">For overall search. Please insert query in the search box given below.</h5>
     <div class="card mt-2">
         <div class="card-header text-center">
             <div class="row">
@@ -31,8 +29,8 @@
                 </div>
             </div>
         </div>
-        <div class="card-body">
-            <table class="table mt-0 table-striped">
+        <div class="card-body mt-0">
+            <table class="table  table-striped">
                 <thead>
                     <tr>
                         <th scope="col" style="width:10%">S.N</th>
@@ -69,5 +67,4 @@
         </div>
     </div>
 </div>
-
 @endsection

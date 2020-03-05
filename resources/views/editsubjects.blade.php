@@ -2,11 +2,13 @@
 @section('content')
 
 <div class="container">
-    <form action="{{route('subjectsUpdate',$get_subject_data->subject_id)}}" method="POST" enctype="mutipart/form-data">
+    <form action="{{route('subjectsUpdate',$get_subject_data->subject_id)}}" method="POST" onSubmit="window.close();
+            window.opener.location.reload();" id="updateformsubject" enctype="mutipart/form-data">
         <div class="card mt-2 addsubjectform">
             <div class="card-body" style="padding:8px;">
                 @csrf
                 <div class="row">
+                    @if((!empty($get_semester_data->yearorsemester)))
                     <div class="col-md-6">
                         @if($get_semester_data->yearorsemester == "s" && $get_semester_data->numberofsemester == "6")
                         <span style="font-size:16px;">Select Semester</span><br>
@@ -24,7 +26,7 @@
                             <option value="2s">Second</option>
                             @endif
 
-                            
+
                             @if($get_semester_data->semester_title == "3s")
                             <option value="3s" selected>Third</option>
                             @else
@@ -67,7 +69,7 @@
                             <option value="2s">Second</option>
                             @endif
 
-                            
+
                             @if($get_semester_data->semester_title == "3s")
                             <option value="3s" selected>Third</option>
                             @else
@@ -122,7 +124,7 @@
                             <option value="2s">Second</option>
                             @endif
 
-                            
+
                             @if($get_semester_data->semester_title == "3s")
                             <option value="3s" selected>Third</option>
                             @else
@@ -207,21 +209,21 @@
                         </select>
                         @endif
                     </div>
+                    @endif
 
                     <div class="col-md-6">
                         <span style="font-size:16px;">Subject</span>
-                        <input type="text" name="subject" value="{{$get_subject_data->subject_title}}" class="form-control input-sm" id="usr"
-                            style="width:182px;"><br>
+                        <input type="text" name="subject" value="{{$get_subject_data->subject_title}}"
+                            class="form-control input-sm" id="usr" style="width:260px;"><br>
                     </div>
-                </div>
-
-
-                <div class="col-md-6"><br>
-                    <button type="submit" onclick="window.close(); window.opener.location.reload();" class="btn btn-primary">UPDATE</button>
+                    <div class="col-md-6"><br>
+                        <button type="submit" onclick="Update()" class="btn btn-primary">UPDATE</button>
+                    </div>
                 </div>
             </div>
         </div>
     </form>
 </div>
-@endsection
 
+
+@endsection

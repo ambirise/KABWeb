@@ -6,11 +6,11 @@
     <h5> Edit Faculties: </h5>
     <br>
     <main class="page-content" style="font-family: Times New Roman, Times, serif;">
-        <form action="{{ route('facultiesUpdate', $facultiesdetails->faculty_id)}}"method="POST" enctype="mutipart/form-data">
-        
+        <form action="{{ route('facultiesUpdate', $facultiesdetails->faculty_id)}}" method="POST" id="updateformfaculty"
+            enctype="mutipart/form-data">
             {{ csrf_field() }}
             <div class="row">
-               <!-- for levels page -->
+                <!-- for levels page -->
                 <!-- <div class="col-md-4">
                     <span style="font-size:16px;">Level</span><br>
                     <select class="custom-select" name="levelchoose" style="height:38px;width:182px;" id="customchange"
@@ -26,12 +26,12 @@
                 @if($implode_leveldetailstitle=="Bachelor")
                 <div class="col-md-4">
                     <span style="font-size:16px;">Add Faculty</span>
-                    <input type="text" name="facultybachelor" value="{{$facultiesdetails_faculty->faculty_title}}"  class="form-control"
-                        id="usr" style="width:182px;"><br>
+                    <input type="text" name="facultybachelor" value="{{$facultiesdetails_faculty->faculty_title}}"
+                        class="form-control" id="usr" style="width:182px;"><br>
                 </div>
 
-                <div class="col-md-4 hidesemesterandyear">
-                    <span style="font-size:16px;">Choose Semester or Year</span>
+                <div class="col-md-4 hidesemesterandyear" style="pointer-events: none; opacity: 0.7;">
+                    <span style="font-size:16px;">Semester or Year</span>
                     <div>
                         @if($facultiesdetails->yearorsemester=="s")
                         <label class="btn btn-light">
@@ -142,18 +142,44 @@
                 </div>
                 @endif
 
-                @else
+                @elseif($implode_leveldetailstitle=="Loksewa")
                 <div class="col-md-4 hidefaculty">
-                    <span style="font-size:16px;">Add School</span>
-                    <input type="text" name="facultybachelor" value="{{$facultiesdetails->faculty_title}}" class="form-control" id="usr" style="width:182px;"><br>
+                    <span style="font-size:16px;">Field</span>
+                    <input type="text" name="facultybachelor" value="{{$facultiesdetails_faculty->faculty_title}}"
+                        class="form-control" id="usr" style="width:200px;"><br>
+                </div>
+
+                @elseif($implode_leveldetailstitle=="School")
+                <div class="col-md-4 hidefaculty">
+                    <span style="font-size:16px;">School</span>
+                    <input type="text" name="facultybachelor" value="{{$facultiesdetails_faculty->faculty_title}}"
+                        class="form-control" id="usr" style="width:200px;"><br>
+                </div>
+
+                @elseif($implode_leveldetailstitle=="Others")
+                <div class="col-md-4 hidefaculty">
+                    <span style="font-size:16px;">Field</span>
+                    <input type="text" name="facultybachelor" value="{{$facultiesdetails_faculty->faculty_title}}"
+                        class="form-control" id="usr" style="width:200px;"><br>
                 </div>
                 @endif
 
                 <div class="col-md-4"><br>
-                    <button type="submit" class="btn btn-primary" onclick="window.close(); window.opener.location.reload();">Update</button>
+                    <button type="submit" onClick="windowReload();" class="btn btn-primary">Update</button>
                 </div>
             </div>
         </form>
     </main>
 </div>
+
+<script>
+    function closeWindow() {
+        setTimeout("window.close()", 2000);
+    }
+
+    function windowReload(){
+        window.location.href = "{{URL::to('/faculties/')}}"
+    }
+</script>
+
 @endsection

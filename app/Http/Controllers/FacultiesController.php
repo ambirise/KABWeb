@@ -175,10 +175,8 @@ class FacultiesController extends Controller
             $semesters->yearorsemester = $yearorsemester;
             $semesters->numberofsemester = $numberofsemester;
             $semesters->numberofyear = $numberofyear;
-
             $semesters->save();
         }
-
         return redirect()->back();
     }
 
@@ -255,7 +253,6 @@ class FacultiesController extends Controller
             ->with('get_school', $get_school)->with('get_bachelor', $get_bachelor)
             ->with('get_10plus2', $get_10plus2)->with('get_loksewa', $get_loksewa)
             ->with('get_level_data', $get_level_data)->with('level_id', $level_id);
-
     }
 
     public function delfacultiesDetails($id)
@@ -268,5 +265,4 @@ class FacultiesController extends Controller
             return redirect()->back();
         }
     }
-
 }
