@@ -7,7 +7,7 @@
     <a href="{{ url('/semesters',$get_semester_data->faculty_id) }}"><span>Semesters</span></a>
     <div class="card mt-4">
         <div class="card-body">
-            <form action="{{route('semestersStore',$get_semester_data->faculty_id)}}" method="POST" enctype="mutipart/form-data">
+            <form action="" method="POST" enctype="mutipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-md-6">
@@ -130,7 +130,6 @@
                     <tr>
                         <th scope="col">S.N</th>
                         <th scope="col">Semester</th>
-                       
                     </tr>
                 </thead>
                 <tbody>

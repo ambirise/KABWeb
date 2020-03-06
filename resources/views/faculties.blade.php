@@ -1,5 +1,7 @@
 @extends('home')
 @section('content')
+
+
 <div class="container"><br>
     <a href="{{ url('/levels') }}"><span>Levels</span></a> -> <a
         href="{{ url('/faculties',$get_level_data->level_id) }}"><span>{{$get_level_data->level_title}}</span></a>
@@ -214,6 +216,7 @@
         </div>
     </div>
 </div>
+
 
 @if($message = Session::get('violation'))
 <div class="container mt-2">

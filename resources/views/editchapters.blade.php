@@ -4,7 +4,7 @@
 <div class="container">
     <div class="card mt-4 addchapterform">
         <div class="card-body">
-            <form action="{{route('chaptersUpdate',$get_chapter_data->chapter_id)}}" onSubmit="window.close();
+            <form action="{{route('chaptersUpdate',$get_chapter_data->chapter_id)}}" onSubmit="
             window.opener.location.reload();" method="POST"
                 id="updateformchapter" enctype="mutipart/form-data">
                 @csrf

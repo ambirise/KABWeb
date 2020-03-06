@@ -249,6 +249,7 @@ class FacultiesController extends Controller
             $get_faculty_data = DB::table('faculties')->where('level_id', '=', $level_id)
                 ->get();
         }
+        
         return view('faculties')->with('get_faculty_data', $get_faculty_data)
             ->with('get_school', $get_school)->with('get_bachelor', $get_bachelor)
             ->with('get_10plus2', $get_10plus2)->with('get_loksewa', $get_loksewa)

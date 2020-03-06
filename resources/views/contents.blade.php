@@ -176,7 +176,7 @@
             var bar = $('.bar');
             var percent = $('.percent');
 
-            $('#contentSumit').ajaxForm({
+            $('#contentSubmit').ajaxForm({
                 beforeSend: function () {
                     var percentVal = '0%';
                     bar.width(percentVal)

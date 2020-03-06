@@ -28,7 +28,7 @@ Route::post('/login','Auth\AdminLoginController@login')->name('admin.login.submi
 Route::get('/faculties/{Level}', ['uses'=>'FacultiesController@index','as'=>'getfacultiesIndex']);
 Route::post('faculties',['uses'=>'FacultiesController@store','as'=>'facultiesStore']);
 
-// Route::get('/semesters/{Faculty}', ['uses'=>'SemestersController@index','as'=>'getsemestersIndex']);
+Route::get('/semesters/{Faculty}', ['uses'=>'SemestersController@index','as'=>'getsemestersIndex']);
 Route::get('/subjects/{Semester}', ['uses'=>'SubjectsController@index','as'=>'getsubjectsIndex']);
 Route::get('/chapters/{Subject}', ['uses'=>'ChaptersController@index','as'=>'getchaptersIndex']);
 Route::get('/contents/{Chapter}', ['uses'=>'ContentsController@index','as'=>'getcontentsIndex']);

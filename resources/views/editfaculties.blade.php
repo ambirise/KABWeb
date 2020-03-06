@@ -6,7 +6,7 @@
     <h5> Edit Faculties: </h5>
     <br>
     <main class="page-content" style="font-family: Times New Roman, Times, serif;">
-        <form action="{{ route('facultiesUpdate', $facultiesdetails->faculty_id)}}" method="POST" id="updateformfaculty"
+        <form action="{{ route('facultiesUpdate', $facultiesdetails->faculty_id)}}" onSubmit="window.opener.location.reload();" method="POST" id="updateformfaculty"
             enctype="mutipart/form-data">
             {{ csrf_field() }}
             <div class="row">
@@ -172,14 +172,6 @@
     </main>
 </div>
 
-<script>
-    function closeWindow() {
-        setTimeout("window.close()", 2000);
-    }
 
-    function windowReload(){
-        window.location.href = "{{URL::to('/faculties/')}}"
-    }
-</script>
 
 @endsection

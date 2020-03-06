@@ -470,7 +470,6 @@
         } else {
             event.stopPropagation();
             return false;
-
         }
     };
 </script>

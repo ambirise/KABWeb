@@ -36,7 +36,6 @@ Route::group([
 Route::get('/', 'ApiController@guardnameApi');
 
 Route::get('/level', 'ApiController@getlevelApi');
-
 Route::get('faculties/{id}', 'ApiController@getfacultyApi');
 Route::get('semesters/{id}', 'ApiController@getsemesterApi');
 

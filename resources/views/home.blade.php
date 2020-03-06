@@ -45,12 +45,12 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto" style="font-size:20px;">
+                <li class="ml-2 nav-item active">
+                    <a class="nav-link border p-1" aria-label="arial box"  style="color:white;" href="{{ url('/home') }}">Home</a>
+                </li>
 
                 <li class="ml-2 nav-item active">
-                    <a class="nav-link border p-1" style="color:white;" href="{{ url('/home') }}">Home</a>
-                </li>
-                <li class="ml-2 nav-item active">
-                    <a class="nav-link border p-1" style="color:white;" href="{{ url('/levels') }}">Levels</a>
+                    <a class="nav-link border p-1" aria-label="arial box"  style="color:white;" href="{{ url('/levels') }}">Levels</a>
                 </li>
                 <!-- <li class="nav-item active">
                     <a class="nav-link" href="{{ url('faculties') }}">Faculties</a>

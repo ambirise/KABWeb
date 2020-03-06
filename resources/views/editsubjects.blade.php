@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="container">
-    <form action="{{route('subjectsUpdate',$get_subject_data->subject_id)}}" method="POST" onSubmit="window.close();
+    <form action="{{route('subjectsUpdate',$get_subject_data->subject_id)}}" method="POST" onSubmit="
             window.opener.location.reload();" id="updateformsubject" enctype="mutipart/form-data">
         <div class="card mt-2 addsubjectform">
             <div class="card-body" style="padding:8px;">
@@ -224,6 +224,4 @@
         </div>
     </form>
 </div>
-
-
 @endsection
