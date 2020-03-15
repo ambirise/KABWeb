@@ -35,7 +35,7 @@ class SubjectsController extends Controller
         $pluck_semesterid_semester = Arr::pluck($get_semester_data_array, ['semester_id']);
         $semester_id = implode(" ", $pluck_semesterid_semester);
 
-        $get_subject_data = DB::table('subjects')->where('faculty_id', $faculty_id)->get();
+        $get_subject_data = DB::table('subjects')->where("subjects.faculty_id","=",$faculty_id)->get();
         $pluck_level_id = Arr::pluck($get_faculty_data_level_title, ['level_id']);
         $level_id = implode(" ", $pluck_level_id);
         $level_title = Level::where('level_id', $level_id)->first();
@@ -66,6 +66,7 @@ class SubjectsController extends Controller
         $get_semester_duration = $request->input('year');
 
         $get_semester_data_array = Semester::where('faculty_id', $faculty_id)->get();
+
 
         $pluck_semesterid_semester = Arr::pluck($get_semester_data_array, ['semester_id']);
         $id = implode(" ", $pluck_semesterid_semester);
@@ -145,12 +146,14 @@ class SubjectsController extends Controller
      */
     public function update(Request $request, $subject_id)
     {
-
         $get_semester_duration = $request->input('year');
 
         $get_semester_data_array = Subject::where('subject_id', $subject_id)->get();
 
         $pluck_semesterid_semester = Arr::pluck($get_semester_data_array, ['semester_id']);
+        $pluck_facultyid = Arr::pluck($get_semester_data_array, ['faculty_id']);
+        $faculty_id = implode(" ", $pluck_facultyid);
+
         $id = implode(" ", $pluck_semesterid_semester);
 
         if ($id == !null) {
@@ -187,10 +190,10 @@ class SubjectsController extends Controller
         $get_subject = $request->input('subject');
 
         $subjects = Subject::find($subject_id);
-
         $subjects->subject_title = $get_subject;
         $subjects->save();
-        return redirect()->back();
+
+        return \Redirect::route('getsubjectsIndex',$faculty_id)->with('updatesuccess', 'Subject is updated successfully');
     }
 
     /**

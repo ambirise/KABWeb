@@ -57,3 +57,5 @@ Route::get('/testingapi', 'ApiController@getTestApi');
 Route::get('/search_faculties_search/{query}', 'ApiController@getallSearch');
 
 Route::get('/contents', ['uses'=>'APIController@getcontentsAPI','as'=>'getcontentsAPI']);
+
+Route::get('get_all/{query}', 'APIController@get_all');

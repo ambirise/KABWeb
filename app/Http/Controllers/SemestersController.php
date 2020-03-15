@@ -43,7 +43,6 @@ class SemestersController extends Controller
     public function store(Request $request,$faculty_id)
     {
         
-     
         $get_semester_duration= $request->input('year');
 
         $get_id_faculty = DB::table('semesters')->where('faculty_id',$faculty_id)->get();

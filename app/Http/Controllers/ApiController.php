@@ -386,7 +386,6 @@ class ApiController extends Controller
 
     public function getsemesterApi($id)
     {
-        
         $get_semester_data_array = DB::table('semesters')->join('levels', 'levels.level_id', '=', 'semesters.level_id')->where('faculty_id', $id)->get();
         return $get_semester_data_array;
 
@@ -419,6 +418,13 @@ class ApiController extends Controller
     {
         $get_content_data_array = DB::table('contents')->where('chapter_id', $id)->get();
         return $get_content_data_array;
+    }
+
+    public function get_all($id)
+    {
+        $get_all_data = DB::table('contents')->join('chapters', 'contents.faculty_id', '=', 'chapters.faculty_id')->where('contents.content_id', $id)->first();
+        return $get_all_data;
+        
     }
 
     public function search_faculties($query)
@@ -469,10 +475,7 @@ class ApiController extends Controller
     {
         $Test = DB::table('subjects')->join('semesters', 'semesters.semester_id', '=', 'subjects.semester_id')->get();
 
-        dd($usingsecondtest);
-
         if ($query != '') {
-
             if ($test) {
 
                 $searchsubject = DB::table('faculties')->get();
@@ -510,5 +513,4 @@ class ApiController extends Controller
 
         return $data;
     }
-
 }

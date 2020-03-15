@@ -163,6 +163,8 @@ class FacultiesController extends Controller
 
         // Get data for inserting into the semester
         $level_id_semester = $faculties->level_id;
+        
+
         $faculty_id_semester = $faculties->faculty_id;
 
         //For inserting into semester
@@ -177,7 +179,8 @@ class FacultiesController extends Controller
             $semesters->numberofyear = $numberofyear;
             $semesters->save();
         }
-        return redirect()->back();
+
+        return \Redirect::route('getfacultiesIndex',$level_id_semester)->with('updatesuccess', 'Faculty is updated successfully');
     }
 
     /**
@@ -195,7 +198,9 @@ class FacultiesController extends Controller
     public function editfacultiesDetails($id)
     {
         $facultiesdetails = Semester::where('faculty_id', $id)->first();
+
         $facultiesdetails_faculty = Faculty::where('faculty_id', $id)->first();
+       
 
         $facultiesdetails_db = DB::table('faculties')->where('faculty_id', $id)->get();
 

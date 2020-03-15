@@ -126,7 +126,7 @@
         <div class="card-body">
             <table class="table mt-0 table-striped">
                 <thead>
-              
+    
                     <tr>
                         <th scope="col">S.N</th>
                         <th scope="col">Semester</th>

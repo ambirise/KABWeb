@@ -38,6 +38,14 @@
 </div>
 @endif
 
+@if($message = Session::get('updatesuccess'))
+<div class="container mt-2">
+    <div class="card alert alert-danger" role="alert">
+        <p>{{$message}}<p>
+    </div>
+</div>
+@endif
+
 @if($message = Session::get('searchnotfound'))
 <div class="container mt-2">
     <div class="alert alert-danger" role="alert">
@@ -86,8 +94,8 @@
                         <td>{{$key+1}}</td>
                         <td>{{$subject_data->chapter_title}}</td>
                         <td>
-                            <a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                onClick=window.open('/editchapters/{{$subject_data->chapter_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                            <a href="{{route('editchaptersDetails',$subject_data->chapter_id)}}" NAME="Error Handling" title="ZeroDivisionError handling"
+                                onClick=event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delchaptersDetails',$subject_data->chapter_id)}}"
                                 onclick="return confirmClick();" class="delete_user"><button type="button"

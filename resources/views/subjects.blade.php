@@ -129,6 +129,14 @@
 </div>
 @endif
 
+@if($message = Session::get('updatesuccess'))
+<div class="container mt-2">
+    <div class="card alert alert-danger" role="alert">
+        <p>{{$message}}<p>
+    </div>
+</div>
+@endif
+
 @if($message = Session::get('searchnotfound'))
         <div class="container mt-2">
             <div class="alert alert-danger" role="alert">
@@ -165,6 +173,14 @@
                     <tr>
                         <th scope="col">S.N</th>
                         <th scope="col">Subject Title</th>
+                        <!-- @if($get_semester_data->yearorsemester == "s")
+                            <th scope="col">Semester</th>
+                        
+                        @endif
+                        @if($get_semester_data->yearorsemester == "y")
+                            <th scope="col">Year</th>
+        
+                        @endif -->
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -184,8 +200,8 @@
                         <th scope="row">{{$i}}</th>
                         <td>{{$subject_data->subject_title}}</td>
                         <td>
-                            <a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                onClick=window.open('/editsubjects/{{$subject_data->subject_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                            <a href="{{route('editsubjectsDetails',$subject_data->subject_id)}}" NAME="Error Handling" title="ZeroDivisionError handling"
+                                onClick=event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delsubjectsDetails',$subject_data->subject_id)}}"
                                 onclick="return confirmClick();" class="delete_user"><button type="button"
@@ -211,8 +227,8 @@
                         <th scope="row">{{$i}}</th>
                         <td>{{$subject_data->subject_title}}</td>
                         <td>
-                            <a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                onClick=window.open('/editsubjects/{{$subject_data->subject_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                            <a href="{{route('editsubjectsDetails',$subject_data->subject_id)}}" NAME="Error Handling" title="ZeroDivisionError handling"
+                                onClick=event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delsubjectsDetails',$subject_data->subject_id)}}"
                                 onclick="return confirmClick();" class="delete_user"><button type="button"
@@ -239,9 +255,10 @@
                         style="cursor:pointer;">
                         <th scope="row">{{$i}}</th>
                         <td>{{$subject_data->subject_title}}</td>
+                      
                         <td>
-                            <a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                onClick=window.open('/editsubjects/{{$subject_data->subject_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                            <a href="{{route('editsubjectsDetails',$subject_data->subject_id)}}" NAME="Error Handling" title="ZeroDivisionError handling"
+                                onClick=event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delsubjectsDetails',$subject_data->subject_id)}}"
                                 onclick="return confirmClick();" class="delete_user"><button type="button"
@@ -266,9 +283,10 @@
                         style="cursor:pointer;">
                         <th scope="row">{{$i}}</th>
                         <td>{{$subject_data->subject_title}}</td>
+                        
                         <td>
-                            <a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                onClick=window.open('/editsubjects/{{$subject_data->subject_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                            <a href="{{route('editsubjectsDetails',$subject_data->subject_id)}}" NAME="Error Handling" title="ZeroDivisionError handling"
+                                onClick=event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delsubjectsDetails',$subject_data->subject_id)}}"
                                 onclick="return confirmClick();" class="delete_user"><button type="button"
@@ -297,8 +315,8 @@
                         <th scope="row">{{$i}}</th>
                         <td>{{$subject_data->subject_title}}</td>
                         <td>
-                            <a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                onClick=window.open('/editsubjects/{{$subject_data->subject_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                            <a href="{{route('editsubjectsDetails',$subject_data->subject_id)}}" NAME="Error Handling" title="ZeroDivisionError handling"
+                                onClick=event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delsubjectsDetails',$subject_data->subject_id)}}"
                                 onclick="return confirmClick();" class="delete_user"><button type="button"
@@ -324,8 +342,8 @@
                         <th scope="row">{{$i}}</th>
                         <td>{{$subject_data->subject_title}}</td>
                         <td>
-                            <a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                onClick=window.open('/editsubjects/{{$subject_data->subject_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                            <a href="{{route('editsubjectsDetails',$subject_data->subject_id)}}" NAME="Error Handling" title="ZeroDivisionError handling"
+                                onClick=event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delsubjectsDetails',$subject_data->subject_id)}}"
                                 onclick="return confirmClick();" class="delete_user"><button type="button"
@@ -354,8 +372,8 @@
                         <th scope="row">{{$i}}</th>
                         <td>{{$subject_data->subject_title}}</td>
                         <td>
-                            <a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                onClick=window.open('/editsubjects/{{$subject_data->subject_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                            <a href="{{route('editsubjectsDetails',$subject_data->subject_id)}}" NAME="Error Handling" title="ZeroDivisionError handling"
+                                onClick=event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delsubjectsDetails',$subject_data->subject_id)}}"
                                 onclick="return confirmClick();" class="delete_user"><button type="button"
@@ -381,8 +399,8 @@
                         <th scope="row">{{$i}}</th>
                         <td>{{$subject_data->subject_title}}</td>
                         <td>
-                            <a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                onClick=window.open('/editsubjects/{{$subject_data->subject_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                            <a href="{{route('editsubjectsDetails',$subject_data->subject_id)}}" NAME="Error Handling" title="ZeroDivisionError handling"
+                                onClick=event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delsubjectsDetails',$subject_data->subject_id)}}"
                                 onclick="return confirmClick();" class="delete_user"><button type="button"
@@ -411,8 +429,8 @@
                         <th scope="row">{{$i}}</th>
                         <td>{{$subject_data->subject_title}}</td>
                         <td>
-                            <a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                onClick=window.open('/editsubjects/{{$subject_data->subject_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                            <a href="{{route('editsubjectsDetails',$subject_data->subject_id)}}" NAME="Error Handling" title="ZeroDivisionError handling"
+                                onClick=event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delsubjectsDetails',$subject_data->subject_id)}}"
                                 onclick="return confirmClick();" class="delete_user"><button type="button"
@@ -438,8 +456,8 @@
                         <th scope="row">{{$i}}</th>
                         <td>{{$subject_data->subject_title}}</td>
                         <td>
-                            <a href="javascript:void(0);" NAME="Error Handling" title="ZeroDivisionError handling"
-                                onClick=window.open('/editsubjects/{{$subject_data->subject_id}}/edit',"Ratting","width=800,height=350,left=180,top=130,toolbar=0,status=0,");event.stopPropagation();>
+                            <a href="{{route('editsubjectsDetails',$subject_data->subject_id)}}" NAME="Error Handling" title="ZeroDivisionError handling"
+                                onClick=event.stopPropagation();>
                                 <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delsubjectsDetails',$subject_data->subject_id)}}"
                                 onclick="return confirmClick();" class="delete_user"><button type="button"
