@@ -79,7 +79,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Kaski Association of Blind
                 </div>
 
                 <div class="links">

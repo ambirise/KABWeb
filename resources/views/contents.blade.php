@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#316698;">
     <!-- for logo -->
-    <a class="navbar-brand" href="{{ url('/home') }}"><input type="image" id="myimage" src="{{ asset('/backend/images/logo.png') }}"
-            height="40" width="80" /></a>
+    <a class="navbar-brand" href="{{ url('/home') }}"><input type="image" id="myimage"
+            src="{{ asset('/backend/images/logo.png') }}" height="40" width="80" /></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -9,7 +9,6 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto" style="font-size:20px;">
-
             <li class="ml-2 nav-item active">
                 <a class="nav-link border p-1" style="color:white;" href="{{ url('/home') }}">Home</a>
             </li>
@@ -82,7 +81,7 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <label class="border border-black p-1">Upload Audio:</label>
-                            <input multiple="multiple"  type="file" id="audiofile" name="audio[]" required>
+                            <input multiple="multiple" type="file" id="audiofile" name="audio[]" required>
                             <div class="progress">
                                 <div class="bar"></div>
                                 <div class="percent">0%</div>
@@ -136,7 +135,8 @@
                 </div>
                 <div class="col-md-4">
                     <!-- // for other additional pages -->
-                    <button class="btn btn-outline-primary" id="addcontentbutton" style="float:right">CONTENT ADD</button>
+                    <button class="btn btn-outline-primary" id="addcontentbutton" style="float:right">CONTENT
+                        ADD</button>
                 </div>
             </div>
         </div>
@@ -194,7 +194,6 @@
             });
         });
     });
-
 </script>
 
 <script>

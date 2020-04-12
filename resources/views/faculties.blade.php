@@ -1,7 +1,6 @@
 @extends('home')
 @section('content')
 
-
 <div class="container"><br>
     <a href="{{ url('/levels') }}"><span>Levels</span></a> -> <a
         href="{{ url('/faculties',$get_level_data->level_id) }}"><span>{{$get_level_data->level_title}}</span></a>
@@ -23,7 +22,6 @@
                         <input type="text" name="levelid" hidden="true" class="form-control" value="{{$level_id}}"
                             id="usr" style="width:182px;">
                     </div>
-
 
                     @if($get_level_data->level_title=='School')
                     <div class="col-md-4 hideclass">
@@ -63,7 +61,7 @@
                     <div class="col-md-4">
                         <span style="font-size:16px;">Field</span>
                         <input type="text" name="facultybachelor" class="form-control" id="usr"
-                            style="width:182px;"><br>
+                            style="width:182px;" required><br>
                     </div>
                     @endif
 
@@ -71,18 +69,18 @@
                     <div class="col-md-4 hidefaculty">
                         <span style="font-size:16px;">Faculty</span>
                         <input type="text" name="facultybachelor" class="form-control" id="usr"
-                            style="width:182px;"><br>
+                            style="width:182px;" required><br>
                     </div>
 
                     <div class="col-md-4 hidesemesterandyear">
                         <span style="font-size:16px;">Choose Semester or Year</span>
                         <div>
                             <label class="btn btn-light">
-                                <input type="radio" name="Semester" Value="s" autocomplete="off">
+                                <input type="radio" name="Semester" Value="s" autocomplete="off" required>
                                 Semester
                             </label>
                             <label class="btn btn-light">
-                                <input type="radio" name="Semester" value="y" autocomplete="off"> Year
+                                <input type="radio" name="Semester" value="y" autocomplete="off" required> Year
                             </label>
                         </div>
                     </div>
@@ -102,7 +100,7 @@
                             </label>
                         </div>
                     </div>
-
+ 
                     <div class="col-md-4 hidesemesters" hidden="true">
                         <span style="font-size:16px;">Number of Semesters</span>
 
@@ -228,7 +226,7 @@
 
 @if($message = Session::get('updatesuccess'))
 <div class="container mt-2">
-    <div class="card alert alert-danger" role="alert">
+    <div class="card alert alert-success" role="alert">
         <p>{{$message}}<p>
     </div>
 </div>
@@ -353,8 +351,6 @@
                     @endif
 
                     @endif
-
-
                     <!-- End of main if condition -->
 
                     <!-- For second main if condition -->

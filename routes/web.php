@@ -33,7 +33,7 @@ Route::get('/subjects/{Semester}', ['uses'=>'SubjectsController@index','as'=>'ge
 Route::get('/chapters/{Subject}', ['uses'=>'ChaptersController@index','as'=>'getchaptersIndex']);
 Route::get('/contents/{Chapter}', ['uses'=>'ContentsController@index','as'=>'getcontentsIndex']);
 
-Route::get('/getcontent/{Content}', ['uses'=>'ShowcontentController@index','as'=>'getcontentShow']);
+Route::get('/getcontent/{content_title}', ['uses'=>'ShowcontentController@index','as'=>'getcontentShow']);
 
 // Route::post('semesters/{Faculty}',['uses'=>'SemestersController@store','as'=>'semestersStore']);
 Route::post('subjects/{Semester}',['uses'=>'SubjectsController@store','as'=>'subjectsStore']);
@@ -64,5 +64,9 @@ Route::get('editsubjects/{Subject}/edit',['uses'=>'SubjectsController@editsubjec
 Route::get('editchapters/{Chapter}/edit',['uses'=>'ChaptersController@editchaptersDetails','as'=>'editchaptersDetails']);
 
 Route::resource('/levels','LevelsController');
+
+Route::get('export', 'MyController@export')->name('export');
+Route::get('importExportView', 'MyController@importExportView');
+Route::post('import', 'MyController@import')->name('import');
 // Route::resource('/semesters','SemestersController');
 // Route::resource('/subjects','SubjectsController');

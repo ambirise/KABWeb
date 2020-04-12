@@ -18,7 +18,7 @@
                     <div class="col-md-6">
                         <div class="col-md-4">
                             <span style="font-size:16px;">Chapter</span>
-                            <input type="text" name="chapter" class="form-control" id="usr" style="width:260px;"><br>
+                            <input type="text" name="chapter" class="form-control" id="usr" style="width:260px;" required><br>
                         </div>
                     </div>
                     <div class="col-md-6"><br>
@@ -40,7 +40,7 @@
 
 @if($message = Session::get('updatesuccess'))
 <div class="container mt-2">
-    <div class="card alert alert-danger" role="alert">
+    <div class="card alert alert-success" role="alert">
         <p>{{$message}}<p>
     </div>
 </div>

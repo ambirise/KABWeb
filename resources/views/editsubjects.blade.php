@@ -20,41 +20,41 @@
                                 <span style="font-size:16px;">Select Semester</span><br>
                                 <select class="custom-select" name="year" style="height:38px;width:182px;"
                                     id="customchange" required>
-                                    @if($get_semester_data->semester_title == "1s")
-                                    <option value="1s" selected>First</option>
+                                    @if($get_semester_data->semester_title == "First Semester")
+                                    <option value="First Semester" selected>First</option>
                                     @else
-                                    <option value="1s">First</option>
+                                    <option value="First Semester">First</option>
                                     @endif
 
-                                    @if($get_semester_data->semester_title == "2s")
-                                    <option value="2s" selected>Second</option>
+                                    @if($get_semester_data->semester_title == "Second Semester")
+                                    <option value="Second Semester" selected>Second</option>
                                     @else
-                                    <option value="2s">Second</option>
+                                    <option value="Second Semester">Second</option>
                                     @endif
 
 
-                                    @if($get_semester_data->semester_title == "3s")
-                                    <option value="3s" selected>Third</option>
+                                    @if($get_semester_data->semester_title == "Third Semester")
+                                    <option value="Third Semester" selected>Third</option>
                                     @else
-                                    <option value="3s">Third</option>
+                                    <option value="Third Semester">Third</option>
                                     @endif
 
-                                    @if($get_semester_data->semester_title == "4s")
-                                    <option value="4s" selected>Fourth</option>
+                                    @if($get_semester_data->semester_title == "Fourth Semester")
+                                    <option value="Fourth Semester" selected>Fourth</option>
                                     @else
-                                    <option value="4s">Fourth</option>
+                                    <option value="Fourth Semester">Fourth</option>
                                     @endif
 
-                                    @if($get_semester_data->semester_title == "5s")
-                                    <option value="5s" selected>Fifth</option>
+                                    @if($get_semester_data->semester_title == "Fifth Semester")
+                                    <option value="Fifth Semester" selected>Fifth</option>
                                     @else
-                                    <option value="5s">Fifth</option>
+                                    <option value="Fifth Semester">Fifth</option>
                                     @endif
 
-                                    @if($get_semester_data->semester_title == "6s")
-                                    <option value="6s" selected>Sixth</option>
+                                    @if($get_semester_data->semester_title == "Sixth Semester")
+                                    <option value="Sixth Semester" selected>Sixth</option>
                                     @else
-                                    <option value="6s">Sixth</option>
+                                    <option value="Sixth Semester">Sixth</option>
                                     @endif
                                 </select>
                                 @endif
@@ -64,53 +64,52 @@
                                 <span style="font-size:16px;">Select Semester</span><br>
                                 <select class="custom-select" name="year" style="height:38px;width:182px;"
                                     id="customchange" required>
-                                    @if($get_semester_data->semester_title == "1s")
-                                    <option value="1s" selected>First</option>
+                                    @if($get_semester_data->semester_title == "First Semester")
+                                    <option value="First Semester" selected>First</option>
                                     @else
-                                    <option value="1s">First</option>
+                                    <option value="First Semester">First</option>
                                     @endif
 
-                                    @if($get_semester_data->semester_title == "2s")
-                                    <option value="2s" selected>Second</option>
+                                    @if($get_semester_data->semester_title == "Second Semester")
+                                    <option value="Second Semester" selected>Second</option>
                                     @else
-                                    <option value="2s">Second</option>
+                                    <option value="Second Semester">Second</option>
                                     @endif
 
-
-                                    @if($get_semester_data->semester_title == "3s")
-                                    <option value="3s" selected>Third</option>
+                                    @if($get_semester_data->semester_title == "Third Semester")
+                                    <option value="Third Semester" selected>Third</option>
                                     @else
-                                    <option value="3s">Third</option>
+                                    <option value="Third Semester">Third</option>
                                     @endif
 
-                                    @if($get_semester_data->semester_title == "4s")
-                                    <option value="4s" selected>Fourth</option>
+                                    @if($get_semester_data->semester_title == "Fourth Semester")
+                                    <option value="Fourth Semester" selected>Fourth</option>
                                     @else
-                                    <option value="4s">Fourth</option>
+                                    <option value="Fourth Semester">Fourth</option>
                                     @endif
 
-                                    @if($get_semester_data->semester_title == "5s")
-                                    <option value="5s" selected>Fifth</option>
+                                    @if($get_semester_data->semester_title == "Fifth Semester")
+                                    <option value="Fifth Semester" selected>Fifth</option>
                                     @else
-                                    <option value="5s">Fifth</option>
+                                    <option value="Fifth Semester">Fifth</option>
                                     @endif
 
-                                    @if($get_semester_data->semester_title == "6s")
-                                    <option value="6s" selected>Sixth</option>
+                                    @if($get_semester_data->semester_title == "Sixth Semester")
+                                    <option value="Sixth Semester" selected>Sixth</option>
                                     @else
-                                    <option value="6s">Sixth</option>
+                                    <option value="Sixth Semester">Sixth</option>
                                     @endif
 
-                                    @if($get_semester_data->semester_title == "7s")
-                                    <option value="7s" selected>Seventh</option>
+                                    @if($get_semester_data->semester_title == "Seventh Semester")
+                                    <option value="Seventh Semester" selected>Seventh</option>
                                     @else
-                                    <option value="7s">Seventh</option>
+                                    <option value="Seventh Semester">Seventh</option>
                                     @endif
 
-                                    @if($get_semester_data->semester_title == "8s")
-                                    <option value="8s" selected>Eighth</option>
+                                    @if($get_semester_data->semester_title == "Eighth Semester")
+                                    <option value="Eighth Semester" selected>Eighth</option>
                                     @else
-                                    <option value="8s">Eighth</option>
+                                    <option value="Eighth Semester">Eighth</option>
                                     @endif
                                 </select>
                                 @endif
@@ -120,65 +119,65 @@
                                 <span style="font-size:16px;">Select Semester</span><br>
                                 <select class="custom-select" name="year" style="height:38px;width:182px;"
                                     id="customchange" required>
-                                    @if($get_semester_data->semester_title == "1s")
-                                    <option value="1s" selected>First</option>
+                                    @if($get_semester_data->semester_title == "First Semester")
+                                    <option value="First Semester" selected>First</option>
                                     @else
-                                    <option value="1s">First</option>
+                                    <option value="First Semester">First</option>
                                     @endif
 
-                                    @if($get_semester_data->semester_title == "2s")
-                                    <option value="2s" selected>Second</option>
+                                    @if($get_semester_data->semester_title == "Second Semester")
+                                    <option value="Second Semester" selected>Second</option>
                                     @else
-                                    <option value="2s">Second</option>
+                                    <option value="Second Semester">Second</option>
                                     @endif
 
 
-                                    @if($get_semester_data->semester_title == "3s")
-                                    <option value="3s" selected>Third</option>
+                                    @if($get_semester_data->semester_title == "Third Semester")
+                                    <option value="Third Semester" selected>Third</option>
                                     @else
-                                    <option value="3s">Third</option>
+                                    <option value="Third Semester">Third</option>
                                     @endif
 
-                                    @if($get_semester_data->semester_title == "4s")
-                                    <option value="4s" selected>Fourth</option>
+                                    @if($get_semester_data->semester_title == "Fourth Semester")
+                                    <option value="Fourth Semester" selected>Fourth</option>
                                     @else
-                                    <option value="4s">Fourth</option>
+                                    <option value="Fourth Semester">Fourth</option>
                                     @endif
 
-                                    @if($get_semester_data->semester_title == "5s")
-                                    <option value="5s" selected>Fifth</option>
+                                    @if($get_semester_data->semester_title == "Fifth Semester")
+                                    <option value="Fifth Semester" selected>Fifth</option>
                                     @else
-                                    <option value="5s">Fifth</option>
+                                    <option value="Fifth Semester">Fifth</option>
                                     @endif
 
-                                    @if($get_semester_data->semester_title == "6s")
-                                    <option value="6s" selected>Sixth</option>
+                                    @if($get_semester_data->semester_title == "Sixth Semester")
+                                    <option value="Sixth Semester" selected>Sixth</option>
                                     @else
-                                    <option value="6s">Sixth</option>
+                                    <option value="Sixth Semester">Sixth</option>
                                     @endif
 
-                                    @if($get_semester_data->semester_title == "7s")
-                                    <option value="7s" selected>Seventh</option>
+                                    @if($get_semester_data->semester_title == "Seventh Semester")
+                                    <option value="Seventh Semester" selected>Seventh</option>
                                     @else
-                                    <option value="7s">Seventh</option>
+                                    <option value="Seventh Semester">Seventh</option>
                                     @endif
 
-                                    @if($get_semester_data->semester_title == "8s")
-                                    <option value="8s" selected>Eighth</option>
+                                    @if($get_semester_data->semester_title == "Eighth Semester")
+                                    <option value="Eighth Semester" selected>Eighth</option>
                                     @else
-                                    <option value="8s">Eighth</option>
+                                    <option value="Eighth Semester">Eighth</option>
                                     @endif
 
-                                    @if($get_semester_data->semester_title == "9s")
-                                    <option value="9s" selected>Eighth</option>
+                                    @if($get_semester_data->semester_title == "Nineth Semester")
+                                    <option value="Nineth Semester" selected>Eighth</option>
                                     @else
-                                    <option value="9s">Eighth</option>
+                                    <option value="Nineth Semester">Eighth</option>
                                     @endif
 
-                                    @if($get_semester_data->semester_title == "10s")
-                                    <option value="10s" selected>Eighth</option>
+                                    @if($get_semester_data->semester_title == "Ten Semester")
+                                    <option value="Tenth Semester" selected>Eighth</option>
                                     @else
-                                    <option value="10s">Eighth</option>
+                                    <option value="Tenth Semester">Eighth</option>
                                     @endif
 
                                 </select>
@@ -189,9 +188,9 @@
                                 <span style="font-size:16px;">Select Year</span><br>
                                 <select class="custom-select" name="year" style="height:38px;width:182px;"
                                     id="customchange" required>
-                                    <option value="1y" selected>First</option>
-                                    <option value="2y">Second</option>
-                                    <option value="3y">Third</option>
+                                    <option value="First Year" selected>First</option>
+                                    <option value="Second Year">Second</option>
+                                    <option value="Third Year">Third</option>
                                 </select>
                                 @endif
 
@@ -200,23 +199,22 @@
                                 <span style="font-size:16px;">Select Year</span><br>
                                 <select class="custom-select" name="year" style="height:38px;width:182px;"
                                     id="customchange" required>
-                                    <option value="1y" selected>First</option>
-                                    <option value="2y">Second</option>
-                                    <option value="3y">Third</option>
-                                    <option value="4y">Fourth</option>
+                                    <option value="First Year" selected>First</option>
+                                    <option value="Second Year">Second</option>
+                                    <option value="Third Year">Third</option>
+                                    <option value="Fourth Year">Fourth</option>
                                 </select>
                                 @endif
 
-                                @if($get_semester_data->yearorsemester == "y" && $get_semester_data->numberofyear ==
-                                "5")
+                                @if($get_semester_data->yearorsemester == "y" && $get_semester_data->numberofyear == "5")
                                 <span style="font-size:16px;">Select Year</span><br>
                                 <select class="custom-select" name="year" style="height:38px;width:182px;"
                                     id="customchange" required>
-                                    <option value="1y" selected>First</option>
-                                    <option value="2y">Second</option>
-                                    <option value="3y">Third</option>
-                                    <option value="4y">Fourth</option>
-                                    <option value="5y">Fifth</option>
+                                    <option value="First Year" selected>First</option>
+                                    <option value="Second Year">Second</option>
+                                    <option value="Third Year">Third</option>
+                                    <option value="Fourth Year">Fourth</option>
+                                    <option value="Fifth Year">Fifth</option>
                                 </select>
                                 @endif
                             </div>

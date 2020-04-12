@@ -35,14 +35,18 @@ class SubjectsController extends Controller
         $pluck_semesterid_semester = Arr::pluck($get_semester_data_array, ['semester_id']);
         $semester_id = implode(" ", $pluck_semesterid_semester);
 
-        $get_subject_data = DB::table('subjects')->where("subjects.faculty_id","=",$faculty_id)->get();
+        $get_subject_data = DB::table('subjects')->where('faculty_id', $faculty_id)->get();
+    
         $pluck_level_id = Arr::pluck($get_faculty_data_level_title, ['level_id']);
         $level_id = implode(" ", $pluck_level_id);
         $level_title = Level::where('level_id', $level_id)->first();
 
+        // for displaying in the subjects by number of semester or number of year
+        $get_all_subjects_from_semester = DB::table('semesters')->join('subjects', 'semesters.semester_id', '=', 'subjects.semester_id')->where('semesters.numberofsemester','=',$get_semester_data->numberofsemester)->get();
+
         return view('subjects')->with('get_semester_data', $get_semester_data)
             ->with('get_subject_data', $get_subject_data)->with('get_faculty_data', $get_faculty_data)
-            ->with('level_title', $level_title);
+            ->with('level_title', $level_title)->with('get_all_subjects_from_semester', $get_all_subjects_from_semester);
     }
 
     /**
@@ -67,23 +71,10 @@ class SubjectsController extends Controller
 
         $get_semester_data_array = Semester::where('faculty_id', $faculty_id)->get();
 
-
         $pluck_semesterid_semester = Arr::pluck($get_semester_data_array, ['semester_id']);
         $id = implode(" ", $pluck_semesterid_semester);
 
-        if ($id == !null) {
-
-            // $get_id_faculty = DB::table('semesters')->where('semester_id',$semester_id)->get();
-            // $pluck_id_faculty=Arr::pluck($get_id_faculty,['semester_id']);
-            // $implode_id_faculty = implode(" ",$pluck_id_faculty);
-
-            // $id=$implode_id_faculty;
-
-            $editSemesters = Semester::find($id);
-            $editSemesters->semester_title = $get_semester_duration;
-            $editSemesters->save();
-        }
-
+      
         if ($id == !null) {
             $get_id_semester = DB::table('semesters')->where('semester_id', $id)->get();
             $pluck_levelid_semester = Arr::pluck($get_id_semester, ['level_id']);
@@ -111,6 +102,7 @@ class SubjectsController extends Controller
         $subjects->level_id = $implode_levelid_semester;
         $subjects->faculty_id = $implode_facultyid_semester;
         $subjects->subject_title = $get_subject;
+        $subjects->semester_choosen = $get_semester_duration;
         $subjects->save();
         return redirect()->back();
     }
@@ -156,19 +148,6 @@ class SubjectsController extends Controller
 
         $id = implode(" ", $pluck_semesterid_semester);
 
-        if ($id == !null) {
-
-            // $get_id_faculty = DB::table('semesters')->where('semester_id',$semester_id)->get();
-            // $pluck_id_faculty=Arr::pluck($get_id_faculty,['semester_id']);
-            // $implode_id_faculty = implode(" ",$pluck_id_faculty);
-
-            // $id=$implode_id_faculty;
-
-            $editSemesters = Semester::find($id);
-            $editSemesters->semester_title = $get_semester_duration;
-            $editSemesters->save();
-        }
-
         // if ($id == !null) {
         //     $get_id_semester = DB::table('semesters')->where('semester_id', $id)->get();
         //     $pluck_levelid_semester = Arr::pluck($get_id_semester, ['level_id']);
@@ -191,6 +170,7 @@ class SubjectsController extends Controller
 
         $subjects = Subject::find($subject_id);
         $subjects->subject_title = $get_subject;
+        $subjects->semester_choosen = $get_semester_duration;
         $subjects->save();
 
         return \Redirect::route('getsubjectsIndex',$faculty_id)->with('updatesuccess', 'Subject is updated successfully');

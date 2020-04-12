@@ -12,6 +12,7 @@ class ShowcontentController extends Controller
 {
     public function index($content_id){
         $get_id_content= DB::table('contents')->where('content_id',$content_id)->get();
+   
         $pluck_contenttitle_content=Arr::pluck($get_id_content,['content_title']);
         $implode_contenttitle_content = implode(" ",$pluck_contenttitle_content);
           

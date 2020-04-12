@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Content;
 use App\Http\Controllers\Controller;
+use App\Preferences;
 use App\Student;
 use App\User;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class ApiController extends Controller
 {
     public $successStatus = 200;
+    public $student;
 
     public function guardnameApi()
     {
@@ -366,6 +368,12 @@ class ApiController extends Controller
     //     }
     // }
 
+    public function getloginApi()
+    {
+        $get_user_data_array = DB::table('students')->select('email', 'password')->get();
+        return $get_user_data_array;
+    }
+
     public function getTestApi()
     {
         $get_content_data_array = DB::table('contents')->get();
@@ -380,7 +388,7 @@ class ApiController extends Controller
 
     public function getfacultyApi($id)
     {
-        $get_faculty_data_array = DB::table('faculties')->join('levels', 'levels.level_id', '=', 'faculties.level_id')->where('faculties.level_id','=',$id)->get();
+        $get_faculty_data_array = DB::table('faculties')->join('levels', 'levels.level_id', '=', 'faculties.level_id')->where('faculties.level_id', '=', $id)->get();
         return $get_faculty_data_array;
     }
 
@@ -390,16 +398,16 @@ class ApiController extends Controller
         return $get_semester_data_array;
 
         // if($get_level_data_array==1){
-   
+
         // }
 
         return $implode_levelid;
 
         // $implode_facultyid = implode(" ", $pluck_facultyid);
-   
+
         if ($implode_yearorsemester !== "") {
-            
-        } 
+
+        }
     }
 
     public function getsubjectApi($id)
@@ -420,12 +428,12 @@ class ApiController extends Controller
         return $get_content_data_array;
     }
 
-    public function get_all($id)
-    {
-        $get_all_data = DB::table('contents')->join('chapters', 'contents.faculty_id', '=', 'chapters.faculty_id')->where('contents.content_id', $id)->first();
-        return $get_all_data;
-        
-    }
+    // public function get_all($id)
+    // {
+    //     $get_all_data = DB::table('contents')->join('chapters', 'contents.faculty_id', '=', 'chapters.faculty_id')->where('contents.content_id', $id)->first();
+    //     return $get_all_data;
+
+    // }
 
     public function search_faculties($query)
     {
@@ -454,9 +462,9 @@ class ApiController extends Controller
         if ($query != '') {
             $get_chapter_data = DB::table('chapters')->where('chapter_title', 'like', '%' . $query . '%')->get();
         } else {
-            $get_chapter_data = DB::table('chapters')
-                ->get();
+            $get_chapter_data = DB::table('chapters')->get();
         }
+
         return $get_chapter_data;
     }
 
@@ -512,5 +520,185 @@ class ApiController extends Controller
         }
 
         return $data;
+    }
+
+    public function getStudentLogin(Request $request)
+    {
+        $student = Student::where("email", $request->email)->first();
+
+        if ($student) {
+            if (Hash::check($request->password, $student->password)) {
+                $passwordcheck = $student;
+
+            } else {
+                json_encode('Invalid Username or Password Please Try Again');
+            }
+        }
+
+        // if($student){
+        //     if(Hash::check($request->password, $student->password)){
+        //          return $student;
+        //     }
+        //     else
+        //     {
+        //         return response()->json(['message' => 'Sorry invalid email or password']);
+        //     }
+        // }
+        // else
+        //     {
+        //         return response()->json(['message' => 'Sorry invalid email or password']);
+        //     }
+
+        if (isset($passwordcheck)) {
+
+            $SuccessLoginMsg = 'Data Matched';
+
+            // Converting the message into JSON format.
+            $SuccessLoginJson = json_encode($SuccessLoginMsg);
+
+            // Echo the message.
+            echo $SuccessLoginJson;
+        } else {
+
+            // If the record inserted successfully then show the message.
+            $InvalidMSG = 'Invalid Username or Password Please Try Again';
+
+            // Converting the message into JSON format.
+            $InvalidMSGJSon = json_encode($InvalidMSG);
+
+            // Echo the message.
+            echo $InvalidMSGJSon;
+
+        }
+    }
+
+    public function addfavouritesAPI(Request $request, $id)
+    {
+        $array = array();
+
+        $json_favourite_content = Preferences::where('student_id', 1)->pluck('student_favourite')->first();
+        $jsondecode_favourite_content = json_decode($json_favourite_content);
+
+        // $favourite_content = json_encode($array);
+        $get_content = Content::where('content_id', $id)->get()->count();
+
+        if ($jsondecode_favourite_content == !null) {
+            if (in_array($id, $jsondecode_favourite_content)) {
+                echo json_encode("Favourite Already Exists");
+                exit();
+            }
+        }
+
+        $jsondecode_favourite_content[] = $id;
+        $favourite_content = json_encode($jsondecode_favourite_content);
+
+        //for getting student level , faculty and semester
+        // $get_student_level = DB::table('levels')->where('student_id', 1)->get();
+        // return $get_student_level;
+
+        $editfavourite = Preferences::where('student_id', 1)->first();
+
+        $editfavourite->student_favourite = $favourite_content;
+        $editfavourite->save();
+    }
+
+    public function addhistoryAPI(Request $request, $id)
+    {
+        $array = array();
+
+        $json_history_content = Preferences::where('student_id', 1)->pluck('student_history')->first();
+
+        $jsondecode_history_content = json_decode($json_history_content);
+
+        // $favourite_content = json_encode($array);
+        $get_content = Content::where('content_id', $id)->get()->count();
+
+        if ($jsondecode_history_content == !null) {
+            if (in_array($id, $jsondecode_history_content)) {
+                echo json_encode("History Already Exists");
+                exit();
+            }
+        }
+
+        $jsondecode_history_content[] = $id;
+        $history_content = json_encode($jsondecode_history_content);
+
+        $edithistory = Preferences::where('student_id', 1)->first();
+
+        $edithistory->student_history = $history_content;
+        $edithistory->save();
+    }
+
+    public function delfavouritesAPI(Request $request, $id)
+    {
+        // $array = ["1", "2", "3"];
+        // $favourite_content = json_encode($array);
+        $get_content = Content::where('content_id', $id)->get()->count();
+
+        if ($get_content > 0) {
+            $json_favourite_content = Preferences::where('student_id', 1)->pluck('student_favourite')->first();
+
+            $jsondecode_favourite_content = json_decode($json_favourite_content);
+
+            if (in_array($id, $jsondecode_favourite_content)) {
+                $remove_content_array = array_diff($jsondecode_favourite_content, array($id));
+                $final_collection = collect($remove_content_array)->values();
+
+                $editfavourite = Preferences::where('student_id', 1)->first();
+
+                $editfavourite->student_favourite = json_encode($final_collection);
+                $editfavourite->save();
+            } else {
+                echo "Content id doest not exist in an array";
+            }
+        }
+    }
+
+    public function delhistoryAPI(Request $request, $id)
+    {
+        // $array = ["1", "2", "3"];
+        // $favourite_content = json_encode($array);
+        $get_content = Content::where('content_id', $id)->get()->count();
+
+        if ($get_content > 0) {
+            $json_history_content = Preferences::where('student_id', 1)->pluck('student_history')->first();
+
+            $jsondecode_history_content = json_decode($json_history_content);
+
+            if (in_array($id, $jsondecode_history_content)) {
+                $remove_content_array = array_diff($jsondecode_history_content, array($id));
+                $final_collection = collect($remove_content_array)->values();
+
+                $edithistory = Preferences::where('student_id', 1)->first();
+
+                $edithistory->student_history = json_encode($final_collection);
+                $edithistory->save();
+            } else {
+                echo "Content id doest not exist in an array";
+            }
+        }
+    }
+
+    public function showfavouritesAPI()
+    {
+        $json_favourite_content = Preferences::where('student_id', 1)->pluck('student_favourite')->first();
+        $jsondecode_favourite_content = json_decode($json_favourite_content);
+
+        foreach ($jsondecode_favourite_content as $data) {
+            $favourites_array[] = Content::where('content_id', $data)->first();
+        }
+        return array_values(array_filter($favourites_array));
+    }
+
+    public function showhistoryAPI()
+    {
+        $json_history_content = Preferences::where('student_id', 1)->pluck('student_history')->first();
+
+        $jsondecode_history_content = json_decode($json_history_content);
+        
+        foreach ($jsondecode_history_content as $data) {
+            $history_array[] = Content::where('content_id', $data)->first();
+        }
+        return array_values(array_filter($history_array));
     }
 }

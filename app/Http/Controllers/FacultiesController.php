@@ -179,7 +179,6 @@ class FacultiesController extends Controller
             $semesters->numberofyear = $numberofyear;
             $semesters->save();
         }
-
         return \Redirect::route('getfacultiesIndex',$level_id_semester)->with('updatesuccess', 'Faculty is updated successfully');
     }
 
@@ -189,6 +188,7 @@ class FacultiesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function destroy($id)
     {
         $post = Faculty::where('faculty_id', $id)->delete();
@@ -198,10 +198,9 @@ class FacultiesController extends Controller
     public function editfacultiesDetails($id)
     {
         $facultiesdetails = Semester::where('faculty_id', $id)->first();
-
+      
         $facultiesdetails_faculty = Faculty::where('faculty_id', $id)->first();
        
-
         $facultiesdetails_db = DB::table('faculties')->where('faculty_id', $id)->get();
 
         $pluckleveldetailsid = Arr::pluck($facultiesdetails_db, ['level_id']);

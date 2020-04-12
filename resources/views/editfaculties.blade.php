@@ -11,8 +11,8 @@
         </div>
         <div class="card-body">
             <main class="page-content" style="font-family: Times New Roman, Times, serif;">
-                <form action="{{ route('facultiesUpdate', $facultiesdetails->faculty_id)}}"
-                    onSubmit="window.opener.location.reload();" method="POST" id="updateformfaculty"
+                <form action="{{ route('facultiesUpdate', $facultiesdetails_faculty->faculty_id)}}"
+                       method="POST" id="updateformfaculty"
                     enctype="mutipart/form-data">
                     {{ csrf_field() }}
                     <div class="row">

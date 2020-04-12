@@ -5,9 +5,7 @@
     <a href="{{ url('/levels') }}"><span>Levels</span></a> -> <a
         href="{{ url('/faculties',$get_semester_data->level_id) }}"><span>{{$level_title->level_title}}</span></a>
     <!-- -> <a href="{{ url('/semesters',$get_semester_data->faculty_id) }}"><span>Semesters</span></a> -->
-    -> <a
-        href="{{ url('/subjects', $get_semester_data->faculty_id) }}"><span>{{$get_faculty_data->faculty_title}}</span></a>
-
+    -> <a href="{{ url('/subjects', $get_semester_data->faculty_id) }}"><span>{{$get_faculty_data->faculty_title}}</span></a>
     <form action="{{route('subjectsStore',$get_semester_data->faculty_id)}}" method="POST" enctype="mutipart/form-data">
         <div class="card mt-2 addsubjectform" hidden="true">
             <div class="card-body" style="padding:8px;">
@@ -18,12 +16,12 @@
                         <span style="font-size:16px;">Select Semester</span><br>
                         <select class="custom-select" name="year" style="height:38px;width:182px;" id="customchange"
                             required>
-                            <option value="1s" selected>First</option>
-                            <option value="2s">Second</option>
-                            <option value="3s">Third</option>
-                            <option value="4s">Fourth</option>
-                            <option value="5s">Fifth</option>
-                            <option value="6s">Sixth</option>
+                            <option value="First Semester" selected>First</option>
+                            <option value="Second Semester">Second</option>
+                            <option value="Third Semester">Third</option>
+                            <option value="Fourth Semester">Fourth</option>
+                            <option value="Fifth Semester">Fifth</option>
+                            <option value="Sixth Semester">Sixth</option>
                         </select>
                     </div>
                     @endif
@@ -33,14 +31,14 @@
                         <span style="font-size:16px;">Select Semester</span><br>
                         <select class="custom-select" name="year" style="height:38px;width:182px;" id="customchange"
                             required>
-                            <option value="1s" selected>First</option>
-                            <option value="2s">Second</option>
-                            <option value="3s">Third</option>
-                            <option value="4s">Fouth</option>
-                            <option value="5s">Fifth</option>
-                            <option value="6s">Sixth</option>
-                            <option value="7s">Seventh</option>
-                            <option value="8s">Eighth</option>
+                            <option value="First Semester" selected>First</option>
+                            <option value="Second Semester">Second</option>
+                            <option value="Third Semester">Third</option>
+                            <option value="Fourth Semester">Fourth</option>
+                            <option value="Fifth Semester">Fifth</option>
+                            <option value="Sixth Semester">Sixth</option>
+                            <option value="Seventh Semester">Seventh</option>
+                            <option value="Eighth Semester">Eighth</option>
                         </select>
                     </div>
                     @endif
@@ -50,16 +48,16 @@
                         <span style="font-size:16px;">Select Semester</span><br>
                         <select class="custom-select" name="year" style="height:38px;width:182px;" id="customchange"
                             required>
-                            <option value="1s" selected>First</option>
-                            <option value="2s">Second</option>
-                            <option value="3s">Third</option>
-                            <option value="4s">Fouth</option>
-                            <option value="5s">Fifth</option>
-                            <option value="6s">Sixth</option>
-                            <option value="7s">Seventh</option>
-                            <option value="8s">Eighth</option>
-                            <option value="9s">Nine</option>
-                            <option value="10s">Ten</option>
+                            <option value="First Semester" selected>First</option>
+                            <option value="Second Semester">Second</option>
+                            <option value="Third Semester">Third</option>
+                            <option value="Fourth Semester">Fourth</option>
+                            <option value="Fifth Semester">Fifth</option>
+                            <option value="Sixth Semester">Sixth</option>
+                            <option value="Seventh Semester">Seventh</option>
+                            <option value="Eighth Semester">Eighth</option>
+                            <option value="Nineth Semester">Nine</option>
+                            <option value="Tenth Semester">Ten</option>
                         </select>
                     </div>
                     @endif
@@ -69,9 +67,9 @@
                         <span style="font-size:16px;">Select Year</span><br>
                         <select class="custom-select" name="year" style="height:38px;width:182px;" id="customchange"
                             required>
-                            <option value="1y" selected>First</option>
-                            <option value="2y">Second</option>
-                            <option value="3y">Third</option>
+                            <option value="First Year" selected>First</option>
+                            <option value="Second Year">Second</option>
+                            <option value="Third Year">Third</option>
                         </select>
                     </div>
                     @endif
@@ -81,10 +79,10 @@
                         <span style="font-size:16px;">Select Year</span><br>
                         <select class="custom-select" name="year" style="height:38px;width:182px;" id="customchange"
                             required>
-                            <option value="1y" selected>First</option>
-                            <option value="2y">Second</option>
-                            <option value="3y">Third</option>
-                            <option value="4y">Fourth</option>
+                            <option value="First Year" selected>First</option>
+                            <option value="Second Year">Second</option>
+                            <option value="Third Year">Third</option>
+                            <option value="Fourth Year">Fourth</option>
                         </select>
                     </div>
                     @endif
@@ -94,11 +92,11 @@
                         <span style="font-size:16px;">Select Year</span><br>
                         <select class="custom-select" name="year" style="height:38px;width:182px;" id="customchange"
                             required>
-                            <option value="1y" selected>First</option>
-                            <option value="2y">Second</option>
-                            <option value="3y">Third</option>
-                            <option value="4y">Fourth</option>
-                            <option value="5y">Fifth</option>
+                            <option value="First Year" selected>First</option>
+                            <option value="Second Year">Second</option>
+                            <option value="Third Year">Third</option>
+                            <option value="Fourth Year">Fourth</option>
+                            <option value="Fifth Year">Fifth</option>
                         </select>
                     </div>
                     @endif
@@ -107,7 +105,7 @@
                     <div class="col-md-6">
                         <span style="font-size:16px;">Subject</span>
                         <input type="text" name="subject" class="form-control input-sm" id="usr"
-                            style="width:260px;"><br>
+                            style="width:260px;" required><br>
                     </div>
                 </div>
 
@@ -131,7 +129,7 @@
 
 @if($message = Session::get('updatesuccess'))
 <div class="container mt-2">
-    <div class="card alert alert-danger" role="alert">
+    <div class="card alert alert-success" role="alert">
         <p>{{$message}}<p>
     </div>
 </div>
@@ -173,14 +171,12 @@
                     <tr>
                         <th scope="col">S.N</th>
                         <th scope="col">Subject Title</th>
-                        <!-- @if($get_semester_data->yearorsemester == "s")
-                            <th scope="col">Semester</th>
-                        
-                        @endif
                         @if($get_semester_data->yearorsemester == "y")
-                            <th scope="col">Year</th>
-        
-                        @endif -->
+                        <th scope="col">Year</th>
+                        @endif
+                        @if($get_semester_data->yearorsemester == "s")
+                        <th scope="col">Semester</th>
+                        @endif
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -247,7 +243,7 @@
                     @php
                     $i=0;
                     @endphp
-                    @foreach($get_subject_data->where('level_id', 3) as $subject_data)
+                    @foreach($get_all_subjects_from_semester as $subject_data)
                     @php
                     $i++;
                     @endphp
@@ -255,6 +251,7 @@
                         style="cursor:pointer;">
                         <th scope="row">{{$i}}</th>
                         <td>{{$subject_data->subject_title}}</td>
+                        <td>{{$subject_data->semester_choosen}}</td>
                       
                         <td>
                             <a href="{{route('editsubjectsDetails',$subject_data->subject_id)}}" NAME="Error Handling" title="ZeroDivisionError handling"
@@ -275,7 +272,7 @@
                     @php
                     $i=0;
                     @endphp
-                    @foreach($get_subject_data->where('level_id', 3) as $subject_data)
+                    @foreach($get_all_subjects_from_semester as $subject_data)
                     @php
                     $i++;
                     @endphp
@@ -283,7 +280,7 @@
                         style="cursor:pointer;">
                         <th scope="row">{{$i}}</th>
                         <td>{{$subject_data->subject_title}}</td>
-                        
+                        <td>{{$subject_data->semester_choosen}}</td>
                         <td>
                             <a href="{{route('editsubjectsDetails',$subject_data->subject_id)}}" NAME="Error Handling" title="ZeroDivisionError handling"
                                 onClick=event.stopPropagation();>

@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Http\Request;
 use App\Content;
 
@@ -15,6 +14,8 @@ use App\Content;
 */
 
 Route::post('/login','ApiController@accessToken');
+Route::post('/studentlogin','ApiController@getstudentLogin');
+
 Route::post('/login/student','ApiController@accessStudentToken');
 
 Route::group([
@@ -35,6 +36,7 @@ Route::group([
 
 Route::get('/', 'ApiController@guardnameApi');
 
+Route::get('/login', 'ApiController@getloginApi');
 Route::get('/level', 'ApiController@getlevelApi');
 Route::get('faculties/{id}', 'ApiController@getfacultyApi');
 Route::get('semesters/{id}', 'ApiController@getsemesterApi');
@@ -57,5 +59,18 @@ Route::get('/testingapi', 'ApiController@getTestApi');
 Route::get('/search_faculties_search/{query}', 'ApiController@getallSearch');
 
 Route::get('/contents', ['uses'=>'APIController@getcontentsAPI','as'=>'getcontentsAPI']);
+
+//  Route for favourites
+Route::get('/addfavourites/{id}', ['uses'=>'APIController@addfavouritesAPI','as'=>'addfavouritesAPI']);
+Route::get('/delfavourites/{id}', ['uses'=>'APIController@delfavouritesAPI','as'=>'delfavouritesAPI']);
+
+Route::get('/showfavourites', ['uses'=>'APIController@showfavouritesAPI','as'=>'showfavouritesAPI']);
+
+//  Route for history
+Route::get('/addhistory/{id}', ['uses'=>'APIController@addhistoryAPI','as'=>'addhistoryAPI']);
+Route::get('/delhistory/{id}', ['uses'=>'APIController@delhistoryAPI','as'=>'delhistoryAPI']);
+
+Route::get('/showhistory', ['uses'=>'APIController@showhistoryAPI','as'=>'showhistoryAPI']);
+
 
 Route::get('get_all/{query}', 'APIController@get_all');
