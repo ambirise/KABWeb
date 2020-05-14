@@ -72,5 +72,9 @@ Route::get('/delhistory/{id}', ['uses'=>'APIController@delhistoryAPI','as'=>'del
 
 Route::get('/showhistory', ['uses'=>'APIController@showhistoryAPI','as'=>'showhistoryAPI']);
 
+Route::get('/filterbyname/{name}', ['uses'=>'APIController@filterbynameAPI','as'=>'filterbynameAPI']);
+Route::get('/filterbygender/{gender}', ['uses'=>'APIController@filterbygenderAPI','as'=>'filterbygenderAPI']);
+Route::get('/filterbyage/{age}', ['uses'=>'APIController@filterbyageAPI','as'=>'filterbyageAPI']);
+Route::get('/filterbytype/{type}', ['uses'=>'APIController@filterbytypeAPI','as'=>'filterbytypeAPI']);
 
 Route::get('get_all/{query}', 'APIController@get_all');

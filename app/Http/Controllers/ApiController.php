@@ -684,6 +684,7 @@ class ApiController extends Controller
         $json_favourite_content = Preferences::where('student_id', 1)->pluck('student_favourite')->first();
         $jsondecode_favourite_content = json_decode($json_favourite_content);
 
+        $favourites_array = null;
         foreach ($jsondecode_favourite_content as $data) {
             $favourites_array[] = Content::where('content_id', $data)->first();
         }
@@ -695,10 +696,48 @@ class ApiController extends Controller
         $json_history_content = Preferences::where('student_id', 1)->pluck('student_history')->first();
 
         $jsondecode_history_content = json_decode($json_history_content);
-        
+
         foreach ($jsondecode_history_content as $data) {
             $history_array[] = Content::where('content_id', $data)->first();
         }
         return array_values(array_filter($history_array));
+    }
+
+    public function filterbynameAPI($name)
+    {
+        //filter by name
+        // $name = "";
+        if ($name) {
+            $sort_student_byname = Student::where('name', $name)->get();
+            return $sort_student_byname;
+        }
+    }
+
+    public function filterbygenderAPI($gender)
+    {
+        //filter by gender
+        // $gender = "";
+        if ($gender) {
+            $sort_student_bygender = Student::where('gender', $gender)->get();
+            return $sort_student_bygender;
+        }
+    }
+
+    public function filterbyageAPI($age)
+    {
+        // filter by age
+        // $age = "";
+        if ($age) {
+            $sort_student_byage = Student::where('age', $age)->get();
+            return $sort_student_byage;
+        }
+    }
+
+    public function filterbytypeAPI($type)
+    {
+        if ($type) {
+            $sort_student_bytype = Student::where('type', $type)->get();
+            return $sort_student_bytype;
+        }
     }
 }

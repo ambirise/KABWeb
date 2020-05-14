@@ -31,7 +31,7 @@ class ChaptersController extends Controller
         $get_subject_data_array = Chapter::where('subject_id', $subject_id)->get();
         $pluck_facultyid_subject = Arr::pluck($get_subject_data_level_id, ['faculty_id']);
 
-        $implode_facultyid_subject = implode(" ", $pluck_facultyid_subject);
+        $implode_facultyid_subject = implode("", $pluck_facultyid_subject);
         $get_faculty_data = Faculty::where('faculty_id', $implode_facultyid_subject)->first();
 
         return view('chapters')->with('get_subject_data', $get_subject_data)->with('get_subject_data_array', $get_subject_data_array)
