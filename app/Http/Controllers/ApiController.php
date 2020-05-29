@@ -574,94 +574,152 @@ class ApiController extends Controller
 
     public function addfavouritesAPI(Request $request, $id)
     {
-        $array = array();
+        if (Content::where('content_id', $id)->first()) {
+            $array = array();
 
-        $json_favourite_content = Preferences::where('student_id', 1)->pluck('student_favourite')->first();
-        $jsondecode_favourite_content = json_decode($json_favourite_content);
+            if (Student::where('id', $request->student_id)->first()) {
+                $find_student_existence = Preferences::where('student_id', $request->student_id)->first();
+                if ($find_student_existence) {
+                    $json_favourite = Preferences::where('student_id', $request->student_id)->first();
+                } else {
+                    $preferences = new Preferences;
+                    $preferences->student_id = $request->student_id;
+                    $preferences->save();
+                    $json_favourite = Preferences::where('student_id', $request->student_id)->first();
+                }
 
-        // $favourite_content = json_encode($array);
-        $get_content = Content::where('content_id', $id)->get()->count();
+                $json_favourite_content = $json_favourite->pluck('student_favourite')->first();
+                $jsondecode_favourite_content = json_decode($json_favourite_content);
 
-        if ($jsondecode_favourite_content == !null) {
-            if (in_array($id, $jsondecode_favourite_content)) {
-                echo json_encode("Favourite Already Exists");
-                exit();
+                // $favourite_content = json_encode($array);
+                $get_content = Content::where('content_id', $id)->get()->count();
+
+                if ($jsondecode_favourite_content == !null) {
+                    if (in_array($id, $jsondecode_favourite_content)) {
+                        echo json_encode("Favourite already exists");
+                        exit();
+                    }
+                }
+
+                $jsondecode_favourite_content[] = $id;
+                $favourite_content = json_encode($jsondecode_favourite_content);
+
+                //for getting student level , faculty and semester
+                // $get_student_level = DB::table('levels')->where('student_id', 1)->get();
+                // return $get_student_level;
+
+                $editfavourite = Preferences::where('student_id', $request->student_id)->first();
+
+                $editfavourite->student_favourite = $favourite_content;
+                $editfavourite->save();
+                echo json_encode("Favourite added successfully");
+            } else {
+                echo json_encode("Sorry, Student does not exist");
             }
+        } else {
+            echo json_encode("Sorry, Content does not exist");
         }
-
-        $jsondecode_favourite_content[] = $id;
-        $favourite_content = json_encode($jsondecode_favourite_content);
-
-        //for getting student level , faculty and semester
-        // $get_student_level = DB::table('levels')->where('student_id', 1)->get();
-        // return $get_student_level;
-
-        $editfavourite = Preferences::where('student_id', 1)->first();
-
-        $editfavourite->student_favourite = $favourite_content;
-        $editfavourite->save();
     }
 
     public function addhistoryAPI(Request $request, $id)
     {
-        $array = array();
+        if (Content::where('content_id', $id)->first()) {
+            $array = array();
 
-        $json_history_content = Preferences::where('student_id', 1)->pluck('student_history')->first();
+            $json_student = Student::where('id', $request->student_id)->first();
 
-        $jsondecode_history_content = json_decode($json_history_content);
+            if ($json_student) {
+                $json_history_content = Preferences::where('student_id', $request->student_id)->pluck('student_history')->first();
 
-        // $favourite_content = json_encode($array);
-        $get_content = Content::where('content_id', $id)->get()->count();
+                if ($json_history_content) {
+                    $jsondecode_history_content = json_decode($json_history_content);
 
-        if ($jsondecode_history_content == !null) {
-            if (in_array($id, $jsondecode_history_content)) {
-                echo json_encode("History Already Exists");
-                exit();
+                    // $favourite_content = json_encode($array);
+                    $get_content = Content::where('content_id', $id)->get()->count();
+
+                    if ($jsondecode_history_content == !null) {
+                        if (in_array($id, $jsondecode_history_content)) {
+                            echo json_encode("History already exists");
+                            exit();
+                        }
+                    }
+
+                    $jsondecode_history_content[] = $id;
+                    $history_content = json_encode($jsondecode_history_content);
+
+                    $edithistory = Preferences::where('student_id', $request->student_id)->first();
+
+                    $edithistory->student_history = $history_content;
+                    $edithistory->save();
+                    echo json_encode("History added successfully");
+                } else {
+
+                    $jsondecode_history_content[] = $id;
+
+                    $history_content = json_encode($jsondecode_history_content);
+
+                    $edithistory = Preferences::where('student_id', $request->student_id)->first();
+                    if ($edithistory) {
+                        $edithistory->student_history = $history_content;
+                        $edithistory->save();
+                        echo json_encode("History added successfully");
+                    } else {
+                        $edithistory = new Preferences;
+                        $edithistory->student_id = $request->student_id;
+                        $edithistory->student_history = $history_content;
+                        $edithistory->save();
+                        echo json_encode("History added successfully");
+                    }
+                }
+            } else {
+                echo json_encode("Sorry, Student does not exist");
             }
+        } else {
+            echo json_encode("Sorry, Content does not exist");
         }
-
-        $jsondecode_history_content[] = $id;
-        $history_content = json_encode($jsondecode_history_content);
-
-        $edithistory = Preferences::where('student_id', 1)->first();
-
-        $edithistory->student_history = $history_content;
-        $edithistory->save();
     }
 
     public function delfavouritesAPI(Request $request, $id)
     {
         // $array = ["1", "2", "3"];
         // $favourite_content = json_encode($array);
-        $get_content = Content::where('content_id', $id)->get()->count();
+        // if (Preferences::where('student_id', $request->student_id)->first()) {
 
-        if ($get_content > 0) {
-            $json_favourite_content = Preferences::where('student_id', 1)->pluck('student_favourite')->first();
+        // $json_favourite = Preferences::where('student_id', $request->student_id)->first();
+        // $json_favourite_content = $json_favourite->pluck('student_favourite')->first();
+        // $jsondecode_favourite_content = json_decode($json_favourite_content);
+
+        // if ($jsondecode_favourite_content == !null) {
+        //     if (!in_array($id, $jsondecode_favourite_content)) {
+        //         echo json_encode("Sorry, Student does not exist");
+        //     }
+        // }
+
+        if (Preferences::where('student_id', $request->student_id)->first()) {
+            $json_favourite_content = Preferences::where('student_id', $request->student_id)->pluck('student_favourite')->first();
 
             $jsondecode_favourite_content = json_decode($json_favourite_content);
 
             if (in_array($id, $jsondecode_favourite_content)) {
                 $remove_content_array = array_diff($jsondecode_favourite_content, array($id));
                 $final_collection = collect($remove_content_array)->values();
-
-                $editfavourite = Preferences::where('student_id', 1)->first();
-
+                $editfavourite = Preferences::where('student_id', $request->student_id)->first();
                 $editfavourite->student_favourite = json_encode($final_collection);
                 $editfavourite->save();
+                echo json_encode("Content deleted successfully");
             } else {
-                echo "Content id doest not exist in an array";
+                echo json_encode("Sorry, Favourite does not exist");
             }
+        } else {
+            echo json_encode("Sorry, Favourite does not exist");
         }
     }
 
     public function delhistoryAPI(Request $request, $id)
     {
-        // $array = ["1", "2", "3"];
-        // $favourite_content = json_encode($array);
-        $get_content = Content::where('content_id', $id)->get()->count();
+        if (Preferences::where('student_id', $request->student_id)->first()) {
 
-        if ($get_content > 0) {
-            $json_history_content = Preferences::where('student_id', 1)->pluck('student_history')->first();
+            $json_history_content = Preferences::where('student_id', $request->student_id)->pluck('student_history')->first();
 
             $jsondecode_history_content = json_decode($json_history_content);
 
@@ -669,38 +727,53 @@ class ApiController extends Controller
                 $remove_content_array = array_diff($jsondecode_history_content, array($id));
                 $final_collection = collect($remove_content_array)->values();
 
-                $edithistory = Preferences::where('student_id', 1)->first();
+                $edithistory = Preferences::where('student_id', $request->student_id)->first();
 
                 $edithistory->student_history = json_encode($final_collection);
                 $edithistory->save();
+                echo json_encode("Content deleted successfully");
             } else {
-                echo "Content id doest not exist in an array";
+                echo json_encode("Sorry, History does not exist");
             }
+        } else {
+            echo json_encode("Sorry, History does not exist");
         }
     }
 
-    public function showfavouritesAPI()
+    public function showfavouritesAPI(Request $request)
     {
-        $json_favourite_content = Preferences::where('student_id', 1)->pluck('student_favourite')->first();
+        $json_favourite_content = Preferences::where('student_id', $request->student_id)->pluck('student_favourite')->first();
+
         $jsondecode_favourite_content = json_decode($json_favourite_content);
 
         $favourites_array = null;
         foreach ($jsondecode_favourite_content as $data) {
             $favourites_array[] = Content::where('content_id', $data)->first();
         }
-        return array_values(array_filter($favourites_array));
+
+        if ($favourites_array) {
+            return array_values(array_filter($favourites_array));
+        } else {
+            echo json_encode("Sorry, Favourite does not exist");
+        }
     }
 
-    public function showhistoryAPI()
+    public function showhistoryAPI(Request $request)
     {
-        $json_history_content = Preferences::where('student_id', 1)->pluck('student_history')->first();
+        $json_history_content = Preferences::where('student_id', $request->student_id)->pluck('student_history')->first();
 
         $jsondecode_history_content = json_decode($json_history_content);
 
+        $history_array = null;
         foreach ($jsondecode_history_content as $data) {
             $history_array[] = Content::where('content_id', $data)->first();
         }
-        return array_values(array_filter($history_array));
+
+        if ($history_array) {
+            return array_values(array_filter($history_array));
+        } else {
+            echo json_encode("Sorry, History does not exist");
+        }
     }
 
     public function filterbynameAPI($name)

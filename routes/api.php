@@ -61,16 +61,16 @@ Route::get('/search_faculties_search/{query}', 'ApiController@getallSearch');
 Route::get('/contents', ['uses'=>'APIController@getcontentsAPI','as'=>'getcontentsAPI']);
 
 //  Route for favourites
-Route::get('/addfavourites/{id}', ['uses'=>'APIController@addfavouritesAPI','as'=>'addfavouritesAPI']);
-Route::get('/delfavourites/{id}', ['uses'=>'APIController@delfavouritesAPI','as'=>'delfavouritesAPI']);
+Route::post('/addfavourites/{id}', ['uses'=>'APIController@addfavouritesAPI','as'=>'addfavouritesAPI']);
+Route::post('/delfavourites/{id}', ['uses'=>'APIController@delfavouritesAPI','as'=>'delfavouritesAPI']);
 
-Route::get('/showfavourites', ['uses'=>'APIController@showfavouritesAPI','as'=>'showfavouritesAPI']);
+Route::post('/showfavourites', ['uses'=>'APIController@showfavouritesAPI','as'=>'showfavouritesAPI']);
 
 //  Route for history
-Route::get('/addhistory/{id}', ['uses'=>'APIController@addhistoryAPI','as'=>'addhistoryAPI']);
-Route::get('/delhistory/{id}', ['uses'=>'APIController@delhistoryAPI','as'=>'delhistoryAPI']);
+Route::post('/addhistory/{id}', ['uses'=>'APIController@addhistoryAPI','as'=>'addhistoryAPI']);
+Route::post('/delhistory/{id}', ['uses'=>'APIController@delhistoryAPI','as'=>'delhistoryAPI']);
 
-Route::get('/showhistory', ['uses'=>'APIController@showhistoryAPI','as'=>'showhistoryAPI']);
+Route::post('/showhistory', ['uses'=>'APIController@showhistoryAPI','as'=>'showhistoryAPI']);
 
 Route::get('/filterbyname/{name}', ['uses'=>'APIController@filterbynameAPI','as'=>'filterbynameAPI']);
 Route::get('/filterbygender/{gender}', ['uses'=>'APIController@filterbygenderAPI','as'=>'filterbygenderAPI']);
