@@ -6,7 +6,7 @@
         href="{{ url('/faculties',$get_semester_data->level_id) }}"><span>{{$level_title->level_title}}</span></a>
     <!-- -> <a href="{{ url('/semesters',$get_semester_data->faculty_id) }}"><span>Semesters</span></a> -->
     -> <a href="{{ url('/subjects', $get_semester_data->faculty_id) }}"><span>{{$get_faculty_data->faculty_title}}</span></a>
-    <form action="{{route('subjectsStore',$get_semester_data->faculty_id)}}" method="POST" enctype="mutipart/form-data">
+    <form action="{{route('subjectsStore',$get_faculty_data->faculty_id)}}" method="POST" enctype="mutipart/form-data">
         <div class="card mt-2 addsubjectform" hidden="true">
             <div class="card-body" style="padding:8px;">
                 @csrf
@@ -272,7 +272,7 @@
                     @php
                     $i=0;
                     @endphp
-                    @foreach($get_all_subjects_from_semester as $subject_data)
+                    @foreach($get_subject_data as $subject_data)
                     @php
                     $i++;
                     @endphp

@@ -10,8 +10,11 @@ use App\User;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ApiController extends Controller
 {
@@ -31,7 +34,7 @@ class ApiController extends Controller
             return $this->prepareResult(false, [], $validate['errors'], "Error while validating user");
         }
 
-        $user = User::where("email", $request->email)->first();
+        $user = Student::where("email", $request->email)->first();
 
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
@@ -531,7 +534,7 @@ class ApiController extends Controller
                 $passwordcheck = $student;
 
             } else {
-                json_encode('Invalid Username or Password Please Try Again');
+                return response()->json(['status' => 'false', 'message' => 'Invalid Username or Password Please Try Again']);
             }
         }
 
@@ -551,24 +554,13 @@ class ApiController extends Controller
 
         if (isset($passwordcheck)) {
 
-            $SuccessLoginMsg = 'Data Matched';
+            $SuccessLoginMsg = $student;
 
             // Converting the message into JSON format.
-            $SuccessLoginJson = json_encode($SuccessLoginMsg);
 
-            // Echo the message.
-            echo $SuccessLoginJson;
+            return response()->json(['status' => 'true', 'data' => $SuccessLoginMsg]);
         } else {
-
-            // If the record inserted successfully then show the message.
-            $InvalidMSG = 'Invalid Username or Password Please Try Again';
-
-            // Converting the message into JSON format.
-            $InvalidMSGJSon = json_encode($InvalidMSG);
-
-            // Echo the message.
-            echo $InvalidMSGJSon;
-
+            return response()->json(['status' => 'false', 'message' => 'Invalid Username or Password Please Try Again']);
         }
     }
 
@@ -653,7 +645,6 @@ class ApiController extends Controller
                     $edithistory->save();
                     echo json_encode("History added successfully");
                 } else {
-
                     $jsondecode_history_content[] = $id;
 
                     $history_content = json_encode($jsondecode_history_content);
@@ -752,7 +743,7 @@ class ApiController extends Controller
         }
 
         if ($favourites_array) {
-            return array_values(array_filter($favourites_array));
+            return array_values(array_filter(array_reverse($favourites_array)));
         } else {
             echo json_encode("Sorry, Favourite does not exist");
         }
@@ -770,7 +761,7 @@ class ApiController extends Controller
         }
 
         if ($history_array) {
-            return array_values(array_filter($history_array));
+            return array_values(array_filter(array_reverse($history_array)));
         } else {
             echo json_encode("Sorry, History does not exist");
         }
@@ -812,5 +803,104 @@ class ApiController extends Controller
             $sort_student_bytype = Student::where('type', $type)->get();
             return $sort_student_bytype;
         }
+    }
+
+    public function changepasswordAPI(Request $request, $current_password)
+    {
+        $hashed_password = Student::where('id', $request->student_id)->pluck('password')->first();
+
+        if (Hash::check($current_password, $hashed_password)) {
+            $students = student::find($request->student_id);
+            $students->password = Hash::make($request->new_password);
+            $students->save();
+            echo json_encode("Password successfully changed");
+        } else {
+            echo json_encode("Sorry, Password does not match");
+        }
+    }
+
+    public function getcontentShow(Request $request, $content_id, $student_id)
+    {
+
+        if (Content::where('content_id', $content_id)->first()) {
+            $array = array();
+
+            $json_student = Student::where('id', $student_id)->first();
+
+            if ($json_student) {
+                $json_history_content = Preferences::where('student_id', $student_id)->pluck('student_history')->first();
+
+                if ($json_history_content) {
+                    $jsondecode_history_content = json_decode($json_history_content);
+
+                    // $favourite_content = json_encode($array);
+                    $get_content = Content::where('content_id', $content_id)->get()->count();
+
+                    if ($jsondecode_history_content == !null) {
+                        if (in_array($content_id, $jsondecode_history_content)) {
+
+                            // delete and add content id in existing case
+                            $remove_content_array = array_diff($jsondecode_history_content, array($content_id));
+                            $final_collection = collect($remove_content_array)->values();
+
+                            $edithistory = Preferences::where('student_id', $request->student_id)->first();
+
+                            $edithistory->student_history = json_encode($final_collection);
+                            $edithistory->save();
+                        
+                            $final_collection[] = $content_id;
+                          
+                            $edithistory = Preferences::where('student_id', $student_id)->first();
+
+                            $edithistory->student_history = $final_collection;
+                            $edithistory->save();
+
+                            exit();
+                        }
+                    }
+
+                    $jsondecode_history_content[] = $content_id;
+                    $history_content = json_encode($jsondecode_history_content);
+
+                    $edithistory = Preferences::where('student_id', $student_id)->first();
+
+                    $edithistory->student_history = $history_content;
+                    $edithistory->save();
+                    echo json_encode("History added successfully");
+                } else {
+                    $jsondecode_history_content[] = $content_id;
+
+                    $history_content = json_encode($jsondecode_history_content);
+
+                    $edithistory = Preferences::where('student_id', $student_id)->first();
+                    if ($edithistory) {
+                        $edithistory->student_history = $history_content;
+                        $edithistory->save();
+                    } else {
+                        $edithistory = new Preferences;
+                        $edithistory->student_id = $student_id;
+                        $edithistory->student_history = $history_content;
+                        $edithistory->save();
+                    }
+
+                    // for playing audio
+
+                    $get_id_content = DB::table('contents')->where('content_id', $content_id)->get();
+                    $pluck_contenttitle_content = Arr::pluck($get_id_content, ['content_title']);
+                    $implode_contenttitle_content = implode(" ", $pluck_contenttitle_content);
+
+                    $path = public_path() . DIRECTORY_SEPARATOR . "audios" . DIRECTORY_SEPARATOR . $implode_contenttitle_content;
+                    $response = new BinaryFileResponse($path);
+                    BinaryFileResponse::trustXSendfileTypeHeader();
+                    return $response;
+
+                }
+            } else {
+                echo json_encode("Sorry, Student does not exist");
+            }
+        } else {
+            echo json_encode("Sorry, Content does not exist");
+        }
+
     }
 }

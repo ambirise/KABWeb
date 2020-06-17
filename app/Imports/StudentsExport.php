@@ -29,9 +29,10 @@ class StudentsExport implements FromCollection,WithHeadings,ShouldAutoSize
             'Name',
             'Age',
             'Phone Number',
-            'Updated At',
+            'Email',
             'Gender',
             'Address',
+            'Blindness Type',
             'Created At',
             'Updated At',
         ];

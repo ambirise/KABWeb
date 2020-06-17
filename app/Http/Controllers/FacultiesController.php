@@ -88,7 +88,9 @@ class FacultiesController extends Controller
 
         //For inserting into semester
         $semesters = new Semester;
-        if ($request->input('facultybachelor') == !null) {
+
+        
+        if ($request->input('Semester') == !null) {
             $semesters->level_id = $level_id_semester;
             $semesters->faculty_id = $faculty_id_semester;
 
@@ -170,7 +172,7 @@ class FacultiesController extends Controller
         //For inserting into semester
         $semesters = Semester::find($semester_id);
 
-        if ($request->input('facultybachelor') == !null) {
+        if ($request->input('Semester') == !null) {
             $semesters->level_id = $level_id_semester;
             $semesters->faculty_id = $faculty_id_semester;
 

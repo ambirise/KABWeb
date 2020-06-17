@@ -11,13 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
+
+Route::get('/statistics', 'StatisticsController@Statistics');
 
 Route::prefix('student')->group(function(){
 Route::get('/','AdminController@index')->name('admin.dashboard');
@@ -70,3 +69,12 @@ Route::get('importExportView', 'MyController@importExportView');
 Route::post('import', 'MyController@import')->name('import');
 // Route::resource('/semesters','SemestersController');
 // Route::resource('/subjects','SubjectsController');
+
+Route::get('/sortbyname',['uses'=>'StatisticsController@sortbyname','as'=>'sortbyname']);
+Route::post('/sortbyage',['uses'=>'StatisticsController@sortbyage','as'=>'sortbyage']);
+
+
+Route::get('/sortbymale',['uses'=>'StatisticsController@sortbymale','as'=>'sortbymale']);
+Route::get('/sortbyfemale',['uses'=>'StatisticsController@sortbyfemale','as'=>'sortbyfemale']);
+Route::get('/sortbyfullblind',['uses'=>'StatisticsController@sortbyfullblind','as'=>'sortbyfullblind']);
+Route::get('/sortbyhalfblind',['uses'=>'StatisticsController@sortbyhalfblind','as'=>'sortbyhalfblind']);

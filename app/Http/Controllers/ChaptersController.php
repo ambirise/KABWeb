@@ -116,7 +116,6 @@ class ChaptersController extends Controller
     public function update(Request $request, $chapter_id)
     {
 
-        
         $get_chapter_data_array = Chapter::where('chapter_id', $chapter_id)->get();
         $pluck_subjectid = Arr::pluck($get_chapter_data_array, ['subject_id']);
         $subject_id = implode(" ", $pluck_subjectid);
@@ -126,7 +125,7 @@ class ChaptersController extends Controller
 
         $chapters->chapter_title = $get_chapter;
         $chapters->save();
-        return \Redirect::route('getchaptersIndex',$subject_id)->with('updatesuccess', 'Chapter is updated successfully');
+        return \Redirect::route('getchaptersIndex', $subject_id)->with('updatesuccess', 'Chapter is updated successfully');
     }
 
     /**
@@ -158,7 +157,7 @@ class ChaptersController extends Controller
 
     public function getchaptersSearch(Request $request, $subject_id)
     {
-        
+
         $get_subject_data = Subject::where('subject_id', $subject_id)->first();
 
         $get_subject_data_level_id = Subject::where('subject_id', $subject_id)->get();

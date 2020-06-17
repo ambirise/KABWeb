@@ -2,10 +2,10 @@
 use Illuminate\Http\Request;
 use App\Content;
 
-/*
-|--------------------------------------------------------------------------
+/* 
+|-----------------------------------------------------------------------
 | API Routes
-|--------------------------------------------------------------------------
+|-----------------------------------------------------------------------
 |
 | Here is where you can register API routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
@@ -29,7 +29,6 @@ Route::group([
   ], function() {
     Route::get('/content/Student','ApiController@getMessageStudent');
   });
-
 
 // Route::post('/login','ApiController@login');
 // Route::post('reg', 'ApiController@register');
@@ -78,3 +77,8 @@ Route::get('/filterbyage/{age}', ['uses'=>'APIController@filterbyageAPI','as'=>'
 Route::get('/filterbytype/{type}', ['uses'=>'APIController@filterbytypeAPI','as'=>'filterbytypeAPI']);
 
 Route::get('get_all/{query}', 'APIController@get_all');
+
+Route::post('/changepassword/{current_password}', 'APIController@changepasswordAPI');
+
+Route::get('/getcontent/{content_id}/{student_id}', ['uses'=>'ApiController@getcontentShow','as'=>'getcontentShow']);
+

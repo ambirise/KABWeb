@@ -1,40 +1,47 @@
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#316698;">
-    <!-- for logo -->
-    <a class="navbar-brand" href="{{ url('/home') }}"><input type="image" id="myimage"
-            src="{{ asset('/backend/images/logo.png') }}" height="40" width="80" /></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+        <!-- for logo -->
+        <a class="navbar-brand p-0 m-0" href="{{ url('/') }}"><input type="image" id="myimage" src="{{ asset('/backend/images/logo.png') }}"
+                height="80" width="80" /></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto" style="font-size:20px;">
-            <li class="ml-2 nav-item active">
-                <a class="nav-link border p-1" style="color:white;" href="{{ url('/home') }}">Home</a>
-            </li>
-            <li class="ml-2 nav-item active">
-                <a class="nav-link border p-1" style="color:white;" href="{{ url('/levels') }}">Levels</a>
-            </li>
-            <!-- <li class="nav-item active">
-                    <a class="nav-link" href="{{ url('faculties') }}">Faculties</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto" style="font-size:20px;">
+             
+                <li class="ml-5  nav-item active">
+                    <a class="nav-link border p-1" aria-label="arial box"  style="color:white;" href="{{ url('/') }}">Home</a>
                 </li>
-                <li class="nav-item active">
+
+                <li class="ml-4 nav-item active">
+                    <a class="nav-link border p-1" aria-label="arial box"  style="color:white;" href="{{ url('/levels') }}">Levels</a>
+                </li>
+                
+                <li class="ml-4 nav-item active">
+                    <a class="nav-link border p-1" aria-label="arial box"  style="color:white;" href="{{ url('statistics') }}">Statistics</a>
+                </li>
+
+                <!-- <li class="nav-item active">
                     <a class="nav-link " href="{{ url('/semesters') }}">Semesters/Year</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link active" href="{{ url('/subjects') }}">Subjects</a>
                 </li> -->
-        </ul>
-        <form class="form-inline my-2 ml-2 my-lg-0">
-            <a style="float:right;color:white;text-decoration:none;" class="mt-2" href="{{ route('logout') }}" onclick="event.preventDefault();
+            </ul>
+
+            <form class="form-inline my-2 ml-2 my-lg-0">
+                <a style="float:right;color:white;text-decoration:none;" class="mt-2" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();"><span
-                    style="font-size:20px;" class="border p-1">Logout</span></a>
-        </form>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
-    </div>
-</nav>
+                        style="font-size:20px;">Log Out</span></a>
+            </form>
+            
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+        </div>
+    </nav>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

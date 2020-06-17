@@ -42,7 +42,10 @@ class SubjectsController extends Controller
         $level_title = Level::where('level_id', $level_id)->first();
 
         // for displaying in the subjects by number of semester or number of year
-        $get_all_subjects_from_semester = DB::table('semesters')->join('subjects', 'semesters.semester_id', '=', 'subjects.semester_id')->where('semesters.numberofsemester','=',$get_semester_data->numberofsemester)->get();
+        // $get_all_subjects_from_semester = DB::table('semesters')->join('subjects', 'semesters.semester_id', '=', 'subjects.semester_id')->where('semesters.numberofsemester','=',$get_semester_data->numberofsemester)->get();
+        $get_all_subjects_from_semester = DB::table('semesters')->join('subjects', 'semesters.semester_id', '=', 'subjects.semester_id')->where('subjects.faculty_id','=',$faculty_id)->get();
+   
+        
 
         return view('subjects')->with('get_semester_data', $get_semester_data)
             ->with('get_subject_data', $get_subject_data)->with('get_faculty_data', $get_faculty_data)
@@ -69,12 +72,14 @@ class SubjectsController extends Controller
     {
         $get_semester_duration = $request->input('year');
 
-        $get_semester_data_array = Semester::where('faculty_id', $faculty_id)->get();
 
+        $get_semester_data_array = Semester::where('faculty_id', $faculty_id)->get();
+        
+        
         $pluck_semesterid_semester = Arr::pluck($get_semester_data_array, ['semester_id']);
         $id = implode(" ", $pluck_semesterid_semester);
 
-      
+
         if ($id == !null) {
             $get_id_semester = DB::table('semesters')->where('semester_id', $id)->get();
             $pluck_levelid_semester = Arr::pluck($get_id_semester, ['level_id']);
@@ -83,6 +88,7 @@ class SubjectsController extends Controller
 
             $implode_levelid_semester = implode(" ", $pluck_levelid_semester);
             $implode_semesterid_semester = implode(" ", $pluck_semesterid_semester);
+
             $implode_facultyid_semester = implode(" ", $pluck_facultyid_semester);
         } else {
             $get_id_semester = DB::table('faculties')->where('faculty_id', $faculty_id)->get();
@@ -99,11 +105,18 @@ class SubjectsController extends Controller
         if ($id == !null) {
             $subjects->semester_id = $implode_semesterid_semester;
         }
+
         $subjects->level_id = $implode_levelid_semester;
         $subjects->faculty_id = $implode_facultyid_semester;
         $subjects->subject_title = $get_subject;
         $subjects->semester_choosen = $get_semester_duration;
         $subjects->save();
+
+        if ($id == !null) {
+        $editSemesters = Semester::find($implode_semesterid_semester);
+        $editSemesters->semester_title = $get_semester_duration;
+        $editSemesters->save();
+        }
         return redirect()->back();
     }
 

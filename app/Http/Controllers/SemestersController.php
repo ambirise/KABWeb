@@ -42,7 +42,6 @@ class SemestersController extends Controller
      */
     public function store(Request $request,$faculty_id)
     {
-        
         $get_semester_duration= $request->input('year');
 
         $get_id_faculty = DB::table('semesters')->where('faculty_id',$faculty_id)->get();
@@ -52,11 +51,12 @@ class SemestersController extends Controller
         
         $id=$implode_id_faculty;
 
+        dd($semester_title);
+
         $editSemesters = Semester::find($id);
         $editSemesters->semester_title = $get_semester_duration;
         $editSemesters->save();
         return redirect()->back();
-
     }
 
     /**
