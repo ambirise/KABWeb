@@ -170,6 +170,26 @@ class ApiController extends Controller
 
     public function login()
     {
+        //  for posting in the preference table
+        $student_all_ids = DB::table('students')->pluck('id')->toArray();
+        // return array_values($student_all_ids);
+
+        $preference_student_id = DB::table('preferences')->pluck('student_id')->toArray();
+
+        $merge_array = array_merge($student_all_ids, $preference_student_id);
+        // return $merge_array;
+        $array_unique = array_diff($student_all_ids, $preference_student_id);
+        $data_array= array_values($array_unique);
+
+        $data_entry_times = 0;
+
+        foreach ($data_array as $data) {
+            $save_studentid_preferences = new Preferences;
+            $save_studentid_preferences->student_id = $data;
+            $save_studentid_preferences->save();
+            $data_entry_times++;
+        }
+        
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             // $user = Auth::user();
             // $success['token'] =  $user->createToken('MyApp')->accessToken;
@@ -527,6 +547,7 @@ class ApiController extends Controller
 
     public function getStudentLogin(Request $request)
     {
+
         $student = Student::where("email", $request->email)->first();
 
         if ($student) {
@@ -554,11 +575,11 @@ class ApiController extends Controller
 
         if (isset($passwordcheck)) {
 
-            $SuccessLoginMsg = $student;
+            $SuccessData = Student::select('id as student_id', 'name', 'age', 'phone', 'email', 'gender', 'address', 'type')->where("email", $request->email)->first();
 
             // Converting the message into JSON format.
 
-            return response()->json(['status' => 'true', 'data' => $SuccessLoginMsg]);
+            return response()->json(['status' => 'true', 'data' => $SuccessData]);
         } else {
             return response()->json(['status' => 'false', 'message' => 'Invalid Username or Password Please Try Again']);
         }
@@ -847,14 +868,31 @@ class ApiController extends Controller
 
                             $edithistory->student_history = json_encode($final_collection);
                             $edithistory->save();
-                        
-                            $final_collection[] = $content_id;
-                          
-                            $edithistory = Preferences::where('student_id', $student_id)->first();
 
+                            $final_collection[] = $content_id;
+
+                            $final_collection_array_length = count($final_collection);
+
+                            if ($final_collection_array_length > 20) {
+
+                                $remove_content_array = array_slice($jsondecode_history_content, 1);
+                                $final_collection = collect($remove_content_array)->values();
+                            }
+
+                            $edithistory = Preferences::where('student_id', $student_id)->first();
                             $edithistory->student_history = $final_collection;
                             $edithistory->save();
 
+                            // for playing audio
+
+                            $get_id_content = DB::table('contents')->where('content_id', $content_id)->get();
+                            $pluck_contenttitle_content = Arr::pluck($get_id_content, ['content_title']);
+                            $implode_contenttitle_content = implode(" ", $pluck_contenttitle_content);
+
+                            $path = public_path() . DIRECTORY_SEPARATOR . "audios" . DIRECTORY_SEPARATOR . $implode_contenttitle_content;
+                            $response = new BinaryFileResponse($path);
+                            BinaryFileResponse::trustXSendfileTypeHeader();
+                            return $response;
                             exit();
                         }
                     }
@@ -862,15 +900,40 @@ class ApiController extends Controller
                     $jsondecode_history_content[] = $content_id;
                     $history_content = json_encode($jsondecode_history_content);
 
+                    $jsondecode_history_content_length = count($jsondecode_history_content);
+
+                    if ($jsondecode_history_content_length > 20) {
+                        $jsondecode_history_content = $jsondecode_history_content;
+
+                        $remove_content_array = array_slice($jsondecode_history_content, 1);
+                        $history_content = collect($remove_content_array)->values();
+                    }
+
                     $edithistory = Preferences::where('student_id', $student_id)->first();
 
                     $edithistory->student_history = $history_content;
                     $edithistory->save();
-                    echo json_encode("History added successfully");
+
+                    // for playing audio
+
+                    $get_id_content = DB::table('contents')->where('content_id', $content_id)->get();
+                    $pluck_contenttitle_content = Arr::pluck($get_id_content, ['content_title']);
+                    $implode_contenttitle_content = implode(" ", $pluck_contenttitle_content);
+
+                    $path = public_path() . DIRECTORY_SEPARATOR . "audios" . DIRECTORY_SEPARATOR . $implode_contenttitle_content;
+                    $response = new BinaryFileResponse($path);
+                    BinaryFileResponse::trustXSendfileTypeHeader();
+                    return $response;
                 } else {
                     $jsondecode_history_content[] = $content_id;
 
                     $history_content = json_encode($jsondecode_history_content);
+
+                    if ($jsondecode_history_content_length > 20) {
+                        $jsondecode_history_content = array_reverse($jsondecode_history_content);
+                        $remove_content_array = array_diff($jsondecode_history_content, array($content_id));
+                        $history_content = collect($remove_content_array)->values();
+                    }
 
                     $edithistory = Preferences::where('student_id', $student_id)->first();
                     if ($edithistory) {
@@ -883,17 +946,6 @@ class ApiController extends Controller
                         $edithistory->save();
                     }
 
-                    // for playing audio
-
-                    $get_id_content = DB::table('contents')->where('content_id', $content_id)->get();
-                    $pluck_contenttitle_content = Arr::pluck($get_id_content, ['content_title']);
-                    $implode_contenttitle_content = implode(" ", $pluck_contenttitle_content);
-
-                    $path = public_path() . DIRECTORY_SEPARATOR . "audios" . DIRECTORY_SEPARATOR . $implode_contenttitle_content;
-                    $response = new BinaryFileResponse($path);
-                    BinaryFileResponse::trustXSendfileTypeHeader();
-                    return $response;
-
                 }
             } else {
                 echo json_encode("Sorry, Student does not exist");
@@ -902,5 +954,10 @@ class ApiController extends Controller
             echo json_encode("Sorry, Content does not exist");
         }
 
+    }
+
+    public function testAPI()
+    {
+        
     }
 }

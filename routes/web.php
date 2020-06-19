@@ -43,6 +43,7 @@ Route::post('contents/{Chapter}', ['uses'=>'ContentsController@store','as'=>'con
 Route::post('faculties{Faculty}/edit',['uses'=>'FacultiesController@update','as'=>'facultiesUpdate']);
 Route::post('subjects{Subject}/edit',['uses'=>'SubjectsController@update','as'=>'subjectsUpdate']);
 Route::post('chapters{Chapter}/edit',['uses'=>'ChaptersController@update','as'=>'chaptersUpdate']);
+Route::post('contents{Content}/edit',['uses'=>'ContentsController@update','as'=>'contentsUpdate']);
 
 Route::get('delfacultiesdetails/{Faculty}/delete',['uses'=>'FacultiesController@delfacultiesDetails','as'=>'delfacultiesDetails']);
 Route::get('delsubjectsdetails/{Subject}/delete',['uses'=>'SubjectsController@delsubjectsDetails','as'=>'delsubjectsDetails']);
@@ -61,6 +62,7 @@ Route::get('/live_search/faculties', 'FacultiesController@action')->name('live_s
 Route::get('editfaculties/{Faculties}/edit',['uses'=>'FacultiesController@editfacultiesDetails','as'=>'editfacultiesDetails']);
 Route::get('editsubjects/{Subject}/edit',['uses'=>'SubjectsController@editsubjectsDetails','as'=>'editsubjectsDetails']);
 Route::get('editchapters/{Chapter}/edit',['uses'=>'ChaptersController@editchaptersDetails','as'=>'editchaptersDetails']);
+Route::get('editcontents/{Content}/edit',['uses'=>'ContentsController@editcontentsDetails','as'=>'editcontentsDetails']);
 
 Route::resource('/levels','LevelsController');
 

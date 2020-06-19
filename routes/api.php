@@ -69,6 +69,7 @@ Route::post('/showfavourites', ['uses'=>'APIController@showfavouritesAPI','as'=>
 Route::post('/addhistory/{id}', ['uses'=>'APIController@addhistoryAPI','as'=>'addhistoryAPI']);
 Route::post('/delhistory/{id}', ['uses'=>'APIController@delhistoryAPI','as'=>'delhistoryAPI']);
 
+
 Route::post('/showhistory', ['uses'=>'APIController@showhistoryAPI','as'=>'showhistoryAPI']);
 
 Route::get('/filterbyname/{name}', ['uses'=>'APIController@filterbynameAPI','as'=>'filterbynameAPI']);
@@ -82,3 +83,4 @@ Route::post('/changepassword/{current_password}', 'APIController@changepasswordA
 
 Route::get('/getcontent/{content_id}/{student_id}', ['uses'=>'ApiController@getcontentShow','as'=>'getcontentShow']);
 
+Route::get('/testapi', 'APIController@testAPI');

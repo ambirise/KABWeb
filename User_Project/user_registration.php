@@ -29,6 +29,9 @@ $phone= $obj['phone'];
 
 // Populate User email from JSON $obj array and store into $email.
 $email = $obj['email'];
+
+// use type
+$type = $obj['type'];
  
 // // Populate Password from JSON $obj array and store into $password.
 // $password = $obj[password_hash('password',PASSWORD_DEFAULT)];
@@ -49,13 +52,13 @@ if(isset($check)){
 $EmailExistJson = json_encode($EmailExistMSG);
  
 // Echo the message.
- echo $EmailExistJson ; 
+ echo $EmailExistJson ;
  }
  else{
  
  // Creating SQL query and insert the record into MySQL database table.
-$Sql_Query = "insert into students (name,age,gender,address,phone,email,password) values ('$name','$age', '$gender', '$address', '$phone', '$email', '$password')";
- 
+$Sql_Query = "insert into students (name,age,gender,address,phone,email,password,type) values ('$name','$age', '$gender', '$address', '$phone', '$email', '$password','$type')";
+
  
  if(mysqli_query($con,$Sql_Query)){
  

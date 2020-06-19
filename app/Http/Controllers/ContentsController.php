@@ -162,9 +162,18 @@ class ContentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $content_id)
     {
-        //
+        $get_content_data_array = Content::where('content_id', $content_id)->get();
+        $pluck_chapterid = Arr::pluck($get_content_data_array, ['chapter_id']);
+        $chapter_id = implode(" ", $pluck_chapterid);
+      
+        $get_content = $request->input('content');
+        $contents = Content::find($content_id);
+
+        $contents->content_name = $get_content;
+        $contents->save();
+        return \Redirect::route('getcontentsIndex', $chapter_id)->with('updatesuccess', 'Content is updated successfully');
     }
 
     /**
@@ -185,6 +194,12 @@ class ContentsController extends Controller
         unlink($file_path);
         $findaudio->delete();
         return redirect()->back();
+    }
+
+    public function editcontentsDetails($content_id)
+    {
+        $get_content_data = Content::where('content_id', $content_id)->first();
+        return view('editcontents')->with('get_content_data', $get_content_data);
     }
 
     public function getcontentsSearch(Request $request, $chapter_id)

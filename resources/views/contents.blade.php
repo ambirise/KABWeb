@@ -165,6 +165,9 @@
                         <td>{{$content_data->content_name}}</td>
                         <td>{{$content_data->content_title}}</td>
                         <td>
+                        <a href="{{route('editcontentsDetails',$content_data->content_id)}}" 
+                                onClick=event.stopPropagation();>
+                            <button class="btn btn-primary">Edit</button></a>
                             <a href="{{route('delcontentsDetails',$content_data->content_id)}}"
                                 onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
                                     class="btn btn-danger ">Delete</button></a>
