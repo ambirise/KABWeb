@@ -42,7 +42,7 @@ Route::get('semesters/{id}', 'ApiController@getsemesterApi');
 
 Route::get('subjects/{id}', 'ApiController@getsubjectApi');
 Route::get('chapters/{id}', 'ApiController@getchapterApi');
-Route::get('contents/{id}', 'ApiController@getcontentApi');
+Route::post('contents/{id}', 'ApiController@getcontentApi');
 
 Route::get('search_faculties/{query}', 'APIController@search_faculties');
 Route::get('search_subjects/{query}', 'APIController@search_subjects');
@@ -80,7 +80,9 @@ Route::get('/filterbytype/{type}', ['uses'=>'APIController@filterbytypeAPI','as'
 Route::get('get_all/{query}', 'APIController@get_all');
 
 Route::post('/changepassword/{current_password}', 'APIController@changepasswordAPI');
+Route::post('/forgotpassword', 'APIController@forgotpasswordAPI');
+Route::post('/resetpassword', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 
+Route::post('/isfavourite/{content_id}', 'APIController@isfavouriteAPI');
 Route::get('/getcontent/{content_id}/{student_id}', ['uses'=>'ApiController@getcontentShow','as'=>'getcontentShow']);
 
-Route::get('/testapi', 'APIController@testAPI');

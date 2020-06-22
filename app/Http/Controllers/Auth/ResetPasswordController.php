@@ -26,13 +26,14 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
+
     public function __construct()
     {
         $this->middleware('guest');
@@ -40,6 +41,10 @@ class ResetPasswordController extends Controller
 
     protected function guard()
     {
-        return Auth::guard('guard-name');
+        return Auth::guard('web');
+    }
+
+    public function broker(){
+        return Password::broker(request()->get('user-type'));
     }
 }

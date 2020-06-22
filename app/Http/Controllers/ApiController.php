@@ -12,6 +12,7 @@ use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -170,26 +171,7 @@ class ApiController extends Controller
 
     public function login()
     {
-        //  for posting in the preference table
-        $student_all_ids = DB::table('students')->pluck('id')->toArray();
-        // return array_values($student_all_ids);
 
-        $preference_student_id = DB::table('preferences')->pluck('student_id')->toArray();
-
-        $merge_array = array_merge($student_all_ids, $preference_student_id);
-        // return $merge_array;
-        $array_unique = array_diff($student_all_ids, $preference_student_id);
-        $data_array= array_values($array_unique);
-
-        $data_entry_times = 0;
-
-        foreach ($data_array as $data) {
-            $save_studentid_preferences = new Preferences;
-            $save_studentid_preferences->student_id = $data;
-            $save_studentid_preferences->save();
-            $data_entry_times++;
-        }
-        
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             // $user = Auth::user();
             // $success['token'] =  $user->createToken('MyApp')->accessToken;
@@ -445,10 +427,38 @@ class ApiController extends Controller
         return $get_chapter_data_array;
     }
 
-    public function getcontentApi($id)
+    public function getcontentApi(Request $request, $id)
     {
-        $get_content_data_array = DB::table('contents')->where('chapter_id', $id)->get();
-        return $get_content_data_array;
+        $get_content_data_array = DB::table('contents')->where('chapter_id', $id)->pluck('content_id')->toArray();
+
+        $json_all_favourite_ids = DB::table('preferences')->where('student_id', $request->student_id)->pluck('student_favourite')->first();
+
+        // $json_all_content_ids = Content::all()->pluck('content_id')->toArray();
+
+        // $favourites_array = array();
+        $jsondecode_all_favourite_ids = json_decode($json_all_favourite_ids);
+
+        $array_unique = array_diff($get_content_data_array, $jsondecode_all_favourite_ids);
+
+        $content_values_array_isfavourite = array();
+        $content_values_array = array();
+
+        foreach ($jsondecode_all_favourite_ids as $data) {
+            if (in_array($data, $get_content_data_array)) {
+                $content_values_one = collect(DB::table('contents')->where('content_id', $data)->first());
+                $content_values_array_isfavourite[] = $content_values_one->put('isFavourite', true);
+
+                $content_values_array++;
+            }
+        }
+
+        foreach ($array_unique as $data) {
+            $content_values_two = collect(DB::table('contents')->where('content_id', $data)->first());
+            $content_values_array[] = $content_values_two->put('isFavourite', false);
+            $content_values_array++;
+        }
+
+        return array_merge($content_values_array_isfavourite, $content_values_array);
     }
 
     // public function get_all($id)
@@ -547,6 +557,25 @@ class ApiController extends Controller
 
     public function getStudentLogin(Request $request)
     {
+        //  for posting in the preference table
+        $student_all_ids = DB::table('students')->pluck('id')->toArray();
+        // return array_values($student_all_ids);
+
+        $preference_student_id = DB::table('preferences')->pluck('student_id')->toArray();
+
+        $merge_array = array_merge($student_all_ids, $preference_student_id);
+        // return $merge_array;
+        $array_unique = array_diff($student_all_ids, $preference_student_id);
+        $data_array = array_values($array_unique);
+
+        $data_entry_times = 0;
+
+        foreach ($data_array as $data) {
+            $save_studentid_preferences = new Preferences;
+            $save_studentid_preferences->student_id = $data;
+            $save_studentid_preferences->save();
+            $data_entry_times++;
+        }
 
         $student = Student::where("email", $request->email)->first();
 
@@ -587,13 +616,16 @@ class ApiController extends Controller
 
     public function addfavouritesAPI(Request $request, $id)
     {
+
         if (Content::where('content_id', $id)->first()) {
             $array = array();
 
             if (Student::where('id', $request->student_id)->first()) {
-                $find_student_existence = Preferences::where('student_id', $request->student_id)->first();
+                $find_student_existence = Preferences::where('student_id', $request->student_id)->pluck('student_favourite')->first();
+
                 if ($find_student_existence) {
-                    $json_favourite = Preferences::where('student_id', $request->student_id)->first();
+                    $json_favourite = Preferences::where('student_id', $request->student_id)->get();
+
                 } else {
                     $preferences = new Preferences;
                     $preferences->student_id = $request->student_id;
@@ -601,7 +633,8 @@ class ApiController extends Controller
                     $json_favourite = Preferences::where('student_id', $request->student_id)->first();
                 }
 
-                $json_favourite_content = $json_favourite->pluck('student_favourite')->first();
+                $json_favourite_content = $find_student_existence;
+
                 $jsondecode_favourite_content = json_decode($json_favourite_content);
 
                 // $favourite_content = json_encode($array);
@@ -615,6 +648,7 @@ class ApiController extends Controller
                 }
 
                 $jsondecode_favourite_content[] = $id;
+
                 $favourite_content = json_encode($jsondecode_favourite_content);
 
                 //for getting student level , faculty and semester
@@ -759,14 +793,17 @@ class ApiController extends Controller
         $jsondecode_favourite_content = json_decode($json_favourite_content);
 
         $favourites_array = null;
+
         foreach ($jsondecode_favourite_content as $data) {
+
             $favourites_array[] = Content::where('content_id', $data)->first();
         }
 
         if ($favourites_array) {
             return array_values(array_filter(array_reverse($favourites_array)));
         } else {
-            echo json_encode("Sorry, Favourite does not exist");
+            $empty_array = array();
+            return $empty_array;
         }
     }
 
@@ -838,6 +875,23 @@ class ApiController extends Controller
         } else {
             echo json_encode("Sorry, Password does not match");
         }
+    }
+
+    public function sendResetLinkEmail(Request $request, $student_id, $email)
+    {
+        $this->validateEmail($request);
+
+        // We will send the password reset link to this user. Once we have attempted
+        // to send the link, we will examine the response then see the message we
+        // need to show to the user. Finally, we'll send out a proper response.
+        $response = $this->broker()->sendResetLink(
+            $email
+        );
+
+        return $response == Password::RESET_LINK_SENT
+        ? $this->sendResetLinkResponse($request, $response)
+        : $this->sendResetLinkFailedResponse($request, $response);
+
     }
 
     public function getcontentShow(Request $request, $content_id, $student_id)
@@ -956,8 +1010,8 @@ class ApiController extends Controller
 
     }
 
-    public function testAPI()
+    public function isfavouriteAPI(Request $request, $content_id)
     {
-        
+
     }
 }

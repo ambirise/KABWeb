@@ -3,7 +3,7 @@
 
 <br>
 <div class="container">
-    <h5>Please Select an Option To Sort</h5>
+    <h5 class="text-center">Please Select an Option To Sort</h5><br>
     <div class="row text-center">
         <div class="col-md-3 ">
             <div>Name </div>

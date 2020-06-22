@@ -13,8 +13,14 @@ return [
     |
     */
 
+    // Guard for Admin
+    // 'defaults' => [
+    //     'guard' => 'admin',
+    //     'passwords' => 'users',
+    // ],
+
     'defaults' => [
-        'guard' => 'admin',
+        'guard' => 'web',
         'passwords' => 'users',
     ],
 
@@ -36,24 +42,30 @@ return [
     */
 
     'guards' => [
-        'admin' => [
+        'web' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
 
-        'admin api' => [
-            'driver' => 'passport',
+        'api' => [
+            'driver' => 'token',
             'provider' => 'users',
         ],
+
+        // 'admin api' => [
+        //     'driver' => 'passport',
+        //     'provider' => 'users',
+        // ],
 
         'student' => [
             'driver' => 'session',
             'provider' => 'students',
         ],
-        'student-api' => [
-            'driver' => 'passport',
-            'provider' => 'students',
-        ],
+
+        // 'student-api' => [
+        //     'driver' => 'passport',
+        //     'provider' => 'students',
+        // ],
 
     ],
 
@@ -113,8 +125,14 @@ return [
             'expire' => 60,
         ],
 
+        // 'admins' => [
+        //     'provider' => 'admins',
+        //     'table' => 'password_resets',
+        //     'expire' => 60,
+        // ],
+
         'admins' => [
-            'provider' => 'admins',
+            'provider' => 'students',
             'table' => 'password_resets',
             'expire' => 60,
         ],
