@@ -20,46 +20,53 @@ class StatisticsController extends Controller
         return view('statistics')->with('statistics', $statistics)->with('sortbyname', $sortbyname);
     }
 
-    public function sortbymale()
+    public function sortbylevel(Request $request)
     {
-        $statistics = DB::table('students')->where('gender', '=', 'male')->get();
-        $sortbymale = 'Sorting by male';
-        return view('statistics')->with('statistics', $statistics)->with('sortbymale', $sortbymale);
-    }
-
-    public function sortbyfemale()
-    {
-        $statistics = DB::table('students')->where('gender', '=', 'female')->get();
-        $sortbyfemale = 'Sorting by female';
-        return view('statistics')->with('statistics', $statistics)->with('sortbyfemale', $sortbyfemale);
-    }
-
-    public function sortbyfullblind()
-    {
-        $statistics = DB::table('students')->where('type', '=', 'fullblind')->get();
-        $sortbyfullblind = 'Sorting by full blind';
-        return view('statistics')->with('statistics', $statistics)->with('sortbyfullblind', $sortbyfullblind);
-    }
-
-    public function sortbyhalfblind()
-    {
-        $statistics = DB::table('students')->where('type', '=', 'halfblind')->get();
-        $sortbyhalfblind = 'Sorting by half blind';
-        return view('statistics')->with('statistics', $statistics)->with('sortbyhalfblind', $sortbyhalfblind);
-    }
-
-    public function sortbyage(Request $request)
-    {
-        if ($request->form && $request->to == !null) {
-            $get_firstrange = $request->from;
-            $get_secondrange = $request->to;
-            $statistics = DB::table('students')->where('age', '>', $get_firstrange)->where('age', '<', $get_secondrange)->get();
+            $statistics = DB::table('students')->where('level', '=', $request->level)->get();
             return view('statistics')->with('statistics', $statistics);
-        }
-        else {
-            return redirect()->back();
-        }
+
     }
+
+    // public function sortbymale()
+    // {
+    //     $statistics = DB::table('students')->where('gender', '=', 'male')->get();
+    //     $sortbymale = 'Sorting by male';
+    //     return view('statistics')->with('statistics', $statistics)->with('sortbymale', $sortbymale);
+    // }
+
+    // public function sortbyfemale()
+    // {
+    //     $statistics = DB::table('students')->where('gender', '=', 'female')->get();
+    //     $sortbyfemale = 'Sorting by female';
+    //     return view('statistics')->with('statistics', $statistics)->with('sortbyfemale', $sortbyfemale);
+    // }
+
+    // public function sortbyfullblind()
+    // {
+    //     $statistics = DB::table('students')->where('type', '=', 'fullblind')->get();
+    //     $sortbyfullblind = 'Sorting by full blind';
+    //     return view('statistics')->with('statistics', $statistics)->with('sortbyfullblind', $sortbyfullblind);
+    // }
+
+    // public function sortbyhalfblind()
+    // {
+    //     $statistics = DB::table('students')->where('type', '=', 'halfblind')->get();
+    //     $sortbyhalfblind = 'Sorting by half blind';
+    //     return view('statistics')->with('statistics', $statistics)->with('sortbyhalfblind', $sortbyhalfblind);
+    // }
+
+    // public function sortbyage(Request $request)
+    // {
+    //     if ($request->form && $request->to == !null) {
+    //         $get_firstrange = $request->from;
+    //         $get_secondrange = $request->to;
+    //         $statistics = DB::table('students')->where('age', '>', $get_firstrange)->where('age', '<', $get_secondrange)->get();
+    //         return view('statistics')->with('statistics', $statistics);
+    //     }
+    //     else {
+    //         return redirect()->back();
+    //     }
+    // }
 
     // public function sortbyagebetween25and35()
     // {

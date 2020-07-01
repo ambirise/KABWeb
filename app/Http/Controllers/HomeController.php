@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
@@ -27,16 +26,16 @@ class HomeController extends Controller
     public function index(Request $request)
     {
 
-    //    if(Auth::guard('student')) {
-    //         return "Hello Student";
-    //     }
+        //    if(Auth::guard('student')) {
+        //         return "Hello Student";
+        //     }
 
-    // foreach(array_keys(config('auth.guards')) as $guard){
-    //     if(auth()->guard($guard)) return $guard;
-    // }
-        
+        // foreach(array_keys(config('auth.guards')) as $guard){
+        //     if(auth()->guard($guard)) return $guard;
+        // }
 
-      return view('index');
+        $get_level_data = DB::table('levels')->get();
+        return view('levels')->with('get_level_data', $get_level_data);
     }
 
     public function getallSearch(Request $request)

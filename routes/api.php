@@ -2,6 +2,7 @@
 use Illuminate\Http\Request;
 use App\Content;
 
+
 /* 
 |-----------------------------------------------------------------------
 | API Routes
@@ -40,8 +41,10 @@ Route::get('/level', 'ApiController@getlevelApi');
 Route::get('faculties/{id}', 'ApiController@getfacultyApi');
 Route::get('semesters/{id}', 'ApiController@getsemesterApi');
 
-Route::get('subjects/{id}', 'ApiController@getsubjectApi');
-Route::get('chapters/{id}', 'ApiController@getchapterApi');
+Route::post('subjects', 'ApiController@getsubjectApi');
+
+Route::post('subjectstest', 'ApiController@getsubjecttestApi');
+// Route::get('chapters/{id}', 'ApiController@getchapterApi');
 Route::post('contents/{id}', 'ApiController@getcontentApi');
 
 Route::get('search_faculties/{query}', 'APIController@search_faculties');
@@ -69,7 +72,6 @@ Route::post('/showfavourites', ['uses'=>'APIController@showfavouritesAPI','as'=>
 Route::post('/addhistory/{id}', ['uses'=>'APIController@addhistoryAPI','as'=>'addhistoryAPI']);
 Route::post('/delhistory/{id}', ['uses'=>'APIController@delhistoryAPI','as'=>'delhistoryAPI']);
 
-
 Route::post('/showhistory', ['uses'=>'APIController@showhistoryAPI','as'=>'showhistoryAPI']);
 
 Route::get('/filterbyname/{name}', ['uses'=>'APIController@filterbynameAPI','as'=>'filterbynameAPI']);
@@ -86,3 +88,4 @@ Route::post('/resetpassword', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::post('/isfavourite/{content_id}', 'APIController@isfavouriteAPI');
 Route::get('/getcontent/{content_id}/{student_id}', ['uses'=>'ApiController@getcontentShow','as'=>'getcontentShow']);
 
+Route::post('/register', 'APIController@studentRegistration');

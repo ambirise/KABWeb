@@ -15,6 +15,20 @@
                         <div class="row">
                             @if((!empty($get_semester_data->yearorsemester)))
                             <div class="col-md-6">
+
+                                @if($get_semester_data->yearorsemester == "y" && $get_semester_data->numberofyear ==
+                                "2")
+                                <div class="col-md-6">
+                                    <span style="font-size:16px;">Select Year</span><br>
+                                    <select class="custom-select" name="year" style="height:38px;width:182px;"
+                                        id="customchange" required>
+                                        <option value="First Year" selected>First</option>
+                                        <option value="Second Year">Second</option>
+                                    </select>
+                                </div>
+                                @endif
+
+
                                 @if($get_semester_data->yearorsemester == "s" && $get_semester_data->numberofsemester ==
                                 "6")
                                 <span style="font-size:16px;">Select Semester</span><br>
@@ -206,7 +220,8 @@
                                 </select>
                                 @endif
 
-                                @if($get_semester_data->yearorsemester == "y" && $get_semester_data->numberofyear == "5")
+                                @if($get_semester_data->yearorsemester == "y" && $get_semester_data->numberofyear ==
+                                "5")
                                 <span style="font-size:16px;">Select Year</span><br>
                                 <select class="custom-select" name="year" style="height:38px;width:182px;"
                                     id="customchange" required>
@@ -227,7 +242,8 @@
                             </div>
                             <div class="col-md-6"><br>
                                 <button type="submit" onclick="Update()" class="btn btn-primary">UPDATE</button>
-                                <a href="{{ route('getsubjectsIndex',$get_subject_data->faculty_id) }}"><button type="button" class="btn btn-primary">Cancel</button></a>
+                                <a href="{{ route('getsubjectsIndex',$get_subject_data->faculty_id) }}"><button
+                                        type="button" class="btn btn-primary">Cancel</button></a>
                             </div>
                         </div>
                     </div>

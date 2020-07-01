@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
     <div class="container"><br>
-          <a href="{{ url('/levels') }}">
+          <a href="{{ url('/') }}">
             <span>Levels</span>
         </a>
 
@@ -42,6 +42,7 @@
                         <tr>
                             <th scope="col">S.N</th>
                             <th scope="col">Level Title</th>
+                            <th scope="col"> </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,6 +51,7 @@
                             style="cursor:pointer;">
                             <td>{{$key+1}}</td>
                             <td>{{$level_data->level_title}}</td>
+                            <td>Insert contents into {{$level_data->level_title}}</td>
                         </tr>
                         @endforeach
                     </tbody>

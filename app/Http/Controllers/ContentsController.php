@@ -6,10 +6,12 @@ use App\Chapter;
 use App\Content;
 use App\Faculty;
 use App\Level;
+use App\Preferences;
 use App\Subject;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class ContentsController extends Controller
 {
@@ -18,33 +20,32 @@ class ContentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $chapter_id)
+    public function index(Request $request, $subject_id)
     {
-        $get_chapter_data = Chapter::where('chapter_id', $chapter_id)->first();
 
-        $get_chapter_data_array = Chapter::where('chapter_id', $chapter_id)->get();
-        $pluck_facultyid_chapter = Arr::pluck($get_chapter_data_array, ['faculty_id']);
-        $pluck_subjectid_chapter = Arr::pluck($get_chapter_data_array, ['subject_id']);
-        $pluck_chapterid_chapter = Arr::pluck($get_chapter_data_array, ['chapter_id']);
+        $get_subject_data = Subject::where('subject_id', $subject_id)->first();
 
-        $implode_facultyid_chapter = implode(" ", $pluck_facultyid_chapter);
-        $implode_subjectid_chapter = implode(" ", $pluck_subjectid_chapter);
-        $implode_chapterid_chapter = implode(" ", $pluck_chapterid_chapter);
+        $get_subject_data_array = Subject::where('subject_id', $subject_id)->get();
 
-        $get_faculty_title = Faculty::where('faculty_id', $implode_facultyid_chapter)->first();
-        $get_subject_title = Subject::where('subject_id', $implode_subjectid_chapter)->first();
-        $get_chapter_title = Chapter::where('faculty_id', $implode_chapterid_chapter)->first();
+        $pluck_facultyid_subject = Arr::pluck($get_subject_data_array, ['faculty_id']);
+        $pluck_subjectid_subject = Arr::pluck($get_subject_data_array, ['subject_id']);
 
-        $get_content_data_array = DB::table('contents')->where('chapter_id', $chapter_id)->get();
+        $implode_facultyid = implode(" ", $pluck_facultyid_subject);
+        $implode_subjectid = implode(" ", $pluck_subjectid_subject);
 
-        $pluck_level_id = Arr::pluck($get_chapter_data_array, ['level_id']);
+        $get_faculty_title = Faculty::where('faculty_id', $implode_facultyid)->first();
+        $get_subject_title = Subject::where('subject_id', $implode_subjectid)->first();
+
+        $get_content_data_array = DB::table('contents')->where('subject_id', $subject_id)->get();
+
+        $pluck_level_id = Arr::pluck($get_subject_data_array, ['level_id']);
         $level_id = implode(" ", $pluck_level_id);
+
         $level_title = Level::where('level_id', $level_id)->first();
 
-        return view('contents')->with('get_chapter_data', $get_chapter_data)
+        return view('contents')->with('get_subject_data', $get_subject_data)
             ->with('get_content_data_array', $get_content_data_array)->with('get_faculty_title', $get_faculty_title)
             ->with('get_subject_title', $get_subject_title)
-            ->with('get_chapter_title', $get_chapter_title)
             ->with('level_title', $level_title);
     }
 
@@ -64,23 +65,20 @@ class ContentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $chapter_id)
+    public function store(Request $request, $subject_id)
     {
-   
 
-        $get_id_chapter = DB::table('chapters')->where('chapter_id', $chapter_id)->get();
+        $get_id_subject = DB::table('subjects')->where('subject_id', $subject_id)->get();
 
-        $pluck_levelid_chapter = Arr::pluck($get_id_chapter, ['level_id']);
-        $pluck_semesterid_chapter = Arr::pluck($get_id_chapter, ['semester_id']);
-        $pluck_facultyid_chapter = Arr::pluck($get_id_chapter, ['faculty_id']);
-        $pluck_subjectid_chapter = Arr::pluck($get_id_chapter, ['subject_id']);
-        $pluck_chapterid_chapter = Arr::pluck($get_id_chapter, ['chapter_id']);
+        $pluck_levelid_subject = Arr::pluck($get_id_subject, ['level_id']);
+        $pluck_semesterid_subject = Arr::pluck($get_id_subject, ['semester_id']);
+        $pluck_facultyid_subject = Arr::pluck($get_id_subject, ['faculty_id']);
+        $pluck_subjectid_subject = Arr::pluck($get_id_subject, ['subject_id']);
 
-        $implode_levelid_chapter = implode(" ", $pluck_levelid_chapter);
-        $implode_semesterid_chapter = implode(" ", $pluck_semesterid_chapter);
-        $implode_facultyid_chapter = implode(" ", $pluck_facultyid_chapter);
-        $implode_subjectid_chapter = implode(" ", $pluck_subjectid_chapter);
-        $implode_chapterid_chapter = implode(" ", $pluck_chapterid_chapter);
+        $implode_levelid_subject = implode(" ", $pluck_levelid_subject);
+        $implode_semesterid_subject = implode(" ", $pluck_semesterid_subject);
+        $implode_facultyid_subject = implode(" ", $pluck_facultyid_subject);
+        $implode_subjectid_subject = implode(" ", $pluck_subjectid_subject);
 
         $audios = $request->file('audio');
         // if(count($audios)>=5){
@@ -88,47 +86,45 @@ class ContentsController extends Controller
         // }
 
         $uploadcount = 0;
+        $uniquecontent = array();
 
         if ($request->file('audio') == !null) {
             foreach ($audios as $audio) {
                 // $destinationPath = 'audios';
 
-                $uniquecontent = sha1(microtime());
+                $uniquecontent = (string) Str::uuid();
                 $file = $audio->getClientOriginalName();
                 $info = pathinfo($file);
+
                 // from PHP 5.2.0 :
                 $file_name = $info['filename'];
-               
-               
+
+                //aready a comment
                 // $upload_success = $audio->move($destinationPath, $filename);
 
                 $getExtension = $audio->getClientOriginalExtension();
                 $nameofcontent = $uniquecontent . '.' . $getExtension;
 
                 $audio->move('audios/', $nameofcontent);
-              
 
                 $contents = new Content;
 
-                $contents->level_id = $implode_levelid_chapter;
+                $contents->level_id = $implode_levelid_subject;
 
-                if ($implode_semesterid_chapter == !null) {
-                    $contents->semester_id = $implode_semesterid_chapter;
+                if ($implode_semesterid_subject == !null) {
+                    $contents->semester_id = $implode_semesterid_subject;
                 }
 
-                $contents->faculty_id = $implode_facultyid_chapter;
-                $contents->subject_id = $implode_subjectid_chapter;
-                $contents->chapter_id = $implode_chapterid_chapter;
+                $contents->faculty_id = $implode_facultyid_subject;
+                $contents->subject_id = $implode_subjectid_subject;
 
-                // if ($getExtension == "wav") {
                 $contents->content_name = $file_name;
-                // }
 
                 $contents->content_title = $nameofcontent;
                 $contents->save();
                 $uploadcount++;
-
             }
+
             return redirect()->back();
         }
     }
@@ -167,7 +163,7 @@ class ContentsController extends Controller
         $get_content_data_array = Content::where('content_id', $content_id)->get();
         $pluck_chapterid = Arr::pluck($get_content_data_array, ['chapter_id']);
         $chapter_id = implode(" ", $pluck_chapterid);
-      
+
         $get_content = $request->input('content');
         $contents = Content::find($content_id);
 
@@ -187,12 +183,47 @@ class ContentsController extends Controller
         //
     }
 
-    public function delcontentsDetails($id)
+    public function delcontentsDetails(Request $request, $id)
     {
+
+        //  deleting from favourite if exists
+        $preferences_array = DB::table('preferences')->get();
+        if (count($preferences_array) > 0) {
+
+            $json_all_favourite_ids = DB::table('preferences')->pluck('student_favourite')->toArray();
+
+            $json_all_student_ids = DB::table('preferences')->pluck('student_id')->toArray();
+
+            $increment = null;
+
+            foreach (array_combine($json_all_favourite_ids, $json_all_student_ids) as $student_favourite => $student_id) {
+                $favourite_single = json_decode($student_favourite);
+
+                $single_collection = collect(array_diff($favourite_single, array($id)))->values()->all();
+
+                $editfavourite = Preferences::where('student_id', $student_id)->first();
+                $editfavourite->student_favourite = json_encode($single_collection);
+                $editfavourite->save();
+            }
+        }
+
         $findaudio = Content::findOrFail($id);
         $file_path = public_path() . "/audios/" . $findaudio->content_title;
         unlink($file_path);
         $findaudio->delete();
+
+        return redirect()->back();
+    }
+
+    public function delcontentsdetailsAll(Request $request, $subject_id){
+        $findallcontents = DB::table('contents')->where('subject_id',$subject_id)->get();
+
+        foreach ($findallcontents as $findaudio){
+            $file_path = public_path() . "/audios/" . $findaudio->content_title;
+            unlink($file_path);
+            $delete_audio = Content::where('content_id',$findaudio->content_id)->delete();
+        }
+
         return redirect()->back();
     }
 
@@ -237,9 +268,9 @@ class ContentsController extends Controller
         }
 
         return view('contents')->with('get_chapter_data', $get_chapter_data)
-        ->with('get_content_data_array', $get_content_data_array)->with('get_faculty_title', $get_faculty_title)
-        ->with('get_subject_title', $get_subject_title)
-        ->with('get_chapter_title', $get_chapter_title)
-        ->with('level_title', $level_title);
+            ->with('get_content_data_array', $get_content_data_array)->with('get_faculty_title', $get_faculty_title)
+            ->with('get_subject_title', $get_subject_title)
+            ->with('get_chapter_title', $get_chapter_title)
+            ->with('level_title', $level_title);
     }
 }

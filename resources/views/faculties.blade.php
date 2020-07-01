@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="container"><br>
-    <a href="{{ url('/levels') }}"><span>Levels</span></a> -> <a
+    <a href="{{ url('/') }}"><span>Levels</span></a> -> <a
         href="{{ url('/faculties',$get_level_data->level_id) }}"><span>{{$get_level_data->level_title}}</span></a>
     <div class="card mt-4 addfacultyform" hidden="true">
         <div class="card-header">
@@ -116,6 +116,17 @@
                                 <input type="radio" name="numberofsemester" value="10" autocomplete="off">Ten
                             </label>
                         </div>
+                    </div>
+                    @endif
+
+
+                    @if($get_level_data->level_title=='Masters')
+                    <div class="col-md-4">
+                        <span style="font-size:16px;">Faculty</span>
+                        <input type="text" name="facultybachelor" class="form-control" id="usr"
+                            style="width:182px;" required><br>
+                        <input type="hidden" name="numberofyear" Value="2" autocomplete="off">
+                        <input type="hidden" name="Semester" value="y" autocomplete="off" required>
                     </div>
                     @endif
 
@@ -260,7 +271,7 @@
                 </div>
 
                 @if(($get_level_data->level_id == "3" || $get_level_data->level_id == "5" || $get_level_data->level_id
-                == "6"))
+                == "9" || $get_level_data->level_id == "7"))
                 <div class="col-md-4">
                     <button class="btn btn-outline-primary" id="addfacultybutton" style="float:right">ADD</button>
                 </div>
@@ -272,7 +283,7 @@
                 <thead>
                     <tr>
                         <th scope="col">S.N</th>
-                        @if(($get_level_data->level_id == "3"))
+                        @if(($get_level_data->level_id == "3" || $get_level_data->level_id == "7"))
                         <th scope="col">Faculty</th>
                         @endif
                         @if(($get_level_data->level_id == "1"))
@@ -284,7 +295,7 @@
                         @if(($get_level_data->level_id == "5"))
                         <th scope="col">Field</th>
                         @endif
-                        @if(($get_level_data->level_id == "6"))
+                        @if(($get_level_data->level_id == "9"))
                         <th scope="col">Field</th>
                         @endif
 
@@ -492,12 +503,12 @@
                     <!-- End of main if condition -->
 
                     <!-- For fifth main if condition -->
-                    @if($get_level_data->level_id == "6")
+                    @if($get_level_data->level_id == "9")
                     @if(isset($details))
                     @php
                     $i=0;
                     @endphp
-                    @foreach($get_faculty_data->where('level_id', 6) as $faculty_data)
+                    @foreach($get_faculty_data->where('level_id', 9) as $faculty_data)
                     @php
                     $i++;
                     @endphp
@@ -523,7 +534,7 @@
                     @php
                     $i=0;
                     @endphp
-                    @foreach($get_faculty_data->where('level_id', 6) as $faculty_data)
+                    @foreach($get_faculty_data->where('level_id', 9) as $faculty_data)
                     @php
                     $i++;
                     @endphp
@@ -545,18 +556,76 @@
                     @endif
                     <!-- End of main if condition -->
 
+                 <!-- For main if condition for level id 6-->
+                 @if(($get_level_data->level_id == "7"))
+                    @if(isset($details))
+                    @php
+                    $i=0;
+                    @endphp
+                    @foreach($get_faculty_data->where('level_id', 7) as $faculty_data)
+                    @php
+                    $i++;
+                    @endphp
+                    <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
+                        style="cursor:pointer;">
+                        <th scope="row">{{$i}}</th>
+                        <td>{{$faculty_data->faculty_title}}</td>
+                        <!-- {{ route('editfacultiesDetails', $faculty_data->faculty_id)}} -->
+                        <td><a href="{{route('editfacultiesDetails',$faculty_data->faculty_id)}}" NAME="Error Handling" title="ZeroDivisionError handling"
+                                onClick="event.stopPropagation();">
+                                <button class="btn btn-primary">Edit</button></a>
+                            <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
+                                onclick="return confirmClick();" class="delete_user"><button type="button"
+                                    class="btn btn-danger ">Delete</button></a>
+                        </td>
+                        @if($get_faculty_data->isEmpty())
+                        this is home
+                        @endif
+                    </tr>
+
+                    @endforeach
+
+                    @else
+                    @php
+                    $i=0;
+                    @endphp
+                    @foreach($get_faculty_data->where('level_id', 7) as $faculty_data)
+                    @php
+                    $i++;
+                    @endphp
+                    <tr onclick="window.location = '{{route('getsubjectsIndex',$faculty_data->faculty_id)}}'"
+                        style="cursor:pointer;">
+                        <th scope="row">{{$i}}</th>
+                        <td>{{$faculty_data->faculty_title}}</td>
+                        <td><a href="{{route('editfacultiesDetails',$faculty_data->faculty_id)}}" NAME="Error Handling" title="ZeroDivisionError handling"
+                                onClick="event.stopPropagation();">
+                                <button class="btn btn-primary">Edit</button></a>
+                            <a href="{{route('delfacultiesDetails',$faculty_data->faculty_id)}}"
+                                onclick="return confirmClick();" class="delete_user"><button type="button"
+                                    class="btn btn-danger ">Delete</button></a>
+                        </td>
+                    </tr>
+
+                    @endforeach
+                    @endif
+
+                    @endif
+                    <!-- End of main if condition -->
+
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
 <script>
     $(document).ready(function () {
         $('input:radio[name="Semester"]').change(function () {
             if ($(this).val() == 'y') {
                 $('.hideyears').removeAttr('hidden');
                 $('.hidesemesters').attr("hidden", "false");
-
+                $("input[name='numberofsemester']").attr('required', false);
+                $("input[name='numberofyear']").attr('required', true);
                 // $('.hideselectyearfirst').attr("hidden", "true");
                 // $('.hideselectyearsecond').attr("hidden", "true");
                 // $('.hideselectyearthird').attr("hidden", "true");
@@ -569,6 +638,8 @@
             if ($(this).val() == 's') {
                 $('.hidesemesters').removeAttr('hidden');
                 $('.hideyears').attr("hidden", "false");
+                $("input[name='numberofyear']").attr('required', false);
+                $("input[name='numberofsemester']").attr('required', true);
 
                 // $('.hideselectyearfirst').attr("hidden", "true");
                 // $('.hideselectyearsecond').attr("hidden", "true");
@@ -580,7 +651,6 @@
             }
         });
     });
-
 </script>
 <!--
 //     $(document).ready(function () {

@@ -68,6 +68,7 @@ class FacultiesController extends Controller
             $faculty = $request->input('facultybachelor');
             $yearorsemester = $request->input('Semester');
             $numberofyear = $request->input('numberofyear');
+
             $numberofsemester = $request->input('numberofsemester');
         }
 

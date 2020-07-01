@@ -36,8 +36,8 @@
 <body onFocus="parent_disable();" onclick="parent_disable();">
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#316698;">
         <!-- for logo -->
-        <a class="navbar-brand p-0 m-0" href="{{ url('/') }}"><input type="image" id="myimage" src="{{ asset('/backend/images/logo.png') }}"
-                height="80" width="80" /></a>
+        <a class="navbar-brand p-0 m-0" href="{{ url('/') }}"><input type="image" title="Logo"
+                src="{{ asset('/backend/images/logo.png') }}" height="80" width="80" /></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -45,17 +45,19 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto" style="font-size:20px;">
-             
-                <li class="ml-5  nav-item active">
-                    <a class="nav-link border p-1" aria-label="arial box"  style="color:white;" href="{{ url('/') }}">Home</a>
+                <li class="ml-4 nav-item active">
+                    <a class="nav-link border p-1" aria-label="Levels" style="color:white;"
+                        href="{{ url('/') }}">Home</a>
+                </li>
+
+                <li class="ml-4  nav-item active">
+                    <a class="nav-link border p-1" title="Hello" aria-label="Home" style="color:white;"
+                        href="{{ url('/searchall') }}">Search</a>
                 </li>
 
                 <li class="ml-4 nav-item active">
-                    <a class="nav-link border p-1" aria-label="arial box"  style="color:white;" href="{{ url('/levels') }}">Levels</a>
-                </li>
-                
-                <li class="ml-4 nav-item active">
-                    <a class="nav-link border p-1" aria-label="arial box"  style="color:white;" href="{{ url('statistics') }}">Statistics</a>
+                    <a class="nav-link border p-1" aria-label="Statistics" style="color:white;"
+                        href="{{ url('statistics') }}">Statistics</a>
                 </li>
 
                 <!-- <li class="nav-item active">
@@ -72,7 +74,7 @@
                                                      document.getElementById('logout-form').submit();"><span
                         style="font-size:20px;">Log Out</span></a>
             </form>
-            
+
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
@@ -80,4 +82,5 @@
     </nav>
     @yield('content')
 </body>
+
 </html>

@@ -11,9 +11,8 @@
         </div>
         <div class="card-body">
             <main class="page-content" style="font-family: Times New Roman, Times, serif;">
-                <form action="{{ route('facultiesUpdate', $facultiesdetails_faculty->faculty_id)}}"
-                       method="POST" id="updateformfaculty"
-                    enctype="mutipart/form-data">
+                <form action="{{ route('facultiesUpdate', $facultiesdetails_faculty->faculty_id)}}" method="POST"
+                    id="updateformfaculty" enctype="mutipart/form-data">
                     {{ csrf_field() }}
                     <div class="row">
                         <!-- for levels page -->
@@ -159,6 +158,15 @@
                                 style="width:200px;"><br>
                         </div>
 
+                        @elseif($implode_leveldetailstitle=="Masters")
+                        <div class="col-md-4">
+                            <span style="font-size:16px;">Faculty</span>
+                            <input type="text" name="facultybachelor" value="{{$facultiesdetails_faculty->faculty_title}}" class="form-control" id="usr" style="width:182px;"
+                                required><br>
+                            <input type="hidden" name="numberofyear" Value="2" autocomplete="off">
+                            <input type="hidden" name="Semester" value="y" autocomplete="off" required>
+                        </div>
+
                         @elseif($implode_leveldetailstitle=="School")
                         <div class="col-md-4 hidefaculty">
                             <span style="font-size:16px;">School</span>
@@ -178,7 +186,8 @@
 
                         <div class="col-md-4"><br>
                             <button type="submit" class="btn btn-primary">Update</button>
-                            <a href="{{ route('getfacultiesIndex',$facultiesdetails_faculty->level_id) }}"><button type="button" class="btn btn-primary">Cancel</button></a>
+                            <a href="{{ route('getfacultiesIndex',$facultiesdetails_faculty->level_id) }}"><button
+                                    type="button" class="btn btn-primary">Cancel</button></a>
                         </div>
                     </div>
                 </form>

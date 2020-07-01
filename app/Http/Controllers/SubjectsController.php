@@ -72,7 +72,6 @@ class SubjectsController extends Controller
     {
         $get_semester_duration = $request->input('year');
 
-
         $get_semester_data_array = Semester::where('faculty_id', $faculty_id)->get();
         
         
@@ -160,24 +159,6 @@ class SubjectsController extends Controller
         $faculty_id = implode(" ", $pluck_facultyid);
 
         $id = implode(" ", $pluck_semesterid_semester);
-
-        // if ($id == !null) {
-        //     $get_id_semester = DB::table('semesters')->where('semester_id', $id)->get();
-        //     $pluck_levelid_semester = Arr::pluck($get_id_semester, ['level_id']);
-        //     $pluck_semesterid_semester = Arr::pluck($get_id_semester, ['semester_id']);
-        //     $pluck_facultyid_semester = Arr::pluck($get_id_semester, ['faculty_id']);
-
-        //     $implode_levelid_semester = implode(" ", $pluck_levelid_semester);
-        //     $implode_semesterid_semester = implode(" ", $pluck_semesterid_semester);
-        //     $implode_facultyid_semester = implode(" ", $pluck_facultyid_semester);
-        // } else {
-        //     $get_id_semester = DB::table('faculties')->where('faculty_id', $faculty_id)->get();
-        //     $pluck_levelid_semester = Arr::pluck($get_id_semester, ['level_id']);
-        //     $pluck_facultyid_semester = Arr::pluck($get_id_semester, ['faculty_id']);
-
-        //     $implode_levelid_semester = implode(" ", $pluck_levelid_semester);
-        //     $implode_facultyid_semester = implode(" ", $pluck_facultyid_semester);
-        // }
 
         $get_subject = $request->input('subject');
 

@@ -1,12 +1,12 @@
 @extends('home')
 @section('content')
-<div class="container">
+<!-- <div class="container">
     <div class="card mt-4">
         <div class="card-header text-center">
             <h5>Welcome To Audio Library Management System</h5>
         </div>
     </div>
-</div>
+</div> -->
 
 <div class="container"><br>
     <h5 class=" p-1 text-center">Overall Search</h5>
@@ -43,7 +43,7 @@
                     @if(isset($data))
                     @foreach($data as $key=>$get_search_data)
                     @if(isset($get_search_data->subject_title))
-                    <tr onclick="window.location = '{{route('getchaptersIndex',$get_search_data->subject_id)}}'"
+                    <tr onclick="window.location = '{{route('getcontentsIndex',$get_search_data->subject_id)}}'"
                         style="cursor:pointer;">
                         @else
                     <tr onclick="window.location = '{{route('getsubjectsIndex',$get_search_data->faculty_id)}}'"

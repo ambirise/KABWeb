@@ -17,8 +17,7 @@ class LevelsController extends Controller
      */
     public function index()
     {
-        $get_level_data= Level::all();
-        return view('levels')->with('get_level_data',$get_level_data);
+        return view('index');
     }
 
     /**
