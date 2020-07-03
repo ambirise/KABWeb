@@ -35,8 +35,8 @@
             <form class="form-inline my-2 ml-2 my-lg-0">
                 <a style="float:right;color:white;text-decoration:none;" class="mt-2" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();"><span
-                        style="font-size:20px;">Log Out</span></a>
+                                                     document.getElementById('logout-form').submit();"><input type="image" title="Logo"
+                src="{{ asset('/backend/images/logout.jpg') }}" height="40" width="80" /></a>
             </form>
 
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -78,7 +78,7 @@
     -> <a
         href="{{ url('/subjects',$get_subject_data->faculty_id) }}"><span>{{$get_faculty_title->faculty_title}}</span></a>
     -> <a
-        href="{{ url('/chapters',$get_subject_data->subject_id) }}"><span>{{$get_subject_title->subject_title}}</span></a>
+        href="{{ url('/contents',$get_subject_data->subject_id) }}"><span>{{$get_subject_title->subject_title}}</span></a>
 
     <div class="card mt-4 addbookform" hidden="true">
         <div class="card-body">
@@ -88,7 +88,7 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <label class="border border-black p-1">Upload Book:</label>
-                            <input multiple="multiple" type="file" id="audiofile" name="audio[]" webkitdirectory directory multiple/>
+                            <input multiple="multiple" type="file" id="audiofile" name="audio[]" webkitdirectory directory multiple required/>
                             <div class="progress">
                                 <div class="bar"></div>
                                 <div class="percent">0%</div>
@@ -113,7 +113,7 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <label class="border border-black p-1">Upload Audio:</label>
-                            <input multiple="multiple" type="file" id="audiofile" name="audio[]" >
+                            <input multiple="multiple" type="file" id="audiofile" name="audio[]" required>
                             <div class="progress">
                                 <div class="bar"></div>
                                 <div class="percent">0%</div>
@@ -153,7 +153,7 @@
         <div class="card-header text-center">
             <div class="row">
                 <div class="col-md-8">
-                    <form action="" method="POST"
+                    <form action="{{ route('getcontentsSearch',$get_subject_data->subject_id)}}" method="POST"
                         role="search">
                         {{ csrf_field() }}
                         <div class="input-group" class="columnpatient1">
@@ -176,13 +176,13 @@
             </div>
         </div>
         <div class="card-body">
-            <table class="table mt-0 table-striped">
+            <table class="table mt-0 table-striped table-bordered">
                 <thead>
                     <tr>
                         <th scope="col">S.N</th>
                         <th scope="col">Name</th>
                         <!-- <th scope="col">Audio</th> -->
-                        <th scope="col"><span style="float:left">Action</span> <a href="{{route('delcontentsdetailsAll',$get_subject_data->subject_id)}}"
+                        <th scope="col">Action<a href="{{route('delcontentsdetailsAll',$get_subject_data->subject_id)}}"
                                 onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
                                     class="btn btn-danger" style="float:right">Delete All </button></a></th>
                     </tr>
@@ -193,7 +193,7 @@
                         style="cursor:pointer;">
                         <td>{{$key+1}}</td>
                         <td>{{$content_data->content_name}}</td>
-                        <!-- <td>{{$content_data->content_title}}</td> -->
+
                         <td>
                         <a href="{{route('editcontentsDetails',$content_data->content_id)}}"
                                 onClick=event.stopPropagation(); >
@@ -202,7 +202,6 @@
                                 onclick="return confirm('Are you sure?')" class="delete_user"><button type="button"
                                     class="btn btn-danger ">Delete</button></a>
                         </td>
-                        <td></td>
                     </tr>
                     @endforeach
                 </tbody>

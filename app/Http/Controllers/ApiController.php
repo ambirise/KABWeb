@@ -70,9 +70,7 @@ class ApiController extends Controller
         } else {
 
             return $this->prepareResult(false, [], ["email" => "Unable to find user"], "User not found");
-
         }
-
     }
 
     // /**
@@ -219,7 +217,6 @@ class ApiController extends Controller
             if (auth()->guard($guard)->check()) {
                 return $guard;
             }
-
         }
     }
     // /**
@@ -406,15 +403,101 @@ class ApiController extends Controller
 
     public function getsubjectApi(Request $request)
     {
+        $faculty_id = $request->faculty_id;
+        $semester_id = $request->semester_id;
 
         if ($request->faculty_id == null) {
-            $get_semester_data = DB::table('subjects')->where('semester_id', $request->semester_id)->get();
-            return $get_semester_data;
+            $get_subject_data_array = DB::table('subjects')->where('semester_id', $semester_id)->pluck('subject_id')->toArray();
+
+            $json_all_favourite_ids = DB::table('preferences')->where('student_id', $request->student_id)->pluck('student_favourite')->first();
+
+            // $json_all_content_ids = Content::all()->pluck('content_id')->toArray();
+
+            // $favourites_array = array();
+            $jsondecode_all_favourite_ids = json_decode($json_all_favourite_ids);
+
+            $array_unique = array_diff($get_subject_data_array, $jsondecode_all_favourite_ids);
+
+            $subject_values_array_isfavourite = array();
+            $subject_values_array = array();
+
+            foreach ($jsondecode_all_favourite_ids as $data) {
+                if (in_array($data, $get_subject_data_array)) {
+                    $subject_values_one = collect(DB::table('subjects')->join('levels', 'levels.level_id', '=', 'subjects.level_id')->where('subject_id', $data)->first());
+                    $pluck_content_collection = collect(DB::table('contents')->where('subject_id', $data)->get());
+                    if (count($pluck_content_collection) > 0) {
+                        $subject_values_one->put('hasContent', true);
+                    } else {
+                        $subject_values_one->put('hasContent', false);
+                    }
+                    $subject_values_array_isfavourite[] = $subject_values_one->put('isFavourite', true);
+                    $subject_values_array++;
+                }
+            }
+
+            foreach ($array_unique as $data) {
+                $subject_values_two = collect(DB::table('subjects')->join('levels', 'levels.level_id', '=', 'subjects.level_id')->where('subject_id', $data)->first());
+                $pluck_content_collection = collect(DB::table('contents')->where('subject_id', $data)->get());
+                if (count($pluck_content_collection) > 0) {
+                    $subject_values_two->put('hasContent', true);
+                } else {
+                    $subject_values_two->put('hasContent', false);
+                }
+
+                $subject_values_array[] = $subject_values_two->put('isFavourite', false);
+                $subject_values_array++;
+            }
+
+            return array_merge($subject_values_array_isfavourite, $subject_values_array);
         }
 
         if ($request->semester_id == null) {
-            $get_semester_data = DB::table('subjects')->where('faculty_id', $request->faculty_id)->get();
-            return $get_semester_data;
+
+            $get_subject_data_array = DB::table('subjects')->where('faculty_id', $faculty_id)->pluck('subject_id')->toArray();
+
+            $json_all_favourite_ids = DB::table('preferences')->where('student_id', $request->student_id)->pluck('student_favourite')->first();
+
+            // $json_all_content_ids = Content::all()->pluck('content_id')->toArray();
+
+            // $favourites_array = array();
+            $jsondecode_all_favourite_ids = json_decode($json_all_favourite_ids);
+
+            $array_unique = array_diff($get_subject_data_array, $jsondecode_all_favourite_ids);
+
+            $aubject_values_array_isfavourite = array();
+            $subject_values_array = array();
+
+            foreach ($jsondecode_all_favourite_ids as $data) {
+                if (in_array($data, $get_subject_data_array)) {
+                    $subject_values_one = collect(DB::table('subjects')->join('levels', 'levels.level_id', '=', 'subjects.level_id')->where('subject_id', $data)->first());
+                    $pluck_content_collection = collect(DB::table('contents')->where('subject_id', $data)->get());
+                    if (count($pluck_content_collection) > 0) {
+                        $subject_values_one > put('hasContent', true);
+                    } else {
+                        $subject_values_one->put('hasContent', false);
+                    }
+                    $subject_values_array_isfavourite[] = $subject_values_one->put('isFavourite', true);
+
+                    $subject_values_array++;
+                } else {
+                    $subject_values_array_isfavourite = [];
+                }
+            }
+
+            foreach ($array_unique as $data) {
+                $subject_values_two = collect(DB::table('subjects')->join('levels', 'levels.level_id', '=', 'subjects.level_id')->where('subject_id', $data)->first());
+                $pluck_content_collection = collect(DB::table('contents')->where('subject_id', $data)->get());
+                if (count($pluck_content_collection) > 0) {
+                    $subject_values_two->put('hasContent', true);
+                } else {
+                    $subject_values_two->put('hasContent', false);
+                }
+
+                $subject_values_array[] = $subject_values_two->put('isFavourite', false);
+                $subject_values_array++;
+            }
+
+            return array_merge($subject_values_array_isfavourite, $subject_values_array);
         }
         // $get_subject_data_array = DB::table('subjects')->where('faculty_id', $id)->get();
 
@@ -653,7 +736,6 @@ class ApiController extends Controller
         if ($student) {
             if (Hash::check($request->password, $student->password)) {
                 $passwordcheck = $student;
-
             } else {
                 return response()->json(['status' => 'false', 'message' => 'Invalid Login Details!! Please Try Again']);
             }
@@ -672,8 +754,7 @@ class ApiController extends Controller
 
     public function addfavouritesAPI(Request $request, $id)
     {
-
-        if (Content::where('content_id', $id)->first()) {
+        if (Subject::where('subject_id', $id)->first()) {
             $array = array();
 
             if (Student::where('id', $request->student_id)->first()) {
@@ -694,7 +775,7 @@ class ApiController extends Controller
                 $jsondecode_favourite_content = json_decode($json_favourite_content);
 
                 // $favourite_content = json_encode($array);
-                $get_content = Content::where('content_id', $id)->get()->count();
+                $get_content = Subject::where('subject_id', $id)->get()->count();
 
                 if ($jsondecode_favourite_content == !null) {
                     if (in_array($id, $jsondecode_favourite_content)) {
@@ -720,7 +801,7 @@ class ApiController extends Controller
                 echo json_encode("Sorry, Student does not exist");
             }
         } else {
-            echo json_encode("Sorry, Content does not exist");
+            echo json_encode("Sorry, Subject does not exist");
         }
     }
 
@@ -783,20 +864,6 @@ class ApiController extends Controller
 
     public function delfavouritesAPI(Request $request, $id)
     {
-        // $array = ["1", "2", "3"];
-        // $favourite_content = json_encode($array);
-        // if (Preferences::where('student_id', $request->student_id)->first()) {
-
-        // $json_favourite = Preferences::where('student_id', $request->student_id)->first();
-        // $json_favourite_content = $json_favourite->pluck('student_favourite')->first();
-        // $jsondecode_favourite_content = json_decode($json_favourite_content);
-
-        // if ($jsondecode_favourite_content == !null) {
-        //     if (!in_array($id, $jsondecode_favourite_content)) {
-        //         echo json_encode("Sorry, Student does not exist");
-        //     }
-        // }
-
         if (Preferences::where('student_id', $request->student_id)->first()) {
             $json_favourite_content = Preferences::where('student_id', $request->student_id)->pluck('student_favourite')->first();
 
@@ -808,7 +875,7 @@ class ApiController extends Controller
                 $editfavourite = Preferences::where('student_id', $request->student_id)->first();
                 $editfavourite->student_favourite = json_encode($final_collection);
                 $editfavourite->save();
-                echo json_encode("Content deleted successfully");
+                echo json_encode("Subject deleted successfully");
             } else {
                 echo json_encode("Sorry, Favourite does not exist");
             }
@@ -851,7 +918,24 @@ class ApiController extends Controller
         $favourites_array = null;
 
         foreach ($jsondecode_favourite_content as $data) {
-            $favourites_array[] = Content::where('content_id', $data)->first();
+            $array = collect(Subject::where('subject_id', $data)->first());
+
+            if (count($array) == 0) {
+                $array = Subject::where('subject_id', $data)->first();
+            }
+
+            $pluck_content_collection = collect(DB::table('contents')->where('subject_id', $data)->get());
+           
+           
+            if (count($pluck_content_collection) > 0 && count(collect(Subject::where('subject_id', $data)->first())) > 0) {
+                $array->put('hasContent', true);
+            }
+
+            if (count($pluck_content_collection) == 0 && count(collect(Subject::where('subject_id', $data)->first())) > 0) {
+                $array->put('hasContent', false);
+            }
+
+            $favourites_array[] = $array;
         }
 
         if ($favourites_array) {
@@ -870,7 +954,22 @@ class ApiController extends Controller
 
         $history_array = null;
         foreach ($jsondecode_history_content as $data) {
-            $history_array[] = Subject::where('subject_id', $data)->first();
+            $array = collect(Subject::where('subject_id', $data)->first());
+            
+            if (count($array) == 0) {
+                $array = Subject::where('subject_id', $data)->first();
+            }
+
+            $pluck_content_collection = collect(DB::table('contents')->where('subject_id', $data)->get());
+            if (count($pluck_content_collection) > 0 && count(collect(Subject::where('subject_id', $data)->first())) > 0) {
+                $array->put('hasContent', true);
+            }
+
+            if (count($pluck_content_collection) == 0 && count(collect(Subject::where('subject_id', $data)->first())) > 0) {
+                $array->put('hasContent', false);
+            }
+
+            $history_array[] = $array;
         }
 
         if ($history_array) {
@@ -1083,15 +1182,15 @@ class ApiController extends Controller
         $level = $request->level;
         $password = Hash::make($request->password);
 
-        if(strlen($name)<1){
+        if (strlen($name) < 1) {
             return response()->json(['message' => 'Name is required']);
         }
 
-        if(strlen($phone) !== 10){
+        if (strlen($phone) !== 10) {
             return response()->json(['message' => 'Phone number invalid']);
         }
 
-        if(strlen($request->password)<1){
+        if (strlen($request->password) < 1) {
             return response()->json(['message' => 'Password is required']);
         }
 

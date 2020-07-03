@@ -22,7 +22,7 @@
                             </div>
                             <div class="col-md-6"><br>
                                 <button type="submit" class="btn btn-primary" onclick="Update()">UPDATE</button>
-                                <a href="{{ route('getcontentsIndex',$get_content_data->chapter_id) }}"><button type="button" class="btn btn-primary">Cancel</button></a>
+                                <a href="{{ route('getcontentsIndex',$get_content_data->subject_id) }}"><button type="button" class="btn btn-primary">Cancel</button></a>
                             </div>
                         </div>
                     </form>

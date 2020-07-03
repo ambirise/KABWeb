@@ -42,7 +42,7 @@
     <a href="{{ url('/export') }}"><button type="button" class="btn btn-primary pt-0" style="float:right;">Download as
             Excel</button></a>
     <br><br>
-    <table class="table">
+    <table class="table table-striped table-bordered">
         <thead>
             <tr>
                 <th scope="col">S.N</th>

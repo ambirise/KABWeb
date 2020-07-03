@@ -253,7 +253,7 @@
 
 <div class="container">
     <div class="card mt-2">
-        <div class="card-header ">
+        <div class="card-header">
             <div class="row">
                 <div class="col-md-8">
                     <form action="{{ route('getfacultiesSearch',$get_level_data->level_id)}}" method="POST"
@@ -279,7 +279,7 @@
             </div>
         </div>
         <div class="card-body">
-            <table class="table mt-0 table-striped">
+            <table class="table mt-0 table-striped table-bordered">
                 <thead>
                     <tr>
                         <th scope="col">S.N</th>

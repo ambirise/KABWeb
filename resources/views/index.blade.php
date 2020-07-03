@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="card-body mt-0" style="min-height:300px">
-            <table class="table  table-striped">
+            <table class="table  table-striped table-bordered">
                 
                 <thead>
                     <tr>

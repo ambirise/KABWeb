@@ -177,7 +177,7 @@
             </div>
         </div>
         <div class="card-body">
-            <table class="table mt-0 table-striped">
+            <table class="table mt-0 table-striped table-bordered">
                 <thead>
                     <tr>
                         <th scope="col">S.N</th>

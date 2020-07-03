@@ -15,7 +15,6 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
-
 Route::get('/statistics', 'StatisticsController@Statistics');
 
 Route::prefix('student')->group(function(){

@@ -161,15 +161,15 @@ class ContentsController extends Controller
     public function update(Request $request, $content_id)
     {
         $get_content_data_array = Content::where('content_id', $content_id)->get();
-        $pluck_chapterid = Arr::pluck($get_content_data_array, ['chapter_id']);
-        $chapter_id = implode(" ", $pluck_chapterid);
+        $pluck_subjectid = Arr::pluck($get_content_data_array, ['subject_id']);
+        $subject_id = implode(" ", $pluck_subjectid);
 
         $get_content = $request->input('content');
         $contents = Content::find($content_id);
 
         $contents->content_name = $get_content;
         $contents->save();
-        return \Redirect::route('getcontentsIndex', $chapter_id)->with('updatesuccess', 'Content is updated successfully');
+        return \Redirect::route('getcontentsIndex', $subject_id)->with('updatesuccess', 'Content is updated successfully');
     }
 
     /**
@@ -233,44 +233,40 @@ class ContentsController extends Controller
         return view('editcontents')->with('get_content_data', $get_content_data);
     }
 
-    public function getcontentsSearch(Request $request, $chapter_id)
+    public function getcontentsSearch(Request $request, $subject_id)
     {
-        $get_chapter_data = Chapter::where('chapter_id', $chapter_id)->first();
+        $get_subject_data = Subject::where('subject_id', $subject_id)->first();
 
-        $get_chapter_data_array = Chapter::where('chapter_id', $chapter_id)->get();
-        $pluck_facultyid_chapter = Arr::pluck($get_chapter_data_array, ['faculty_id']);
-        $pluck_subjectid_chapter = Arr::pluck($get_chapter_data_array, ['subject_id']);
-        $pluck_chapterid_chapter = Arr::pluck($get_chapter_data_array, ['chapter_id']);
+        $get_subject_data_array = Subject::where('subject_id', $subject_id)->get();
+        $pluck_facultyid_subject = Arr::pluck($get_subject_data_array, ['faculty_id']);
+        $pluck_subjectid_subject = Arr::pluck($get_subject_data_array, ['subject_id']);
+        
+        $implode_facultyid_subject = implode(" ", $pluck_facultyid_subject);
+        $implode_subjectid_subject = implode(" ", $pluck_subjectid_subject);
 
-        $implode_facultyid_chapter = implode(" ", $pluck_facultyid_chapter);
-        $implode_subjectid_chapter = implode(" ", $pluck_subjectid_chapter);
-        $implode_chapterid_chapter = implode(" ", $pluck_chapterid_chapter);
+        $get_faculty_title = Faculty::where('faculty_id', $implode_facultyid_subject)->first();
+        $get_subject_title = Subject::where('subject_id', $implode_subjectid_subject)->first();
 
-        $get_faculty_title = Faculty::where('faculty_id', $implode_facultyid_chapter)->first();
-        $get_subject_title = Subject::where('subject_id', $implode_subjectid_chapter)->first();
-        $get_chapter_title = Chapter::where('faculty_id', $implode_chapterid_chapter)->first();
+        $get_content_data_array = DB::table('contents')->where('subject_id', $subject_id)->get();
 
-        $get_content_data_array = DB::table('contents')->where('chapter_id', $chapter_id)->get();
-
-        $pluck_level_id = Arr::pluck($get_chapter_data_array, ['level_id']);
+        $pluck_level_id = Arr::pluck($get_subject_data_array, ['level_id']);
         $level_id = implode(" ", $pluck_level_id);
         $level_title = Level::where('level_id', $level_id)->first();
 
         $query = $request->input('q');
         if ($query != '') {
-            $get_content_data_array = DB::table('contents')->where('content_name', 'like', '%' . $query . '%')->where('chapter_id', "=", $chapter_id)->get();
+            $get_content_data_array = DB::table('contents')->where('content_name', 'like', '%' . $query . '%')->where('subject_id', "=", $subject_id)->get();
             if ($get_content_data_array->count() == 0) {
                 return redirect()->back()->with('searchnotfound', 'Sorry the search item doesnot exist');
             }
         } else {
-            $get_content_data_array = DB::table('contents')->where('chapter_id', "=", $chapter_id)
+            $get_content_data_array = DB::table('contents')->where('subject_id', "=", $subject_id)
                 ->get();
         }
 
-        return view('contents')->with('get_chapter_data', $get_chapter_data)
+        return view('contents')->with('get_subject_data', $get_subject_data)
             ->with('get_content_data_array', $get_content_data_array)->with('get_faculty_title', $get_faculty_title)
             ->with('get_subject_title', $get_subject_title)
-            ->with('get_chapter_title', $get_chapter_title)
             ->with('level_title', $level_title);
     }
 }

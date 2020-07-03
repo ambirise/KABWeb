@@ -7,6 +7,7 @@ use App\Faculty;
 use App\Level;
 use App\Semester;
 use App\Subject;
+use App\Content;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -196,8 +197,8 @@ class SubjectsController extends Controller
 
     public function delsubjectsDetails($id)
     {
-        if (Chapter::where('subject_id', $id)->exists()) {
-            return redirect()->back()->with('violation', 'Cannot delete faculty: Chapters exists');
+        if (Content::where('subject_id', $id)->exists()) {
+            return redirect()->back()->with('violation', 'Cannot delete faculty: Contents exists');
         } else {
             Subject::find($id)->delete();
             return redirect()->back();

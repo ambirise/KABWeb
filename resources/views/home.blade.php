@@ -71,8 +71,8 @@
             <form class="form-inline my-2 ml-2 my-lg-0">
                 <a style="float:right;color:white;text-decoration:none;" class="mt-2" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();"><span
-                        style="font-size:20px;">Log Out</span></a>
+                                                     document.getElementById('logout-form').submit();"><input type="image" title="Logo"
+                src="{{ asset('/backend/images/logout.jpg') }}" height="40" width="80" /></a>
             </form>
 
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
